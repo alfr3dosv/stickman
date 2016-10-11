@@ -1,0 +1,73 @@
+---
+layout: post
+title:  "Obteniendo los frames"
+date:   2016-10-10 08:31:25 -0500
+categories: jekyll update
+---
+{% highlight java %}		
+        int SIZE_X = 20;
+		int SIZE_Y = 20;
+		int frames=1;
+		char[][] frame = new char[SIZE_Y][SIZE_X];
+{% endhighlight %}
+Como cada `frame` es una matriz de caracteres, sera bastante facil mostrarlo en pantalla, lo unico necesario son dos for para imprmirlo y una forma simple de limpiar la pantalla.
+
+Imprimir un `frame`
+{% highlight java %}		
+			System.out.println("Frame" + frames++);
+			for(int y=0; y<SIZE_Y; y++)
+			{
+				for(int x=0; x<SIZE_X; x++)
+					System.out.print(frame[y][x]);
+				System.out.print("\n");
+			}
+			clean();
+{% endhighlight %}
+
+La forma que encontre para limpiar la pantalla. Siendo sincero no se muy bien como funciona, pero funciona! y es multiplataforma.
+{% highlight java %}		
+    final String ANSI_CLS = "\u001b[2J";
+    final String ANSI_HOME = "\u001b[H";
+    System.out.print(ANSI_CLS + ANSI_HOME);
+    System.out.flush();
+{% endhighlight %}
+
+Una pequeña prueba que hice
+{% highlight java %}		
+public class frameTest
+{
+	public static void main(String[] args)
+	{
+		int SIZE_X = 20;
+		int SIZE_Y = 20;
+		int frames=1;
+		char[][] frame = new char[SIZE_Y][SIZE_X];
+		// Llena el frame con algo
+		for(int y=0; y<SIZE_Y; y++)
+			for(int x=0; x<SIZE_X; x++)
+				frame[y][x]='0';		
+		while (true)
+		{
+			System.out.println("Frame" + frames++);
+			for(int y=0; y<SIZE_Y; y++)
+			{
+				for(int x=0; x<SIZE_X; x++)
+					System.out.print(frame[y][x]);
+				System.out.print("\n");
+			}
+			clean();
+		}
+	}
+	public static void clean()
+	{
+		final String ANSI_CLS = "\u001b[2J";
+		final String ANSI_HOME = "\u001b[H";
+		System.out.print(ANSI_CLS + ANSI_HOME);
+		System.out.flush();
+	}
+
+}
+{% endhighlight %}
+
+De momento imprime varios cientos de frames por segundo, puedo suponer que al no contar con ninguna aceleración grafica es lo que produce 
+ese efecto de lentitud al pasar de `frame` a `frame`.

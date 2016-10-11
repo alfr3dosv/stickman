@@ -1,0 +1,49 @@
+---
+layout: default
+---
+<div class="container">
+  <!--THUMBNAILS-->
+  <section>
+    <div>
+      <h2>Some features</h2>
+      <div class="row">
+        <div class="four columns">
+          <div class="thumbnail">
+            <img src="https://i.ytimg.com/vi/BE6ogFlKp6A/hqdefault.jpg">
+            <p>Text bottom pics</p>
+          </div>
+        </div>
+        <div class="four columns">
+          <div class="thumbnail">
+            <img src="https://i.ytimg.com/vi/BE6ogFlKp6A/hqdefault.jpg">
+            <p>Text bottom pics</p>
+          </div>
+        </div>
+        <div class="four columns">
+          <div class="thumbnail">
+            <img src="https://cdn.meme.am/images/5724553.jpg">
+            <p>If only I have the pics</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--END THUMBNAILS-->
+    <!--BLOG-->
+    <section>
+      <div id="blog">
+        <h3>Proyecto</h3>
+        <hr>
+        {% for post in site.posts reversed %}
+          <div class="entry">
+            <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+            <h2>
+            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+            </h2>
+          </div>
+          <div class="timeline">|</div>
+        {% endfor %}
+      </div>
+    </section>
+    <!--END BLOG-->
+  </div>
+</div>
