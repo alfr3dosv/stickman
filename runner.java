@@ -5,7 +5,7 @@ public class runner
 	{
 		Display disp = new Display();
 		disp.loadStage("/home/alfredo/progra/java/gitman/game/assets/stages/story_1/before.txt");
-		while (true)
-			disp.print();
+		//while (true)
+		//	disp.print();
 	}
 }

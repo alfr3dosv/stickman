@@ -15,12 +15,13 @@ public class Display
 	char[][] frame;
 	int step;
 	long start_time;
-	Level level;	
+	Level level = new Level();	
 	
 	public Display()
 	{
 		step = 0;
-		start_time = System.currentTimeMillis();		
+		start_time = System.currentTimeMillis();	
+
 	}
 
 	public void print()
@@ -41,7 +42,7 @@ public class Display
 		 * Limpia la pantalla
 		 * Imprime el frame
 		 */
-		frame = level.stages.get(step);
+		frame = level.stages.get(0);
 		clean();
 		System.out.println("Frame" + frames++);
 		for(int y=0; y<SIZE_Y; y++)
@@ -88,6 +89,7 @@ public class Display
 			String s = lines.remove(0);
 			stage[y] = s.toCharArray();
 		}
-		//level.stages.add(stage);
+		level.stages.add(stage);
+		System.out.print(level.stages.indexOf(stage));
 	}
 }
