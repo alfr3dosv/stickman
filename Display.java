@@ -13,13 +13,16 @@ public class Display
 	final int WAIT_PER_FRAME = 16; 
 	int frames=0;
 	char[][] frame;
-	char[][] stage;
-	long start_time;	
+	int step;
+	long start_time;
+	Level level;	
 	
 	public Display()
 	{
+		step = 0;
 		start_time = System.currentTimeMillis();		
-	} 
+	}
+
 	public void print()
 	{
 		/* Si el tiempo actual - tiempo inicial > intevalo
@@ -38,7 +41,7 @@ public class Display
 		 * Limpia la pantalla
 		 * Imprime el frame
 		 */
-		frame = stage;
+		frame = level.stages.get(step);
 		clean();
 		System.out.println("Frame" + frames++);
 		for(int y=0; y<SIZE_Y; y++)
@@ -71,8 +74,7 @@ public class Display
 
 	public void loadStage(String path)
 	{
-
-		stage = new char[SIZE_Y][SIZE_X];
+		char[][] stage = new char[SIZE_Y][SIZE_X];
 		List<String> lines = new ArrayList();
 
 		try (Stream<String> stream = Files.lines(Paths.get(path))) {
@@ -86,5 +88,6 @@ public class Display
 			String s = lines.remove(0);
 			stage[y] = s.toCharArray();
 		}
+		//level.stages.add(stage);
 	}
 }
