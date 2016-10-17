@@ -8,8 +8,8 @@ import java.util.stream.Stream;
 
 public class Display
 {
-	final int SIZE_X = 70;
-	final int SIZE_Y = 20;
+	public static final int SIZE_X = 70;
+	public static final int SIZE_Y = 20;
 	final int WAIT_PER_FRAME = 16; 
 	int frames=0;
 	char[][] frame;
