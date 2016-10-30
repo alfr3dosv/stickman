@@ -1,17 +1,39 @@
 import java.util.*;
-import java.awt.event.KeyEvent;
+import java.io.*;
 
-public class Player
+public class Player implements Runnable
 {
 	public int y;
 	public int x;
+	public volatile DIRECTION dir;
 	boolean ALIVE;
-
+	public STATE status;
+	Scanner console;
+	RawConsoleInput in;
 	public Player()
 	{
 		ALIVE = true;
 		x = 0; 
 		y = 0;
+		console = new Scanner(System.in);
+		in = new RawConsoleInput();
+	}
+	public void run()
+	{
+		char key = 'f';
+		while(key != ':')
+		{
+			key = captureKey();
+			if(key != 'f')
+				System.out.println(key);
+		}
+		try{
+			in.resetConsoleMode();
+		}
+		catch(Exception e)
+		{
+
+		}
 	}
 	private void move(DIRECTION dir)
 	{
@@ -38,28 +60,51 @@ public class Player
 			break;
 		}
 	}
-	public DIRECTION captureInput(java.awt.event.KeyEvent e) 
+	public char captureKey()
 	{
-    	int keyCode = e.getKeyCode();
-	    DIRECTION dir_captured = DIRECTION.NONE;
+		StringBuffer str = new StringBuffer();
+		char key = 'f';
+		try {
+		    //Reader entrada = new InputStreamReader(System.in);
+		    //while ((key=(char)entrada.read())!='\n'){
+		    //    str.append(key);
+		    //}
+			key = (char)in.read(false);
+		} 
+		catch(IOException ex){key='f';}  
+		finally
+		{
+			if(key != 'j' && key != 'k' && key != 'l' && key != 'h' && key != ':')
+				key = 'f';
+			return key;
+		}
+	} 
+	public void captureInput() 
+	{
+    	char keyCode = captureKey();
+	    dir = DIRECTION.NONE;
 	    switch( keyCode ) 
 	    { 
-	        case KeyEvent.VK_UP:
-	            dir_captured = DIRECTION.UP;
+	        case 'j':
+	            dir = DIRECTION.UP;
 	            break;
-	        case KeyEvent.VK_DOWN:
-	            dir_captured = DIRECTION.DOWN;
+	        case 'k':
+	            dir = DIRECTION.DOWN;
 	            break;
-	        case KeyEvent.VK_LEFT:
-	            dir_captured = DIRECTION.LEFT;
+	        case 'h':
+	            dir = DIRECTION.LEFT;
 	            break;
-	        case KeyEvent.VK_RIGHT :
-	            dir_captured = DIRECTION.RIGHT;
+	        case 'l':
+	            dir = DIRECTION.RIGHT;
 	            break;
+	        case ':':
+	        	dir = DIRECTION.NONE;
+	        	status = STATE.PAUSED;
+	        	break;
+
 	     }
-	     return dir_captured;
 	 }
 	public enum DIRECTION {UP, DOWN, LEFT, RIGHT, NONE}
-	public enum STATE {JUMPING, FALLING, WALKING, STATIC}
+	public enum STATE {JUMPING, FALLING, WALKING, STATIC, PAUSED}
 
 }
