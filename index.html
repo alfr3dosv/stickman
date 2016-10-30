@@ -5,24 +5,23 @@ layout: default
   <!--THUMBNAILS-->
   <section>
     <div>
-      <h2>Some features</h2>
-      <div class="row">
+      <div class="row info">
         <div class="four columns">
           <div class="thumbnail">
-            <img src="https://i.ytimg.com/vi/BE6ogFlKp6A/hqdefault.jpg">
-            <p>Text bottom pics</p>
+            <img src="img/f_1.jpg">
+            <p>Crea tu propia historia</p>
           </div>
         </div>
         <div class="four columns">
           <div class="thumbnail">
-            <img src="https://i.ytimg.com/vi/BE6ogFlKp6A/hqdefault.jpg">
-            <p>Text bottom pics</p>
+            <img src="img/f_2.jpg">
+            <p>Cambia entre branch's</p>
           </div>
         </div>
         <div class="four columns">
           <div class="thumbnail">
-            <img src="https://cdn.meme.am/images/5724553.jpg">
-            <p>If only I have the pics</p>
+            <img src="img/f_3.jpg">
+            <p>Merge!</p>
           </div>
         </div>
       </div>
@@ -30,11 +29,13 @@ layout: default
     <!--END THUMBNAILS-->
     <!--BLOG-->
     <section>
-      <div id="blog">
-        <h3>Proyecto</h3>
+      <div>
+        <div class="blog-brand">
+        <h5>Proyecto</h5>
         <hr>
+        </div>
         {% for post in site.posts reversed %}
-          <div class="entry">
+          <div class="entry" id="blog">
             <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
             <h2>
             <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
