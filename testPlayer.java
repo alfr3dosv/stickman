@@ -1,4 +1,3 @@
-
 public class testPlayer 
 {
 	public static void main(String[] args)
@@ -6,11 +5,13 @@ public class testPlayer
 		Player player = new Player();
 		Thread input = new Thread(player);
 		input.start();
-		while(true)
+		while(player.status != Player.STATE.PAUSED)
 		{
-//			System.out.println(player.dir);
-			//System.out.print("x:"+player.x+" y:"+player.y);
+
+			System.out.println(player.dir);
+			System.out.print("x:"+player.x+" y:"+player.y);
 		}
-		//input.interrupt();
+		System.out.println("FIN");
+		input.interrupt();
 	}
 }

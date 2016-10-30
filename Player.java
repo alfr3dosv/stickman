@@ -5,9 +5,11 @@ public class Player implements Runnable
 {
 	public int y;
 	public int x;
-	public volatile DIRECTION dir;
+	public volatile boolean capturing = true;
+	public volatile DIRECTION dir = DIRECTION.NONE;
 	boolean ALIVE;
-	public STATE status;
+	public volatile char key;
+	public volatile STATE status = STATE.STATIC;
 	Scanner console;
 	RawConsoleInput in;
 	public Player()
@@ -20,22 +22,20 @@ public class Player implements Runnable
 	}
 	public void run()
 	{
-		char key = 'f';
-		while(key != ':')
+		while(status != STATE.PAUSED)
 		{
-			key = captureKey();
-			if(key != 'f')
-				System.out.println(key);
+			captureInput();
+			move();
+			try{Thread.sleep(100);}
+			catch (Exception e){}
 		}
 		try{
 			in.resetConsoleMode();
+			console.next();
 		}
-		catch(Exception e)
-		{
-
-		}
+		catch(Exception e){}
 	}
-	private void move(DIRECTION dir)
+	private void move()
 	{
 		switch (dir)
 		{
@@ -65,17 +65,11 @@ public class Player implements Runnable
 		StringBuffer str = new StringBuffer();
 		char key = 'f';
 		try {
-		    //Reader entrada = new InputStreamReader(System.in);
-		    //while ((key=(char)entrada.read())!='\n'){
-		    //    str.append(key);
-		    //}
 			key = (char)in.read(false);
 		} 
 		catch(IOException ex){key='f';}  
 		finally
 		{
-			if(key != 'j' && key != 'k' && key != 'l' && key != 'h' && key != ':')
-				key = 'f';
 			return key;
 		}
 	} 
