@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class runner
+public class TestDisplay
 {
 	public static void main(String[] args)
 	{
