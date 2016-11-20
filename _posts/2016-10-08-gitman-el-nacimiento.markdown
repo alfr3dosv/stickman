@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Gitman el nacimiento"
+title:  "Comienzo"
 date:   2016-10-08 08:31:25 -0500
 categories: jekyll update
 ---

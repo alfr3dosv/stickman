@@ -1,11 +1,46 @@
 ---
-layout: default
+layout: index
 ---
 <div class="container">
   <!--THUMBNAILS-->
   <section>
-    <div>
-      <div class="row info">
+    <div class="pad-top">
+      <div>
+        <h5>Que es gitman?</h5>
+        <p>Es un juego de plataformas 2D escrito en Java. El objetivo del juego es cruzar al siguinte nivel usando comandos de <a href="https://es.wikipedia.org/wiki/Git">git</a> como poderes del personaje principal.</p>
+        <br>
+        <strong>Controles</strong>
+        <p>Usa los mismo key blindings que <a href="https://es.wikipedia.org/wiki/Vim#Modos">vim</a> en modo comandos</p>
+        <table>
+          <thead>
+            <th>Tecla/Caracter</th>
+            <th>Función</th>
+          </thead>
+          <tr>
+            <th>h</th>
+            <td>Moverse a la izquierda</td>
+          </tr>
+          <tr>
+            <th>j</th>
+            <td>Moverse hacia abajo</td>
+          </tr>
+          <tr>
+            <th>k</th>
+            <td>Saltar/Moverse hacia arriba</td>
+          </tr>
+          <tr>
+            <th>l</th>
+            <td>Moverse a la derecha</td>
+          </tr>
+          <tr>
+            <th>:</th>
+            <td>Abre la linea de comandos. En la linea de comandos podras ejecutar comandos de git.</td>
+          </tr>
+        </table>
+        <br>
+      </div>
+      <h5>Capturas</h5>
+      <div class="row">
         <div class="four columns">
           <div class="thumbnail">
             <img src="img/f_1.jpg">
@@ -26,22 +61,28 @@ layout: default
         </div>
       </div>
     </section>
+    <section>
+      <div class="pad-top">
+        <h5>Como instalar?</h5>
+        <p>Para instalarlo es necesario descargar el zip que se enguentra en <strong>download</strong></p>
+      </div>
+    </section>
     <!--END THUMBNAILS-->
     <!--BLOG-->
     <section>
       <div>
         <div class="blog-brand">
-        <h5>Proyecto</h5>
-        <hr>
+          <h5>Blog</h5>
+          <hr>
         </div>
         {% for post in site.posts reversed %}
           <div class="entry" id="blog">
+            <div class="timeline">|</div>
             <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
             <h2>
             <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
             </h2>
           </div>
-          <div class="timeline">|</div>
         {% endfor %}
       </div>
     </section>

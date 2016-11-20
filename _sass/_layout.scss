@@ -21,29 +21,32 @@
 .header-content
 {
 overflow: hidden;
-height: 500px;
-background-image: url('../img/gitman.jpg');
-background-size: 100% auto;
- background-position: center;
+background-color: #000; 
+background-image: url('../img/gitman-only.jpg');
+
+background-size: auto 90%;
+background-position: 5% -250%;
+background-repeat: no-repeat;
 }
 
 .header-text
 {
-    height: 500px;
+    height: auto;
     text-align: center;
-    font-size: 4em;
+    font-size: 3em;
 }
 
 .header-text p
 {
-        padding-top: 100px;
+        padding-top: 50px;
+        padding-bottom: 50px;
         color: #fff;
         font-weight: 900;
 }
 
 @media screen and (max-width: 480px) {
     .menu-content{ display: block; position: inherit; text-align: center; right: auto; top: -10px;}
-    .header-content {background-size: auto 100%;}
+    .header-content {background-size: auto 100%;background-image: none;}
 }
 
 /**
@@ -143,17 +146,17 @@ background-size: 100% auto;
 
 .post-link {
     display: block;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .entry{
-
     text-align: center;
 }
 
 .timeline{
     text-align: center;
-    font-size: 2em;
+    font-size: 1em;
+    color: $grey-color;
 }
 
 /**
@@ -201,6 +204,6 @@ background-size: 100% auto;
     }
 }
 /*Info*/
-.info{padding-top: 50px;}
+.pad-top{padding-top: 50px;}
 /*Blog*/
 .blog-brand{padding-top: 50px;}
