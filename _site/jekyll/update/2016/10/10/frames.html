@@ -7,12 +7,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Obteniendo los frames</title>
-  <meta name="description" content="		        int SIZE_X = 20;		int SIZE_Y = 20;		int frames=1;		char[][] frame = new char[SIZE_Y][SIZE_X];Como cada frame es una matriz de caracteres, sera bast...">
+  <meta name="description" content="		        int SIZE_X = 20;		int SIZE_Y = 20;		int frames=1;		char[][] frame = new char[SIZE_Y][SIZE_X];Descargar">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu:300" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://yourdomain.com/jekyll/update/2016/10/10/frames.html">
   <link rel="alternate" type="application/rss+xml" title="Gitman" href="http://yourdomain.com/feed.xml">
+  <script type="text/javascript">
+
+  function dl(codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', document.title.replace(/\s+/g, '-').toLowerCase() + "-code-snippet-" +codeIndex + ".java");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  console.log(codeIndex);
+  document.body.removeChild(element);
+}
+  function copy(index){
+    var code = document.getElementsByTagName("code");
+    return code[index].innerText;
+  }
+  </script>
 </head>
 
 
@@ -47,6 +66,8 @@
 		<span class="kt">int</span> <span class="n">frames</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span>
 		<span class="kt">char</span><span class="o">[][]</span> <span class="n">frame</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="n">SIZE_Y</span><span class="o">][</span><span class="n">SIZE_X</span><span class="o">];</span></code></pre></figure>
 
+<p><a onclick="dl(0);">Descargar</a></p>
+
 <p>Como cada <code class="highlighter-rouge">frame</code> es una matriz de caracteres, sera bastante facil mostrarlo en pantalla, lo unico necesario son dos for para imprmirlo y una forma simple de limpiar la pantalla.</p>
 
 <p>Imprimir un <code class="highlighter-rouge">frame</code></p>
@@ -61,6 +82,8 @@
 			<span class="o">}</span>
 			<span class="n">clean</span><span class="o">();</span></code></pre></figure>
 
+<p><a onclick="dl(1);">Descargar</a></p>
+
 <p>La forma que encontre para limpiar la pantalla. Siendo sincero no se muy bien como funciona, pero funciona! y es multiplataforma.</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java">		
@@ -68,6 +91,8 @@
     <span class="kd">final</span> <span class="n">String</span> <span class="n">ANSI_HOME</span> <span class="o">=</span> <span class="s">"\u001b[H"</span><span class="o">;</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">ANSI_CLS</span> <span class="o">+</span> <span class="n">ANSI_HOME</span><span class="o">);</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span></code></pre></figure>
+
+<p><a onclick="dl(2);">Descargar</a></p>
 
 <p>Una pequeña prueba que hice</p>
 
@@ -106,12 +131,33 @@
 
 <span class="o">}</span></code></pre></figure>
 
+<p><a onclick="dl(3);">Descargar</a></p>
+
 <p>De momento imprime varios cientos de frames por segundo, puedo suponer que al no contar con ninguna aceleración grafica es lo que produce 
 ese efecto de lentitud al pasar de <code class="highlighter-rouge">frame</code> a <code class="highlighter-rouge">frame</code>.</p>
 
 		</div>
 	</article>
 </div>
+<script type="text/javascript">
+
+	function download(filename, codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+	function copy(index){
+		var code = document.getElementsByTagName("code");
+		return code[index].innerText;
+	}
+</script>
       </div>
     </div>
 

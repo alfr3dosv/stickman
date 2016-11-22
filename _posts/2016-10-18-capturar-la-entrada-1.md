@@ -28,6 +28,8 @@ Habia contado con los Key events para capturar la entrada del jugador.
 	     return dir_captured;
 	 }
 {% endhighlight %}
+<a onclick="dl(0);">Descargar</a>
+
 Pero eso no va ser posible, debido a que los Key events solo funcionan con Swing y no en la consola. 
 
 Y lo peor la libreria estandar de java solo permite capturar la entrada despues de la tecla enter, navegando por internet la unica soucion que encontre involucra Java Native Inteface: para conoctar con metodos propios de cada plataforma.

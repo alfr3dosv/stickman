@@ -10,6 +10,8 @@ categories: jekyll update
 		int frames=1;
 		char[][] frame = new char[SIZE_Y][SIZE_X];
 {% endhighlight %}
+<a onclick="dl(0);">Descargar</a>
+
 Como cada `frame` es una matriz de caracteres, sera bastante facil mostrarlo en pantalla, lo unico necesario son dos for para imprmirlo y una forma simple de limpiar la pantalla.
 
 Imprimir un `frame`
@@ -23,6 +25,7 @@ Imprimir un `frame`
 			}
 			clean();
 {% endhighlight %}
+<a onclick="dl(1);">Descargar</a>
 
 La forma que encontre para limpiar la pantalla. Siendo sincero no se muy bien como funciona, pero funciona! y es multiplataforma.
 {% highlight java %}		
@@ -31,6 +34,7 @@ La forma que encontre para limpiar la pantalla. Siendo sincero no se muy bien co
     System.out.print(ANSI_CLS + ANSI_HOME);
     System.out.flush();
 {% endhighlight %}
+<a onclick="dl(2);">Descargar</a>
 
 Una pequeña prueba que hice
 {% highlight java %}		
@@ -68,6 +72,7 @@ public class frameTest
 
 }
 {% endhighlight %}
+<a onclick="dl(3);">Descargar</a>
 
 De momento imprime varios cientos de frames por segundo, puedo suponer que al no contar con ninguna aceleración grafica es lo que produce 
 ese efecto de lentitud al pasar de `frame` a `frame`.

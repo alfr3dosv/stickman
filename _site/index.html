@@ -14,6 +14,25 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://yourdomain.com/">
   <link rel="alternate" type="application/rss+xml" title="Gitman" href="http://yourdomain.com/feed.xml">
+  <script type="text/javascript">
+
+  function dl(codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', document.title.replace(/\s+/g, '-').toLowerCase() + "-code-snippet-" +codeIndex + ".java");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  console.log(codeIndex);
+  document.body.removeChild(element);
+}
+  function copy(index){
+    var code = document.getElementsByTagName("code");
+    return code[index].innerText;
+  }
+  </script>
 </head>
 
 
@@ -46,13 +65,13 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="container">
+        <div>
   <!--THUMBNAILS-->
   <section>
-    <div class="pad-top">
+    <div class="container">
       <div>
         <h5>Que es gitman?</h5>
-        <p>Es un juego de plataformas 2D escrito en Java. El objetivo del juego es cruzar al siguinte nivel usando comandos de <a href="https://es.wikipedia.org/wiki/Git">git</a> como poderes del personaje principal.</p>
+        <p>Es un juego de plataformas 2D escrito en Java. El objetivo del juego es cruzar al siguiente nivel usando comandos de <a href="https://es.wikipedia.org/wiki/Git">git</a> como poderes del personaje principal.</p>
         <br>
         <strong>Controles</strong>
         <p>Usa los mismo key blindings que <a href="https://es.wikipedia.org/wiki/Vim#Modos">vim</a> en modo comandos</p>
@@ -84,119 +103,119 @@
         </table>
         <br>
       </div>
-      <h5>Capturas</h5>
-      <div class="row">
-        <div class="four columns">
-          <div class="thumbnail">
-            <img src="img/f_1.jpg">
-            <p>Crea tu propia historia</p>
-          </div>
-        </div>
-        <div class="four columns">
-          <div class="thumbnail">
-            <img src="img/f_2.jpg">
-            <p>Cambia entre branch's</p>
-          </div>
-        </div>
-        <div class="four columns">
-          <div class="thumbnail">
-            <img src="img/f_3.jpg">
-            <p>Merge!</p>
-          </div>
+    </div>
+  </section>
+  <section>
+    <center><h5>Capturas</h5></center>
+    <div class="row">
+      <div class="four columns">
+        <div class="thumbnail">
+          <img src="img/f_1.jpg">
         </div>
       </div>
-    </section>
-    <section>
-      <div class="pad-top">
-        <h5>Como instalar?</h5>
-        <p>Para instalarlo es necesario descargar el zip que se enguentra en <strong>download</strong></p>
-      </div>
-    </section>
-    <!--END THUMBNAILS-->
-    <!--BLOG-->
-    <section>
-      <div>
-        <div class="blog-brand">
-          <h5>Blog</h5>
-          <hr>
+      <div class="four columns">
+        <div class="thumbnail">
+          <img src="img/f_2.jpg">
         </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 8, 2016</span>
-            <h2>
-            <a class="post-link" href="/jekyll/update/2016/10/08/gitman-el-nacimiento.html">Comienzo</a>
-            </h2>
-          </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 10, 2016</span>
-            <h2>
-            <a class="post-link" href="/jekyll/update/2016/10/10/frames.html">Obteniendo los frames</a>
-            </h2>
-          </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 17, 2016</span>
-            <h2>
-            <a class="post-link" href="/java/2016/10/17/el-display.html">Display</a>
-            </h2>
-          </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 17, 2016</span>
-            <h2>
-            <a class="post-link" href="/java/2016/10/17/creando-los-assests.html">Creando los assets</a>
-            </h2>
-          </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 17, 2016</span>
-            <h2>
-            <a class="post-link" href="/java/2016/10/17/probando-los-assets-y-display.html">Probando el display/assets</a>
-            </h2>
-          </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 18, 2016</span>
-            <h2>
-            <a class="post-link" href="/java/2016/10/18/la-clase-player.html">La clase Player</a>
-            </h2>
-          </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 18, 2016</span>
-            <h2>
-            <a class="post-link" href="/java/2016/10/18/capturar-la-entrada-1.html">Capturar las entradas 1</a>
-            </h2>
-          </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 30, 2016</span>
-            <h2>
-            <a class="post-link" href="/java/2016/10/30/capturar-la-entrada-2.html">Capturar las entradas 2</a>
-            </h2>
-          </div>
-        
-          <div class="entry" id="blog">
-            <div class="timeline">|</div>
-            <span class="post-meta">Oct 30, 2016</span>
-            <h2>
-            <a class="post-link" href="/java/2016/10/30/esctruturando-el-directorio.html">Estructurando el proyecto</a>
-            </h2>
-          </div>
-        
       </div>
-    </section>
-    <!--END BLOG-->
-  </div>
+      <div class="four columns">
+        <div class="thumbnail">
+          <img src="img/f_3.jpg">
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container pad-top">
+      <h5>Como instalar?</h5>
+      <p>Para instalarlo es necesario descargar el zip que se enguentra en <strong>download</strong></p>
+    </div>
+  </section>
+  <!--END THUMBNAILS-->
+  <!--BLOG-->
+  <section>
+    <div class="container">
+      <div class="blog-brand">
+        <h5>Blog</h5>
+        <hr>
+      </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 8, 2016</span>
+          <h2>
+          <a class="post-link" href="/jekyll/update/2016/10/08/gitman-el-nacimiento.html">Comienzo</a>
+          </h2>
+        </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 10, 2016</span>
+          <h2>
+          <a class="post-link" href="/jekyll/update/2016/10/10/frames.html">Obteniendo los frames</a>
+          </h2>
+        </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 17, 2016</span>
+          <h2>
+          <a class="post-link" href="/java/2016/10/17/el-display.html">Display</a>
+          </h2>
+        </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 17, 2016</span>
+          <h2>
+          <a class="post-link" href="/java/2016/10/17/creando-los-assests.html">Creando los assets</a>
+          </h2>
+        </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 17, 2016</span>
+          <h2>
+          <a class="post-link" href="/java/2016/10/17/probando-los-assets-y-display.html">Probando el display/assets</a>
+          </h2>
+        </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 18, 2016</span>
+          <h2>
+          <a class="post-link" href="/java/2016/10/18/la-clase-player.html">La clase Player</a>
+          </h2>
+        </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 18, 2016</span>
+          <h2>
+          <a class="post-link" href="/java/2016/10/18/capturar-la-entrada-1.html">Capturar las entradas 1</a>
+          </h2>
+        </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 30, 2016</span>
+          <h2>
+          <a class="post-link" href="/java/2016/10/30/capturar-la-entrada-2.html">Capturar las entradas 2</a>
+          </h2>
+        </div>
+      
+        <div class="entry" id="blog">
+          <div class="timeline">|</div>
+          <span class="post-meta">Oct 30, 2016</span>
+          <h2>
+          <a class="post-link" href="/java/2016/10/30/esctruturando-el-directorio.html">Estructurando el proyecto</a>
+          </h2>
+        </div>
+      
+    </div>
+  </section>
+  <!--END BLOG-->
+</div>
 </div>
       </div>
     </div>

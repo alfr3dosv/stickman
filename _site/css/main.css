@@ -153,8 +153,7 @@ pre {
 
 .thumbnail p {
   background-color: #6ED3F3;
-  display: block;
-  padding: 20px; }
+  display: block; }
 
 .thumbnail p:hover, .thumbnail p:active {
   background-color: #000;

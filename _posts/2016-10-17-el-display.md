@@ -5,7 +5,7 @@ date: 2016-10-17 08:31:25 -0500
 categories: java
 ---
 
-La clase tiene la funcion de almacenar, editar e imprmir cada frame
+La clase tiene la funcion de almacenar, editar e imprimir cada frame
 
 {% highlight java %}	
 public class Display
@@ -18,6 +18,8 @@ public class Display
 	char[][] stage;
 	long start_time;	
 {% endhighlight %}
+<a onclick="dl(0);">Descargar</a>
+
 La funcion print comprueba que haya pasado un intervalo de tiempo, si es asi actualiza la pantalla.
 El intervalo de tiempo evita imprimir miles de frames por segundo.
 {% highlight java %}
@@ -33,6 +35,8 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.
 		}
 	}
 {% endhighlight %}
+<a onclick="dl(1);">Descargar</a>
+
 La funcion actualizar rescribe la variable frame.
 
  * Carga el mapa en el frame 
@@ -56,12 +60,14 @@ En el futuro despues de cargar el mapa, escribira en la variable los demas objet
 		}
 	}
 {% endhighlight %}
+<a onclick="dl(2);">Descargar</a>
+
 Mediante una escape en ANSI se puede limpiar la pantalla. Puede no funcionar en Windows
 {% highlight java %}
 	private void clean()
 	{
 		/* 
-	     * Debuelve el cursor a la parte superior
+	     * Devuelve el cursor a la parte superior
 	     */
 	    final String ANSI_CLS = "\u001b[2J";
 	    final String ANSI_HOME = "\u001b[H";
@@ -69,3 +75,4 @@ Mediante una escape en ANSI se puede limpiar la pantalla. Puede no funcionar en 
 	    System.out.flush();
 	}
 {% endhighlight %}
+<a onclick="dl(3);">Descargar</a>

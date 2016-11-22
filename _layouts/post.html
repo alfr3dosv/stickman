@@ -12,3 +12,22 @@ layout: default
 		</div>
 	</article>
 </div>
+<script type="text/javascript">
+
+	function download(filename, codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+	function copy(index){
+		var code = document.getElementsByTagName("code");
+		return code[index].innerText;
+	}
+</script>

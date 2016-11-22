@@ -13,6 +13,25 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://yourdomain.com/java/2016/10/18/la-clase-player.html">
   <link rel="alternate" type="application/rss+xml" title="Gitman" href="http://yourdomain.com/feed.xml">
+  <script type="text/javascript">
+
+  function dl(codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', document.title.replace(/\s+/g, '-').toLowerCase() + "-code-snippet-" +codeIndex + ".java");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  console.log(codeIndex);
+  document.body.removeChild(element);
+}
+  function copy(index){
+    var code = document.getElementsByTagName("code");
+    return code[index].innerText;
+  }
+  </script>
 </head>
 
 
@@ -70,6 +89,25 @@
 		</div>
 	</article>
 </div>
+<script type="text/javascript">
+
+	function download(filename, codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+	function copy(index){
+		var code = document.getElementsByTagName("code");
+		return code[index].innerText;
+	}
+</script>
       </div>
     </div>
 

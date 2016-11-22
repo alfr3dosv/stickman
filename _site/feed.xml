@@ -6,8 +6,8 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 20 Nov 2016 16:24:25 -0600</pubDate>
-    <lastBuildDate>Sun, 20 Nov 2016 16:24:25 -0600</lastBuildDate>
+    <pubDate>Mon, 21 Nov 2016 18:54:18 -0600</pubDate>
+    <lastBuildDate>Mon, 21 Nov 2016 18:54:18 -0600</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -83,6 +83,8 @@
 	     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 	     &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dir_captured&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 	 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a onclick=&quot;dl(0);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Pero eso no va ser posible, debido a que los Key events solo funcionan con Swing y no en la consola.&lt;/p&gt;
 
@@ -160,6 +162,7 @@
 	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;p&gt;&lt;a onclick=&quot;dl(0);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 17 Oct 2016 10:20:25 -0500</pubDate>
         <link>http://yourdomain.com/java/2016/10/17/probando-los-assets-y-display.html</link>
@@ -191,7 +194,7 @@
     
       <item>
         <title>Display</title>
-        <description>&lt;p&gt;La clase tiene la funcion de almacenar, editar e imprmir cada frame&lt;/p&gt;
+        <description>&lt;p&gt;La clase tiene la funcion de almacenar, editar e imprimir cada frame&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;	
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Display&lt;/span&gt;
@@ -203,6 +206,8 @@
 	&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 	&lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;	&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a onclick=&quot;dl(0);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;La funcion print comprueba que haya pasado un intervalo de tiempo, si es asi actualiza la pantalla.
 El intervalo de tiempo evita imprimir miles de frames por segundo.&lt;/p&gt;
@@ -218,6 +223,8 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.&lt;/p&gt;
 			&lt;span class=&quot;n&quot;&gt;start_time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;currentTimeMillis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;		
 		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a onclick=&quot;dl(1);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;La funcion actualizar rescribe la variable frame.&lt;/p&gt;
 
@@ -244,12 +251,14 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.&lt;/p&gt;
 		&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;p&gt;&lt;a onclick=&quot;dl(2);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
+
 &lt;p&gt;Mediante una escape en ANSI se puede limpiar la pantalla. Puede no funcionar en Windows&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;clean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 	&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
 		&lt;span class=&quot;cm&quot;&gt;/* 
-	     * Debuelve el cursor a la parte superior
+	     * Devuelve el cursor a la parte superior
 	     */&lt;/span&gt;
 	    &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANSI_CLS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;\u001b[2J&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 	    &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANSI_HOME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;\u001b[H&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
@@ -257,6 +266,7 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.&lt;/p&gt;
 	    &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;flush&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
 	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;p&gt;&lt;a onclick=&quot;dl(3);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 17 Oct 2016 08:31:25 -0500</pubDate>
         <link>http://yourdomain.com/java/2016/10/17/el-display.html</link>
@@ -276,6 +286,8 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.&lt;/p&gt;
 		&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frames&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 		&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;frame&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIZE_Y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIZE_X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;p&gt;&lt;a onclick=&quot;dl(0);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
+
 &lt;p&gt;Como cada &lt;code class=&quot;highlighter-rouge&quot;&gt;frame&lt;/code&gt; es una matriz de caracteres, sera bastante facil mostrarlo en pantalla, lo unico necesario son dos for para imprmirlo y una forma simple de limpiar la pantalla.&lt;/p&gt;
 
 &lt;p&gt;Imprimir un &lt;code class=&quot;highlighter-rouge&quot;&gt;frame&lt;/code&gt;&lt;/p&gt;
@@ -290,6 +302,8 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.&lt;/p&gt;
 			&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 			&lt;span class=&quot;n&quot;&gt;clean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;p&gt;&lt;a onclick=&quot;dl(1);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
+
 &lt;p&gt;La forma que encontre para limpiar la pantalla. Siendo sincero no se muy bien como funciona, pero funciona! y es multiplataforma.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;		
@@ -297,6 +311,8 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.&lt;/p&gt;
     &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANSI_HOME&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;\u001b[H&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ANSI_CLS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANSI_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;flush&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a onclick=&quot;dl(2);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Una pequeña prueba que hice&lt;/p&gt;
 
@@ -334,6 +350,8 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.&lt;/p&gt;
 	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a onclick=&quot;dl(3);&quot;&gt;Descargar&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;De momento imprime varios cientos de frames por segundo, puedo suponer que al no contar con ninguna aceleración grafica es lo que produce 
 ese efecto de lentitud al pasar de &lt;code class=&quot;highlighter-rouge&quot;&gt;frame&lt;/code&gt; a &lt;code class=&quot;highlighter-rouge&quot;&gt;frame&lt;/code&gt;.&lt;/p&gt;

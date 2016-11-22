@@ -10,4 +10,23 @@
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+  <script type="text/javascript">
+
+  function dl(codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', document.title.replace(/\s+/g, '-').toLowerCase() + "-code-snippet-" +codeIndex + ".java");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  console.log(codeIndex);
+  document.body.removeChild(element);
+}
+  function copy(index){
+    var code = document.getElementsByTagName("code");
+    return code[index].innerText;
+  }
+  </script>
 </head>

@@ -7,12 +7,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Display</title>
-  <meta name="description" content="La clase tiene la funcion de almacenar, editar e imprmir cada frame">
+  <meta name="description" content="La clase tiene la funcion de almacenar, editar e imprimir cada frame">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu:300" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://yourdomain.com/java/2016/10/17/el-display.html">
   <link rel="alternate" type="application/rss+xml" title="Gitman" href="http://yourdomain.com/feed.xml">
+  <script type="text/javascript">
+
+  function dl(codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', document.title.replace(/\s+/g, '-').toLowerCase() + "-code-snippet-" +codeIndex + ".java");
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  console.log(codeIndex);
+  document.body.removeChild(element);
+}
+  function copy(index){
+    var code = document.getElementsByTagName("code");
+    return code[index].innerText;
+  }
+  </script>
 </head>
 
 
@@ -40,7 +59,7 @@
 			<p class="post-meta"><time datetime="2016-10-17T08:31:25-05:00" itemprop="datePublished">Oct 17, 2016</time></p>
 		</header>
 		<div class="post-content" itemprop="articleBody">
-			<p>La clase tiene la funcion de almacenar, editar e imprmir cada frame</p>
+			<p>La clase tiene la funcion de almacenar, editar e imprimir cada frame</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java">	
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Display</span>
@@ -52,6 +71,8 @@
 	<span class="kt">char</span><span class="o">[][]</span> <span class="n">frame</span><span class="o">;</span>
 	<span class="kt">char</span><span class="o">[][]</span> <span class="n">stage</span><span class="o">;</span>
 	<span class="kt">long</span> <span class="n">start_time</span><span class="o">;</span>	</code></pre></figure>
+
+<p><a onclick="dl(0);">Descargar</a></p>
 
 <p>La funcion print comprueba que haya pasado un intervalo de tiempo, si es asi actualiza la pantalla.
 El intervalo de tiempo evita imprimir miles de frames por segundo.</p>
@@ -67,6 +88,8 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.</p>
 			<span class="n">start_time</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>		
 		<span class="o">}</span>
 	<span class="o">}</span></code></pre></figure>
+
+<p><a onclick="dl(1);">Descargar</a></p>
 
 <p>La funcion actualizar rescribe la variable frame.</p>
 
@@ -93,12 +116,14 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.</p>
 		<span class="o">}</span>
 	<span class="o">}</span></code></pre></figure>
 
+<p><a onclick="dl(2);">Descargar</a></p>
+
 <p>Mediante una escape en ANSI se puede limpiar la pantalla. Puede no funcionar en Windows</p>
 
 <figure class="highlight"><pre><code class="language-java" data-lang="java">	<span class="kd">private</span> <span class="kt">void</span> <span class="nf">clean</span><span class="p">(</span><span class="o">)</span>
 	<span class="o">{</span>
 		<span class="cm">/* 
-	     * Debuelve el cursor a la parte superior
+	     * Devuelve el cursor a la parte superior
 	     */</span>
 	    <span class="kd">final</span> <span class="n">String</span> <span class="n">ANSI_CLS</span> <span class="o">=</span> <span class="s">"\u001b[2J"</span><span class="o">;</span>
 	    <span class="kd">final</span> <span class="n">String</span> <span class="n">ANSI_HOME</span> <span class="o">=</span> <span class="s">"\u001b[H"</span><span class="o">;</span>
@@ -106,10 +131,30 @@ El intervalo de tiempo evita imprimir miles de frames por segundo.</p>
 	    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
 	<span class="o">}</span></code></pre></figure>
 
+<p><a onclick="dl(3);">Descargar</a></p>
 
 		</div>
 	</article>
 </div>
+<script type="text/javascript">
+
+	function download(filename, codeIndex) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(copy(codeIndex)));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+	function copy(index){
+		var code = document.getElementsByTagName("code");
+		return code[index].innerText;
+	}
+</script>
       </div>
     </div>
 
