@@ -5,7 +5,7 @@ date: 2016-10-18 10:20:25 -0500
 categories: java
 ---
 
-Esta clase tiene la funcion de:
+Esta clase tiene la función de:
 
  * Guardar la posicion del jugador
  * Capturar las entradas del jugador

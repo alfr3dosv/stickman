@@ -32,5 +32,5 @@ Habia contado con los Key events para capturar la entrada del jugador.
 
 Pero eso no va ser posible, debido a que los Key events solo funcionan con Swing y no en la consola. 
 
-Y lo peor la libreria estandar de java solo permite capturar la entrada despues de la tecla enter, navegando por internet la unica soucion que encontre involucra Java Native Inteface: para conoctar con metodos propios de cada plataforma.
+Y lo peor la libreria estandar de java solo permite capturar la entrada despues de la tecla enter, navegando por internet la unica soución que encontre involucra Java Native Inteface: para conectar con metodos propios de cada plataforma.
 

@@ -14,6 +14,7 @@ Funciona!
 Nota: loadStage() deberia ser algo como loadAsset() y estar en algun lugar mas apropiado como level o crear una clase propia para los assets 
 
 ##<center>Probando la clase display</center>##
+
 {% highlight java%}
 import java.util.Scanner;
 public class runner

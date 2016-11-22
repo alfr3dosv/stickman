@@ -7,5 +7,5 @@ categories: java
 
  Casualmente me encontre con esto <a>http://www.source-code.biz/snippets/java/RawConsoleInput/ .</a>
 
- Es justo lo que necesitaba, utiliza la JNA para conectarse con metodos propios de la plataforma y capturar los caracteres individuales.
+Utiliza la JNA para conectarse con metodos propios de la plataforma y capturar los caracteres individuales.
  

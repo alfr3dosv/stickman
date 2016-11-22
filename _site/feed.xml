@@ -6,8 +6,8 @@
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 21 Nov 2016 18:54:18 -0600</pubDate>
-    <lastBuildDate>Mon, 21 Nov 2016 18:54:18 -0600</lastBuildDate>
+    <pubDate>Mon, 21 Nov 2016 21:59:36 -0600</pubDate>
+    <lastBuildDate>Mon, 21 Nov 2016 21:59:36 -0600</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -46,7 +46,7 @@
         <title>Capturar las entradas 2</title>
         <description>&lt;p&gt;Casualmente me encontre con esto &lt;a&gt;http://www.source-code.biz/snippets/java/RawConsoleInput/ .&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Es justo lo que necesitaba, utiliza la JNA para conectarse con metodos propios de la plataforma y capturar los caracteres individuales.&lt;/p&gt;
+&lt;p&gt;Utiliza la JNA para conectarse con metodos propios de la plataforma y capturar los caracteres individuales.&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 30 Oct 2016 11:12:12 -0600</pubDate>
@@ -88,7 +88,7 @@
 
 &lt;p&gt;Pero eso no va ser posible, debido a que los Key events solo funcionan con Swing y no en la consola.&lt;/p&gt;
 
-&lt;p&gt;Y lo peor la libreria estandar de java solo permite capturar la entrada despues de la tecla enter, navegando por internet la unica soucion que encontre involucra Java Native Inteface: para conoctar con metodos propios de cada plataforma.&lt;/p&gt;
+&lt;p&gt;Y lo peor la libreria estandar de java solo permite capturar la entrada despues de la tecla enter, navegando por internet la unica soución que encontre involucra Java Native Inteface: para conectar con metodos propios de cada plataforma.&lt;/p&gt;
 
 </description>
         <pubDate>Tue, 18 Oct 2016 18:31:25 -0500</pubDate>
@@ -102,7 +102,7 @@
     
       <item>
         <title>La clase Player</title>
-        <description>&lt;p&gt;Esta clase tiene la funcion de:&lt;/p&gt;
+        <description>&lt;p&gt;Esta clase tiene la función de:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Guardar la posicion del jugador&lt;/li&gt;
@@ -181,7 +181,7 @@
 
 &lt;p&gt;Los .pre contienen ceros entre los caracteres, estos ceros dan sentido de dimension y facilita modificarlos.&lt;/p&gt;
 
-&lt;p&gt;Los .txt solo se les remueve los ceros, pero al removerlos se vuelve dificil de editar en el futuro. Estos son los que se usaran finalmente.&lt;/p&gt;
+&lt;p&gt;A los .txt solo se les remueve los ceros, pero al removerlos se vuelve dificil de editar en el futuro. Estos son los que se usaran finalmente.&lt;/p&gt;
 </description>
         <pubDate>Mon, 17 Oct 2016 10:20:25 -0500</pubDate>
         <link>http://yourdomain.com/java/2016/10/17/creando-los-assests.html</link>
@@ -369,19 +369,19 @@ ese efecto de lentitud al pasar de &lt;code class=&quot;highlighter-rouge&quot;&
     
       <item>
         <title>Comienzo</title>
-        <description>&lt;p&gt;Cree gitman como un proyecto que integrara el proyecto final de ATI y programación.&lt;/p&gt;
+        <description>&lt;p&gt;Cree gitman como un proyecto que integra el proyecto final de ATI y programación.&lt;/p&gt;
 
-&lt;p&gt;Una pagina para el proyecto que serviria de blog, en el blog serviria para ver como se construye el juego a traves del tiempo&lt;/p&gt;
+&lt;p&gt;Una pagina para el proyecto que serviria de blog, en el blog serviria para ver el estado del juego a traves del tiempo&lt;/p&gt;
 
 &lt;p&gt;El juego correra en la consola, un objetivo es usar la menor cantidad de frameworks, librerías externas.&lt;/p&gt;
 
 &lt;p&gt;Inicialmente planeo:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Los &lt;code class=&quot;highlighter-rouge&quot;&gt;level&lt;/code&gt;s seran puggables&lt;/li&gt;
+  &lt;li&gt;Los &lt;code class=&quot;highlighter-rouge&quot;&gt;level&lt;/code&gt;s son cargados dinamicamente&lt;/li&gt;
   &lt;li&gt;Cada &lt;code class=&quot;highlighter-rouge&quot;&gt;frame&lt;/code&gt; sera una matriz de caracteres&lt;/li&gt;
-  &lt;li&gt;Por cada &lt;code class=&quot;highlighter-rouge&quot;&gt;level&lt;/code&gt; habra una carpeta que contrenda un class que sera cargado dinamicamente y otra carpeta llamada assets&lt;/li&gt;
-  &lt;li&gt;Los &lt;code class=&quot;highlighter-rouge&quot;&gt;assets&lt;/code&gt; son objetos con diferentes propiedades y un ascii art&lt;/li&gt;
+  &lt;li&gt;Por cada &lt;code class=&quot;highlighter-rouge&quot;&gt;level&lt;/code&gt; habra una carpeta que contenda un class que sera cargado dinamicamente y otra carpeta llamada assets&lt;/li&gt;
+  &lt;li&gt;Los &lt;code class=&quot;highlighter-rouge&quot;&gt;assets&lt;/code&gt; son ascii art(unicode art?) con diferentes propiedades,&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 08 Oct 2016 08:31:25 -0500</pubDate>

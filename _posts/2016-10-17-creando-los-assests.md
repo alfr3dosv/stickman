@@ -11,4 +11,4 @@ La forma mas sencilla que encontre para crearlos y editarlos fue atraves de subl
 
 Los .pre contienen ceros entre los caracteres, estos ceros dan sentido de dimension y facilita modificarlos.
 
-Los .txt solo se les remueve los ceros, pero al removerlos se vuelve dificil de editar en el futuro. Estos son los que se usaran finalmente. 
+A los .txt solo se les remueve los ceros, pero al removerlos se vuelve dificil de editar en el futuro. Estos son los que se usaran finalmente. 
