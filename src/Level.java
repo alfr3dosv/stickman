@@ -22,8 +22,6 @@ public class Level
 			System.out.println("ERR: Not found file");
 			e.printStackTrace();
 		}
-		if(lines == null)
-				System.out.println("ERR: Not found file");
 		resource = new char[lines.size()][lines.get(0).toCharArray().length];
 		for(int i=0; i< resource.length; i++)
 		{

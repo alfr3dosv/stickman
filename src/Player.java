@@ -98,6 +98,17 @@ public class Player implements Runnable
 
 	     }
 	 }
+	public char[][] image()
+	{
+		char[][] img = new char[3][3];
+		char[] img_0 = {' ','o',' '};
+		char[] img_1 = {'/','|','\\'};
+		char[] img_2 = {'/',' ','\\'};
+		img[0] = img_0;
+		img[1] = img_1;
+		img[2] = img_2;
+		return img;
+	}
 	public enum DIRECTION {UP, DOWN, LEFT, RIGHT, NONE}
 	public enum STATE {JUMPING, FALLING, WALKING, STATIC, PAUSED}
 

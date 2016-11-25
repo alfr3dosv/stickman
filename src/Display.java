@@ -6,13 +6,14 @@ public class Display
 {
 	public static final int SIZE_X = 70;
 	public static final int SIZE_Y = 20;
-	final int WAIT_PER_FRAME = 16; 
+	final int WAIT_PER_FRAME = 10; 
 	int frames=0;
 	char[][] frame;
 	int step;
 	long start_time;
 	Level level = new Level();	
-	
+
+
 	public Display()
 	{
 		step = 0;
@@ -38,9 +39,10 @@ public class Display
 		 * Limpia la pantalla
 		 * Imprime el frame
 		 */
-		frame = level.stages.get(0);
+
 		clean();
 		System.out.println("Frame" + frames++);
+		//printing chars
 		for(int y=0; y<SIZE_Y; y++)
 		{
 			for(int x=0; x<SIZE_X; x++)
@@ -57,8 +59,19 @@ public class Display
 				frameToFill[y][x]='0';	
 	}
 
+	//limpia el frame
+	public void draw(){frame = level.stages.get(0);}
 
-	private void clean()
+	public void draw(char[][] asset, int y, int x)
+	{
+		frame = level.stages.get(0);
+		for(int pos_y=0; pos_y<asset.length; pos_y++)
+		{
+			for(int pos_x=0; pos_x<asset[0].length; pos_x++)
+				frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
+		}
+	}
+	public void clean()
 	{
 		/* 
 	     * Debuelve el cursor a la parte superior
@@ -68,4 +81,5 @@ public class Display
 	    System.out.print(ANSI_CLS + ANSI_HOME);
 	    System.out.flush();
 	}
+
 }
