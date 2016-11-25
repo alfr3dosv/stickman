@@ -40,7 +40,7 @@ public class Player implements Runnable
 		switch (dir)
 		{
 			case UP: 
-			if(y < Display.SIZE_Y)
+			if( y < (Display.SIZE_Y-Player.Image.SIZE_Y))
 				y++;
 			break;
 			
@@ -55,7 +55,7 @@ public class Player implements Runnable
 			break;
 
 			case RIGHT:
-			if(x < Display.SIZE_X)
+			if(x < (Display.SIZE_X-Player.Image.SIZE_X))
 				x++;
 			break;
 		}
@@ -111,5 +111,8 @@ public class Player implements Runnable
 	}
 	public enum DIRECTION {UP, DOWN, LEFT, RIGHT, NONE}
 	public enum STATE {JUMPING, FALLING, WALKING, STATIC, PAUSED}
-
+	public static class Image{
+		static int SIZE_X = 3;
+		static int SIZE_Y = 3;
+	}
 }
