@@ -60,11 +60,16 @@ public class Display
 	}
 
 	//limpia el frame
-	public void draw(){frame = level.stages.get(0);}
+	public void draw(){
+		//deep copy of the array
+		frame = new char[SIZE_Y][SIZE_X];
+		for(int y=0; y<SIZE_Y; y++)
+			for(int x=0; x<SIZE_X; x++)
+				frame[y][x]=level.stages.get(0)[y][x];	
+	}
 
 	public void draw(char[][] asset, int y, int x)
 	{
-		frame = level.stages.get(0);
 		for(int pos_y=0; pos_y<asset.length; pos_y++)
 		{
 			for(int pos_x=0; pos_x<asset[0].length; pos_x++)
