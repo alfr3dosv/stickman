@@ -12,6 +12,9 @@ public class Player implements Runnable
 	public volatile STATE status = STATE.STATIC;
 	Scanner console;
 	RawConsoleInput in;
+	final int NEXT_KEY=20;
+	long start_time;
+	char lastKey;
 	public Player()
 	{
 		ALIVE = true;
@@ -26,7 +29,10 @@ public class Player implements Runnable
 		{
 			captureInput();
 			move();
-			try{Thread.sleep(100);}
+			try{
+				in.resetConsoleMode();
+				System.out.flush();
+			}
 			catch (Exception e){}
 		}
 		try{
@@ -65,7 +71,12 @@ public class Player implements Runnable
 		StringBuffer str = new StringBuffer();
 		char key = 'f';
 		try {
-			key = (char)in.read(false);
+			if( (System.currentTimeMillis() - start_time) > NEXT_KEY)
+			{
+				key = (char)in.read(false);
+				start_time = System.currentTimeMillis();
+				lastKey = key;
+			}	
 		} 
 		catch(IOException ex){key='f';}  
 		finally
@@ -95,7 +106,8 @@ public class Player implements Runnable
 	        	dir = DIRECTION.NONE;
 	        	status = STATE.PAUSED;
 	        	break;
-
+	       	default:
+	       		dir = DIRECTION.NONE;
 	     }
 	 }
 	public char[][] image()
