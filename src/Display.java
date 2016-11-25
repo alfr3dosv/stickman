@@ -6,7 +6,7 @@ public class Display
 {
 	public static final int SIZE_X = 70;
 	public static final int SIZE_Y = 20;
-	final int WAIT_PER_FRAME = 10; 
+	final int WAIT_PER_FRAME = 30; 
 	int frames=0;
 	char[][] frame;
 	int step;
