@@ -1,25 +1,25 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Display
 {
-	public static final int SIZE_X = 70;
-	public static final int SIZE_Y = 20;
+	final int SIZE_X = 70;
+	final int SIZE_Y = 20;
 	final int WAIT_PER_FRAME = 16; 
 	int frames=0;
 	char[][] frame;
-	int step;
-	long start_time;
-	Level level = new Level();	
+	char[][] stage;
+	long start_time;	
 	
 	public Display()
 	{
-		step = 0;
-		start_time = System.currentTimeMillis();	
-
-	}
-
+		start_time = System.currentTimeMillis();		
+	} 
 	public void print()
 	{
 		/* Si el tiempo actual - tiempo inicial > intevalo
@@ -38,7 +38,7 @@ public class Display
 		 * Limpia la pantalla
 		 * Imprime el frame
 		 */
-		frame = level.stages.get(0);
+		frame = stage;
 		clean();
 		System.out.println("Frame" + frames++);
 		for(int y=0; y<SIZE_Y; y++)
@@ -49,7 +49,7 @@ public class Display
 		}
 	}
 
-	public void fillFrame(char[][] frameToFill)// for testing
+	public void fillFrame(char[][] frameToFill)
 	{
 		frameToFill = new char[SIZE_Y][SIZE_X];
 		for(int y=0; y<SIZE_Y; y++)
@@ -67,5 +67,24 @@ public class Display
 	    final String ANSI_HOME = "\u001b[H";
 	    System.out.print(ANSI_CLS + ANSI_HOME);
 	    System.out.flush();
+	}
+
+	public void loadStage(String path)
+	{
+
+		stage = new char[SIZE_Y][SIZE_X];
+		List<String> lines = new ArrayList();
+
+		try (Stream<String> stream = Files.lines(Paths.get(path))) {
+			lines = stream.collect(Collectors.toList());
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for(int y=0; y<SIZE_Y; y++)
+		{
+			String s = lines.remove(0);
+			stage[y] = s.toCharArray();
+		}
 	}
 }
