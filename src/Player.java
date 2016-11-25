@@ -14,7 +14,7 @@ public class Player implements Runnable
 	RawConsoleInput in;
 	final int NEXT_KEY=20;
 	long start_time;
-	char lastKey;
+
 	public Player()
 	{
 		ALIVE = true;
@@ -75,7 +75,6 @@ public class Player implements Runnable
 			{
 				key = (char)in.read(false);
 				start_time = System.currentTimeMillis();
-				lastKey = key;
 			}	
 		} 
 		catch(IOException ex){key='f';}  

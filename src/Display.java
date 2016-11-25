@@ -73,7 +73,8 @@ public class Display
 		for(int pos_y=0; pos_y<asset.length; pos_y++)
 		{
 			for(int pos_x=0; pos_x<asset[0].length; pos_x++)
-				frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
+				frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
+				// inveritdo frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
 		}
 	}
 	public void clean()
