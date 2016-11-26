@@ -15,9 +15,16 @@ public class Player implements Runnable
 	long start_time;// contador de tiempo entre teclas
 	final int NEXT_KEY=20;//intervalo de tiempo entre teclas
 	//jumping
-	long jump_start;
-	final int JUMP_WAIT=200;
+	long jump_start=0;
+	final int[] JUMP_WAIT={100,500,1000};
+	final int JUMP_WAIT_KEY=800;
 	int jump_steps=0;
+	int jump_step=0;
+	//falling
+	long fall_start=0;
+    final int[] FALL_WAIT={1000,500,100};
+	int fall_step=0;
+	int speed_x;
 
 	public Player()
 	{
@@ -49,6 +56,9 @@ public class Player implements Runnable
 	}
 	private void move()
 	{
+		if(status == STATE.JUMPING){
+			jump();
+		}	
 		switch (dir)
 		{
 			case DOWN: 
@@ -56,22 +66,18 @@ public class Player implements Runnable
 			break;
 			
 			case UP:
-				if(status == STATE.JUMPING && jump_steps<=3){
-					try{
-						setY(getY()-1);
-						Thread.sleep(JUMP_WAIT);
-					}
-					catch(Exception e){
-						e.printStackTrace();
-					}
-					jump_steps++;
-					if(jump_steps >= 3){
-						status = STATE.FALLING;
-					}
 					if(jump_steps == 0){
-						jump_start = System.currentTimeMillis();								
+						jump_steps++;
 					}
-				}
+					else if( (System.currentTimeMillis() - jump_start) < JUMP_WAIT_KEY){
+						jump_steps++;
+					}
+
+
+					if(jump_steps >= 3){
+						jump_steps = 2;
+						//status = STATE.FALLING;
+					}
 			break;
 
 			case LEFT: 
@@ -82,18 +88,7 @@ public class Player implements Runnable
 				setX( (getX()+1) );
 			break;
 		}
-		if( (status == STATE.FALLING) &&  
-			((System.currentTimeMillis() - start_time) > JUMP_WAIT*jump_steps) ) 
-		{
-			setY(getY()+1);
-			try{
-				Thread.sleep(JUMP_WAIT);
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-			jump_steps--;		
-		}
+
 	}
 	public char captureKey()
 	{
@@ -116,7 +111,6 @@ public class Player implements Runnable
 	{
     	char keyCode = captureKey();
 	    dir = DIRECTION.NONE;
-	    status = STATE.FALLING;
 	    switch( keyCode ) 
 	    { 
 	        case 'k':
@@ -128,15 +122,15 @@ public class Player implements Runnable
 	            break;
 	        case 'h':
 	            dir = DIRECTION.LEFT;
-	            status = STATE.WALKING;
+	            //status = STATE.WALKING;
 	            break;
 	        case 'l':
 	            dir = DIRECTION.RIGHT;
-	            status = STATE.WALKING;
+	            //status = STATE.WALKING;
 	            break;
 	        case ':':
 	        	dir = DIRECTION.NONE;
-	        	status = STATE.PAUSED;
+	        	//status = STATE.PAUSED;
 	        	break;
 	       	default:
 	       		dir = DIRECTION.NONE;
@@ -200,43 +194,49 @@ public class Player implements Runnable
 				if( frame[getY()+2][getX()+pos_x] == '-')//area debajo del jugador
 				{
 					setY(getY()-1);//sube
+					status = STATE.STATIC;
 					break;
 				}
 			}
 		}
 	}
-	/*public void jump()
-	{
-		if(status == STATE.JUMPING && jump_steps<=3){
-			try{
-				setY(getY()-1);
-				Thread.sleep(JUMP_WAIT);
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-			jump_steps++;
-			if(jump_steps >= 3){
-				status = STATE.FALLING;
-			}
-			if(jump_steps == 0){
-				jump_start = System.currentTimeMillis();								
-			}
-			if()
-			if( (status == STATE.FALLING) &&  
-			((System.currentTimeMillis() - start_time) > JUMP_WAIT*jump_steps) ) 
+	public void jump()
+	{	
+	    if(jump_start == 0){
+			jump_start = System.currentTimeMillis();
+		}
+		else if( (System.currentTimeMillis() - jump_start) > JUMP_WAIT[jump_step] ) 
 		{
-			setY(getY()+1);
-			try{
-				Thread.sleep(JUMP_WAIT);
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-			jump_steps--;		
+			setY(getY()-1);
+			if((jump_step >= jump_steps)){
+				fall(jump_steps);	
+				jump_steps=0;
+				jump_step=0;
+				status = STATE.FALLING;
+				jump_start = 0;
+			}		
+			jump_step++;
 		}
+	}
+	public void fall(int spaces)
+	{
+		while(spaces > 0)
+		{
+		    if(fall_start == 0){
+				fall_start = System.currentTimeMillis();
+			}
+			else if( (System.currentTimeMillis() - fall_start) > FALL_WAIT[fall_step] ) 
+			{
+				setY(getY()+1);
+				if(fall_step<=2){
+					fall_step++;
+				}
+				spaces--;	
+			}
 		}
-	}*/
+		fall_start = 0;
+		fall_step = 0;
+	}
 	//setters y getters para x,y 
 	public void setX(int x){
 		if( (x < (Display.SIZE_X-Player.Image.SIZE_X)) && (x>=0) )
