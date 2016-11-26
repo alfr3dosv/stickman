@@ -18,7 +18,7 @@ public class Player implements Runnable
 	long jump_start=0;
 	final int[] JUMP_WAIT={100,500,1000};
 	final int JUMP_WAIT_KEY=800;
-	int jump_steps=0;
+	int jump_steps=-1;
 	int jump_step=0;
 	//falling
 	long fall_start=0;
@@ -82,10 +82,22 @@ public class Player implements Runnable
 
 			case LEFT: 
 				setX(getX()-1);
+				if(speed_x>0){
+					speed_x = 0;
+				}
+				else{
+					speed_x--;
+				}
 			break;
 
 			case RIGHT:
 				setX( (getX()+1) );
+				if(speed_x<0){
+					speed_x = 0;
+				}
+				else{
+					speed_x++;
+				}
 			break;
 		}
 
@@ -214,7 +226,17 @@ public class Player implements Runnable
 				jump_step=0;
 				status = STATE.FALLING;
 				jump_start = 0;
-			}		
+			}
+			if(speed_x != 0){
+				if(speed_x>0){
+					setX(getX()+1);
+					speed_x--;		
+				}
+				else if(speed_x<0){
+					setX(getX()-1);
+					speed_x++;		
+				}
+			}
 			jump_step++;
 		}
 	}
