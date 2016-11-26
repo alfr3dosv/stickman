@@ -11,8 +11,13 @@ public class Player implements Runnable
 	public volatile STATE status = STATE.STATIC;
 	Scanner console;
 	RawConsoleInput in;
-	final int NEXT_KEY=20;
-	long start_time;
+	//timers
+	long start_time;// contador de tiempo entre teclas
+	final int NEXT_KEY=20;//intervalo de tiempo entre teclas
+	//jumping
+	long jump_start;
+	final int JUMP_WAIT=200;
+	int jump_steps=0;
 
 	public Player()
 	{
@@ -32,7 +37,9 @@ public class Player implements Runnable
 				in.resetConsoleMode();
 				System.out.flush();
 			}
-			catch (Exception e){}
+			catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		try{
 			in.resetConsoleMode();
@@ -44,12 +51,27 @@ public class Player implements Runnable
 	{
 		switch (dir)
 		{
-			case UP: 
+			case DOWN: 
 				setY( (getY()+1));
 			break;
 			
-			case DOWN:
-				setY(getY()-1);
+			case UP:
+				if(status == STATE.JUMPING && jump_steps<=3){
+					try{
+						setY(getY()-1);
+						Thread.sleep(JUMP_WAIT);
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+					jump_steps++;
+					if(jump_steps >= 3){
+						status = STATE.FALLING;
+					}
+					if(jump_steps == 0){
+						jump_start = System.currentTimeMillis();								
+					}
+				}
 			break;
 
 			case LEFT: 
@@ -59,6 +81,18 @@ public class Player implements Runnable
 			case RIGHT:
 				setX( (getX()+1) );
 			break;
+		}
+		if( (status == STATE.FALLING) &&  
+			((System.currentTimeMillis() - start_time) > JUMP_WAIT*jump_steps) ) 
+		{
+			setY(getY()+1);
+			try{
+				Thread.sleep(JUMP_WAIT);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			jump_steps--;		
 		}
 	}
 	public char captureKey()
@@ -82,19 +116,23 @@ public class Player implements Runnable
 	{
     	char keyCode = captureKey();
 	    dir = DIRECTION.NONE;
+	    status = STATE.FALLING;
 	    switch( keyCode ) 
 	    { 
-	        case 'j':
-	            dir = DIRECTION.UP;
-	            break;
 	        case 'k':
+	            dir = DIRECTION.UP;
+	            status = STATE.JUMPING;
+	            break;
+	        case 'j':
 	            dir = DIRECTION.DOWN;
 	            break;
 	        case 'h':
 	            dir = DIRECTION.LEFT;
+	            status = STATE.WALKING;
 	            break;
 	        case 'l':
 	            dir = DIRECTION.RIGHT;
+	            status = STATE.WALKING;
 	            break;
 	        case ':':
 	        	dir = DIRECTION.NONE;
@@ -151,19 +189,54 @@ public class Player implements Runnable
 				}
 			}
 		}
-		//bottom
-		if( getY() <= (frame.length+Image.SIZE_Y+1) )
+		/* bottom
+		 * si se encuentra un '-' debajo del drawArea hay piso
+		 * logicamente no puede atravesar el piso, lo subimos
+		 */
+		if( getY() <= (frame.length+Image.SIZE_Y+1) )//evitamos out of ranges 
 		{
-			for( char caracter: frame[getY()+1] )
+			for(int pos_x=0; pos_x<Image.SIZE_X; pos_x++)
 			{
-				if( (caracter == '-') )
+				if( frame[getY()+2][getX()+pos_x] == '-')//area debajo del jugador
 				{
-					setY(getY()-1);
+					setY(getY()-1);//sube
 					break;
 				}
 			}
 		}
 	}
+	/*public void jump()
+	{
+		if(status == STATE.JUMPING && jump_steps<=3){
+			try{
+				setY(getY()-1);
+				Thread.sleep(JUMP_WAIT);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			jump_steps++;
+			if(jump_steps >= 3){
+				status = STATE.FALLING;
+			}
+			if(jump_steps == 0){
+				jump_start = System.currentTimeMillis();								
+			}
+			if()
+			if( (status == STATE.FALLING) &&  
+			((System.currentTimeMillis() - start_time) > JUMP_WAIT*jump_steps) ) 
+		{
+			setY(getY()+1);
+			try{
+				Thread.sleep(JUMP_WAIT);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			jump_steps--;		
+		}
+		}
+	}*/
 	//setters y getters para x,y 
 	public void setX(int x){
 		if( (x < (Display.SIZE_X-Player.Image.SIZE_X)) && (x>=0) )
