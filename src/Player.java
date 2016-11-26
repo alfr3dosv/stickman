@@ -13,11 +13,12 @@ public class Player implements Runnable
 	RawConsoleInput in;
 	//timers
 	long start_time;// contador de tiempo entre teclas
-	final int NEXT_KEY=10;//intervalo de tiempo entre teclas
+	final int NEXT_KEY=20;//intervalo de tiempo entre teclas
 	//jumping
 	long jump_start=0;
 	final int[] JUMP_WAIT={100,300,500};
-	final int JUMP_WAIT_KEY=800;
+	final int JUMP_WAIT_KEY=300;
+	long jump_last_key;
 	int jump_steps=0;
 	int jump_step=0;
 	//falling
@@ -67,12 +68,9 @@ public class Player implements Runnable
 			
 			case UP:
 
-					if( (System.currentTimeMillis() - jump_start) < JUMP_WAIT_KEY){
+					if( ((System.currentTimeMillis() - jump_last_key) < JUMP_WAIT_KEY) && (jump_steps < 2)){
 						jump_steps++;
-					}
-					if(jump_steps >= 3){
-						jump_steps = 2;
-						//status = STATE.FALLING;
+						jump_last_key = System.currentTimeMillis();
 					}
 			break;
 
@@ -96,7 +94,9 @@ public class Player implements Runnable
 				}
 			break;
 		}
-
+		if(status == STATE.STATIC){
+			speed_x = 0;
+		}
 	}
 	public char captureKey()
 	{
@@ -130,15 +130,15 @@ public class Player implements Runnable
 	            break;
 	        case 'a':
 	            dir = DIRECTION.LEFT;
-	            //status = STATE.WALKING;
+	            status = STATE.WALKING;
 	            break;
 	        case 'd':
 	            dir = DIRECTION.RIGHT;
-	            //status = STATE.WALKING;
+	            status = STATE.WALKING;
 	            break;
 	        case ':':
 	        	dir = DIRECTION.NONE;
-	        	//status = STATE.PAUSED;
+	        	status = STATE.PAUSED;
 	        	break;
 	       	default:
 	       		dir = DIRECTION.NONE;
@@ -197,21 +197,33 @@ public class Player implements Runnable
 		 */
 		if( getY() <= (frame.length+Image.SIZE_Y+1) )//evitamos out of ranges 
 		{
-			for(int pos_x=0; pos_x<Image.SIZE_X; pos_x++)
+			boolean PISO = false;
+			for(int pos_x=0; pos_x<Image.SIZE_X; pos_x++)//area sobre el jugador
 			{
-				if( frame[getY()+2][getX()+pos_x] == '-')//area debajo del jugador
+				if( frame[getY()+2][getX()+pos_x] == '-')
 				{
 					setY(getY()-1);//sube
 					status = STATE.STATIC;
+					PISO = true;
 					break;
 				}
+				if( frame[getY()+3][getX()+pos_x] == '-'){//area debajo del jugador
+					PISO = true;
+				}
 			}
+			if( (PISO == false) &&(status != STATE.JUMPING) && (getY()!=(frame.length)) && ((System.currentTimeMillis() - jump_last_key) > JUMP_WAIT_KEY) ) 
+			{
+				status = STATE.FALLING;
+				fall(1);
+			}
+			
 		}
 	}
 	public void jump()
 	{	
 	    if(jump_start == 0){
 			jump_start = System.currentTimeMillis();
+			jump_last_key = jump_start;
 		}
 		else if( (System.currentTimeMillis() - jump_start) > JUMP_WAIT[jump_step] ) 
 		{
@@ -222,19 +234,21 @@ public class Player implements Runnable
 				jump_steps=0;
 				jump_step=-1;
 				jump_start = 0;
-				status = STATE.STATIC;
 			}
 			if(speed_x != 0){
 				if(speed_x>0){
-					setX(getX()+speed_x);
-					//speed_x--;		
+					setX(getX()+1+jump_step);
+					speed_x--;		
 				}
 				else if(speed_x<0){
-					setX(getX()+speed_x);
-					//speed_x++;		
+					setX(getX()-1-jump_step);
+					speed_x++;		
 				}
 			}
 			jump_step++;
+		}
+		if(jump_steps == 0){
+			status = STATE.FALLING;
 		}
 	}
 	public void fall(int spaces)
@@ -252,18 +266,15 @@ public class Player implements Runnable
 				}
 				if(speed_x != 0){
 					if(speed_x>0){
-						setX(getX()+speed_x);
-						speed_x=0;		
+						setX(getX()+1);
 					}
 					else if(speed_x<0){
-						setX(getX()+speed_x);
-						speed_x=0;		
+						setX(getX()-1);		
 					}
 				}	
 				spaces--;
 			}
 		}
-		status = STATE.STATIC;
 		fall_start = 0;
 		fall_step = 0;
 	}

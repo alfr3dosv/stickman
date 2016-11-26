@@ -6,7 +6,7 @@ public class Display
 {
 	public static final int SIZE_X = 70;
 	public static final int SIZE_Y = 20;
-	final int WAIT_PER_FRAME = 30; 
+	final int WAIT_PER_FRAME = 20; 
 	int frames=0;
 	char[][] frame;
 	int step;
@@ -85,9 +85,11 @@ public class Display
 		/* 
 	     * Debuelve el cursor a la parte superior
 	     */
-	    final String ANSI_CLS = "\u001b[2J";
+	    /* final String ANSI_CLS = "\u001b[2J";
 	    final String ANSI_HOME = "\u001b[H";
 	    System.out.print(ANSI_CLS + ANSI_HOME);
+	    */
+	    System.out.print("\033[2J\033[;H");
 	    System.out.flush();
 	}
 
