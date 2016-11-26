@@ -18,7 +18,6 @@ public class Display
 	{
 		step = 0;
 		start_time = System.currentTimeMillis();	
-
 	}
 
 	public void print()
@@ -61,19 +60,23 @@ public class Display
 
 	//limpia el frame
 	public void draw(){
-		//deep copy of the array
+		//deep copy del array
 		frame = new char[SIZE_Y][SIZE_X];
 		for(int y=0; y<SIZE_Y; y++)
 			for(int x=0; x<SIZE_X; x++)
 				frame[y][x]=level.stages.get(0)[y][x];	
 	}
 
-	public void draw(char[][] asset, int y, int x)
+	public char[][] draw(char[][] asset, int y, int x)
 	{
+		char[][] before = new char[asset.length][asset[0].length];
 		for(int pos_y=0; pos_y<asset.length; pos_y++)
 		{
 			for(int pos_x=0; pos_x<asset[0].length; pos_x++)
-				frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
+			{
+				before[pos_y][pos_x] = frame[y+pos_y][x+pos_x];
+				frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
+			}	
 				// inveritdo frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
 		}
 	}
@@ -88,4 +91,13 @@ public class Display
 	    System.out.flush();
 	}
 
+	public void getFrame()
+	{
+		char[][] frame = new char[SIZE_Y][SIZE_X];
+		//deep copy
+		for(int y=0; y<SIZE_Y; y++)
+			for(int x=0; x<SIZE_X; x++)
+				frame[y][x]=level.stages.get(0)[y][x];
+		return frame;
+	}
 }

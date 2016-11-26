@@ -5,9 +5,8 @@ public class Player implements Runnable
 {
 	public int y;
 	public int x;
-	public volatile boolean capturing = true;
 	public volatile DIRECTION dir = DIRECTION.NONE;
-	boolean ALIVE;
+	private boolean alive;
 	public volatile char key;
 	public volatile STATE status = STATE.STATIC;
 	Scanner console;
@@ -17,7 +16,7 @@ public class Player implements Runnable
 
 	public Player()
 	{
-		ALIVE = true;
+		alive = true;
 		x = 0; 
 		y = 0;
 		console = new Scanner(System.in);
@@ -46,23 +45,19 @@ public class Player implements Runnable
 		switch (dir)
 		{
 			case UP: 
-			if( y < (Display.SIZE_Y-Player.Image.SIZE_Y))
-				y++;
+				setY( (getY()+1));
 			break;
 			
 			case DOWN:
-			if(y > 0)
-				y--;
+				setY(getY()-1);
 			break;
 
 			case LEFT: 
-			if(x > 0)
-				x--;
+				setX(getX()-1);
 			break;
 
 			case RIGHT:
-			if(x < (Display.SIZE_X-Player.Image.SIZE_X))
-				x++;
+				setX( (getX()+1) );
 			break;
 		}
 	}
@@ -126,4 +121,34 @@ public class Player implements Runnable
 		static int SIZE_X = 3;
 		static int SIZE_Y = 3;
 	}
+
+	public void hit(char[][] drawArea)
+	{
+		int BOTTOM,LEFT,TOP,RIGHT,MIDDLE;
+		TOP = LEFT = 0;
+		BOOTM = RIGHT = 2;		
+		MIDDLE = 1;
+		for( char caracter: drawArea)
+		{
+			if(caracter = '*')
+			{
+				killPlayer();
+			}
+		}
+	}
+	//setters y getters para x,y 
+	public void setX(int x){
+		if( (x < (Display.SIZE_X-Player.Image.SIZE_X)) && (x>=0) )
+			this.x = x;
+	}
+	public void setY(int y){
+		if( (y < (Display.SIZE_Y-Player.Image.SIZE_Y)) && (y>=0) )
+			this.y = y;
+	}
+	public int getX(){return x;}
+	public int getY(){return y;}
+	
+	//setters y getters para alive
+	public boolean isALive(){return alive}
+	private void killPlayer(){alive = false;}
 }
