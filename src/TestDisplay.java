@@ -10,4 +10,5 @@ public class TestDisplay
 		while (true)
 			disp.print();
 	}
+	
 }

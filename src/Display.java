@@ -66,8 +66,7 @@ public class Display
 			for(int x=0; x<SIZE_X; x++)
 				frame[y][x]=level.stages.get(0)[y][x];	
 	}
-
-	public char[][] draw(char[][] asset, int y, int x)
+	public void draw(char[][] asset, int y, int x)
 	{
 		char[][] before = new char[asset.length][asset[0].length];
 		for(int pos_y=0; pos_y<asset.length; pos_y++)
@@ -80,6 +79,7 @@ public class Display
 				// inveritdo frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
 		}
 	}
+
 	public void clean()
 	{
 		/* 
@@ -91,7 +91,7 @@ public class Display
 	    System.out.flush();
 	}
 
-	public void getFrame()
+	public char[][] getFrame()
 	{
 		char[][] frame = new char[SIZE_Y][SIZE_X];
 		//deep copy

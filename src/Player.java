@@ -6,7 +6,7 @@ public class Player implements Runnable
 	public int y;
 	public int x;
 	public volatile DIRECTION dir = DIRECTION.NONE;
-	private boolean alive;
+	private volatile boolean alive;
 	public volatile char key;
 	public volatile STATE status = STATE.STATIC;
 	Scanner console;
@@ -115,24 +115,52 @@ public class Player implements Runnable
 		img[2] = img_2;
 		return img;
 	}
+
 	public enum DIRECTION {UP, DOWN, LEFT, RIGHT, NONE}
 	public enum STATE {JUMPING, FALLING, WALKING, STATIC, PAUSED}
 	public static class Image{
-		static int SIZE_X = 3;
-		static int SIZE_Y = 3;
+		static final int SIZE_X = 3;
+		static final int SIZE_Y = 3;
 	}
 
-	public void hit(char[][] drawArea)
+	public void collisions(char[][] frame)
 	{
-		int BOTTOM,LEFT,TOP,RIGHT,MIDDLE;
-		TOP = LEFT = 0;
-		BOOTM = RIGHT = 2;		
-		MIDDLE = 1;
-		for( char caracter: drawArea)
+		/* drawArea
+		 * area donde se dibuja el jugador
+		 */
+		char[][] drawArea = new char[Image.SIZE_Y][Image.SIZE_X];
+		for(int pos_y=0; pos_y<Image.SIZE_Y; pos_y++)
 		{
-			if(caracter = '*')
+			for(int pos_x=0; pos_x<Image.SIZE_X; pos_x++)
 			{
+				drawArea[pos_y][pos_x] = frame[getY()+pos_y][getX()+pos_x];
+			}	
+		}
+		/* enemies
+		 * commprueba que el area donde se va dibujar no haya enemigos
+		 * en caso de que si mata al jugador y pausa el juego
+		 */
+		for( char[] caracteres: drawArea)
+		{
+			for( char caracter:caracteres)
+			{				
+				if(caracter == '*')
+				{
 				killPlayer();
+				status = STATE.PAUSED;
+				}
+			}
+		}
+		//bottom
+		if( getY() <= (frame.length+Image.SIZE_Y+1) )
+		{
+			for( char caracter: frame[getY()+1] )
+			{
+				if( (caracter == '-') )
+				{
+					setY(getY()-1);
+					break;
+				}
 			}
 		}
 	}
@@ -149,6 +177,7 @@ public class Player implements Runnable
 	public int getY(){return y;}
 	
 	//setters y getters para alive
-	public boolean isALive(){return alive}
-	private void killPlayer(){alive = false;}
+	public boolean isAlive(){return this.alive;}
+	private void killPlayer(){this.alive = false;}
+
 }
