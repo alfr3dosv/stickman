@@ -13,16 +13,16 @@ public class Player implements Runnable
 	RawConsoleInput in;
 	//timers
 	long start_time;// contador de tiempo entre teclas
-	final int NEXT_KEY=20;//intervalo de tiempo entre teclas
+	final int NEXT_KEY=10;//intervalo de tiempo entre teclas
 	//jumping
 	long jump_start=0;
-	final int[] JUMP_WAIT={100,500,1000};
+	final int[] JUMP_WAIT={100,300,500};
 	final int JUMP_WAIT_KEY=800;
-	int jump_steps=-1;
+	int jump_steps=0;
 	int jump_step=0;
 	//falling
 	long fall_start=0;
-    final int[] FALL_WAIT={1000,500,100};
+    final int[] FALL_WAIT={100,500,100};
 	int fall_step=0;
 	int speed_x;
 
@@ -66,14 +66,10 @@ public class Player implements Runnable
 			break;
 			
 			case UP:
-					if(jump_steps == 0){
+
+					if( (System.currentTimeMillis() - jump_start) < JUMP_WAIT_KEY){
 						jump_steps++;
 					}
-					else if( (System.currentTimeMillis() - jump_start) < JUMP_WAIT_KEY){
-						jump_steps++;
-					}
-
-
 					if(jump_steps >= 3){
 						jump_steps = 2;
 						//status = STATE.FALLING;
@@ -85,7 +81,7 @@ public class Player implements Runnable
 				if(speed_x>0){
 					speed_x = 0;
 				}
-				else{
+				else if(speed_x>-3){
 					speed_x--;
 				}
 			break;
@@ -95,7 +91,7 @@ public class Player implements Runnable
 				if(speed_x<0){
 					speed_x = 0;
 				}
-				else{
+				else if(speed_x<3){
 					speed_x++;
 				}
 			break;
@@ -125,18 +121,18 @@ public class Player implements Runnable
 	    dir = DIRECTION.NONE;
 	    switch( keyCode ) 
 	    { 
-	        case 'k':
+	        case 'w':
 	            dir = DIRECTION.UP;
 	            status = STATE.JUMPING;
 	            break;
-	        case 'j':
+	        case 's':
 	            dir = DIRECTION.DOWN;
 	            break;
-	        case 'h':
+	        case 'a':
 	            dir = DIRECTION.LEFT;
 	            //status = STATE.WALKING;
 	            break;
-	        case 'l':
+	        case 'd':
 	            dir = DIRECTION.RIGHT;
 	            //status = STATE.WALKING;
 	            break;
@@ -221,20 +217,21 @@ public class Player implements Runnable
 		{
 			setY(getY()-1);
 			if((jump_step >= jump_steps)){
-				fall(jump_steps);	
-				jump_steps=0;
-				jump_step=0;
 				status = STATE.FALLING;
+				fall(jump_steps+1);	
+				jump_steps=0;
+				jump_step=-1;
 				jump_start = 0;
+				status = STATE.STATIC;
 			}
 			if(speed_x != 0){
 				if(speed_x>0){
-					setX(getX()+1);
-					speed_x--;		
+					setX(getX()+speed_x);
+					//speed_x--;		
 				}
 				else if(speed_x<0){
-					setX(getX()-1);
-					speed_x++;		
+					setX(getX()+speed_x);
+					//speed_x++;		
 				}
 			}
 			jump_step++;
@@ -242,7 +239,7 @@ public class Player implements Runnable
 	}
 	public void fall(int spaces)
 	{
-		while(spaces > 0)
+		while( (spaces > 0) && (status == STATE.FALLING) )
 		{
 		    if(fall_start == 0){
 				fall_start = System.currentTimeMillis();
@@ -253,9 +250,20 @@ public class Player implements Runnable
 				if(fall_step<=2){
 					fall_step++;
 				}
-				spaces--;	
+				if(speed_x != 0){
+					if(speed_x>0){
+						setX(getX()+speed_x);
+						speed_x=0;		
+					}
+					else if(speed_x<0){
+						setX(getX()+speed_x);
+						speed_x=0;		
+					}
+				}	
+				spaces--;
 			}
 		}
+		status = STATE.STATIC;
 		fall_start = 0;
 		fall_step = 0;
 	}
