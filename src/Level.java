@@ -85,17 +85,11 @@ public class Level
 				this.addStage( levelPath+settings.getProperty("stage"+Integer.toString(s)) );
 				s++;
 			}
+
 			//enemies
 			int e = 1;
 			while( settings.getProperty("enemie"+Integer.toString(e)) != null )
 			{
-				System.out.println(settings.getProperty("enemie"+Integer.toString(e)) );
-				try{
-					Thread.sleep(500);
-				}
-				catch(Exception ex){
-
-				}
 				this.addEnemie( settings.getProperty("enemie"+Integer.toString(e)) );
 				e++;
 			}
