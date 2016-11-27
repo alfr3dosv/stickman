@@ -16,10 +16,10 @@ public class Player implements Runnable
 	final int NEXT_KEY=20;//intervalo de tiempo entre teclas
 	//jumping
 	long jump_start=0;
-	final int[] JUMP_WAIT={100,300,500};
+	final int[] JUMP_WAIT={50,100,300};
 	final int JUMP_WAIT_KEY=300;
 	long jump_last_key;
-	int jump_steps=0;
+	int jump_steps=1;
 	int jump_step=0;
 	//falling
 	long fall_start=0;
@@ -231,7 +231,7 @@ public class Player implements Runnable
 			if((jump_step >= jump_steps)){
 				status = STATE.FALLING;
 				fall(jump_steps+1);	
-				jump_steps=0;
+				jump_steps=1;
 				jump_step=-1;
 				jump_start = 0;
 			}
