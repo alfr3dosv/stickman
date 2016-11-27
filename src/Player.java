@@ -211,7 +211,7 @@ public class Player extends Entity implements Runnable
 			//caso en que no hay
 			if( (PISO == false) && (status != STATE.JUMPING) ) 
 			{
-				System.out.println("FALLING");
+				//System.out.println("FALLING"); //debug
 				status = STATE.FALLING;
 				fall(1);
 			}

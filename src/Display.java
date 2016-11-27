@@ -12,11 +12,11 @@ public class Display
 {
 	public static final int SIZE_X = 70;
 	public static final int SIZE_Y = 20;
-	final int WAIT_PER_FRAME = 50; 
-	int frames=0;
-	char[][] frame;
-	int step;
-	long start_time;
+	private final int WAIT_PER_FRAME = 50; 
+	private int frames=0;
+	private char[][] frame;
+	private int step;
+	private long start_time;
 	Level level = new Level();	
 
 
@@ -24,6 +24,12 @@ public class Display
 	{
 		step = 0;
 		start_time = System.currentTimeMillis();	
+	}
+	public Display(String levelPath)
+	{
+		step = 0;
+		start_time = System.currentTimeMillis();
+		level = new Level(levelPath);	
 	}
 
 	public void print()
@@ -40,13 +46,12 @@ public class Display
 
 	private void update()
 	{
-		/* Carga el mapa en el frame 
-		 * Limpia la pantalla
+		/* Limpia la pantalla
 		 * Imprime el frame
 		 */
 
 		clean();
-		System.out.println("Frame" + frames++);
+		//armando el frame
 		StringBuilder newFrame = new StringBuilder();
 		for(int y=0; y<SIZE_Y; y++)
 		{
@@ -55,6 +60,8 @@ public class Display
 			//}
 			newFrame.append("\n");
 		}
+		//impresion
+		System.out.println("Frame" + frames++);
         System.out.print(newFrame.toString());
 
 	}
@@ -89,6 +96,18 @@ public class Display
 		}
 	}
 
+	public void drawEnemies(){
+		//Actualizando la posicion de los enemigos
+		for(Enemie enemie : level.enemies)
+		{
+			enemie.update();
+			this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
+		}
+		for(Enemie enemie : level.enemies)
+		{
+		}
+	}
+
 	public void clean()
 	{
 		/* 
@@ -108,7 +127,7 @@ public class Display
 		//deep copy
 		for(int y=0; y<SIZE_Y; y++)
 			for(int x=0; x<SIZE_X; x++)
-				frame[y][x]=level.stages.get(0)[y][x];
+				frame[y][x]=this.frame[y][x];
 		return frame;
 	}
 }
