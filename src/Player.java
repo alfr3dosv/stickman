@@ -17,11 +17,14 @@ public class Player extends Entity implements Runnable
 	int jump_steps=1;
 	int jump_step=0;
 	//falling
-	long fall_start=0;
+	private long fall_start=0;
     final int FALL_WAIT=50;
-	int fall_step=0;
-	int speed_x;
-
+	private int fall_step=0;
+	private int speed_x;
+	/* STAGE_KEY
+	 * Si el jugador encontro la llave del stage pasa al siguiente stage o nivel
+	 */ 
+	private boolean STAGE_KEY = false;
 
 	public Player()
 	{
@@ -185,7 +188,17 @@ public class Player extends Entity implements Runnable
 				}
 			}
 		}
-
+		//keys
+		for( char[] caracteres: drawArea)
+		{
+			for( char caracter:caracteres)
+			{				
+				if(caracter == 'K')
+				{
+				STAGE_KEY = true;
+				}
+			}
+		}
 		/* bottom
 		 * si se encuentra un '-' debajo del drawArea hay piso
 		 * logicamente no puede atravesar el piso, lo subimos
@@ -278,5 +291,9 @@ public class Player extends Entity implements Runnable
 		status = STATE.STATIC;
 		fall_start = 0;
 		fall_step = 0;
+	}
+	//getter para key
+	public boolean hasKey(){
+		return this.STAGE_KEY;
 	}
 }

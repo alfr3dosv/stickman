@@ -12,7 +12,6 @@ public class TestPlayerOnDisplay
 		while( (player.status != Player.STATE.PAUSED)  )
 		{	
 			disp.draw();
-			disp.drawEnemies();
 			player.collisions(disp.getFrame());
 			disp.draw(player.img.get(), player.getY(), player.getX());	
 			disp.print();

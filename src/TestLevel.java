@@ -8,7 +8,7 @@ public class TestLevel
 		input.start();
 		System.out.print("x:"+player.getX()+" y:"+player.getY());
 
-		while( (player.status != Player.STATE.PAUSED)  )
+		while( (player.status != Player.STATE.PAUSED) && !player.hasKey() )
 		{	
 			disp.draw();
 			disp.drawEnemies();
