@@ -234,7 +234,7 @@ public class Player implements Runnable
 			}
 			if( (PISO == false) && (status != STATE.JUMPING) ) 
 			{
-				System.out.println("FALLING");
+				//System.out.println("FALLING");
 				status = STATE.FALLING;
 				fall(1);
 			}
@@ -257,7 +257,7 @@ public class Player implements Runnable
 				jump_step=-1;
 				jump_start = 0;
 				status = STATE.FALLING;
-				fall(2);
+				//fall(2);
 			}
 			if(speed_x != 0){
 				if(speed_x>0){

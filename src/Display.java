@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+
 import java.lang.StringBuilder;
 
 
@@ -11,7 +12,7 @@ public class Display
 {
 	public static final int SIZE_X = 70;
 	public static final int SIZE_Y = 20;
-	final int WAIT_PER_FRAME = 33; 
+	final int WAIT_PER_FRAME = 50; 
 	int frames=0;
 	char[][] frame;
 	int step;
@@ -49,36 +50,13 @@ public class Display
 		StringBuilder newFrame = new StringBuilder();
 		for(int y=0; y<SIZE_Y; y++)
 		{
-			for(int x=0; x<SIZE_X; x++){
-				newFrame.append(frame[y][x]);
-			}
+			//for(int x=0; x<SIZE_X; x++){
+				newFrame.append(frame[y]);
+			//}
 			newFrame.append("\n");
 		}
-		/*printing chars
-		for(int y=0; y<SIZE_Y; y++)
-		{
-			for(int x=0; x<SIZE_X; x++)
-				System.out.print(frame[y][x]);
-			System.out.print("\n");
-		}*/
-		/*OutputStream out = new BufferedOutputStream ( System.out );
-        for(int y=0; y<SIZE_Y; y++)
-		{
-			for(int x=0; x<SIZE_X; x++){
-				try{
-		        	out.write( (String.valueOf(frame[y][x])).getBytes());
-					//out.write( ("/n").getBytes());
-				}
-				catch(Exception e){
-					e.printStackTrace();
-					System.out.println("FAIL");
-				}
-			}
-			System.out.println();
-		}
-        for (int i = 0; i < 100000; i++) {
-        }*/
         System.out.print(newFrame.toString());
+
 	}
 
 	public void fillFrame(char[][] frameToFill)// for testing

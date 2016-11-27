@@ -11,6 +11,8 @@ public class Level
 {
 	List<char[][]> stages = new ArrayList<char[][]>();
 	List<char[][]> assets = new ArrayList<char[][]>();
+	List<Enemie> enemies = new ArrayList<Enemie>(); 
+
 	public char[][] load(String path)
 	{
 		char[][] resource;
