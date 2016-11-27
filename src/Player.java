@@ -1,17 +1,11 @@
 import java.util.*;
 import java.io.*;
 
-public class Player implements Runnable
+public class Player extends Entity implements Runnable
 {
-	//position
-	public int y;
-	public int x;
-
-	public volatile DIRECTION dir = DIRECTION.NONE;
-	private volatile boolean alive;
 	public volatile STATE status = STATE.STATIC;
-	Scanner console;
 	//input
+	Scanner console;
 	RawConsoleInput in;
 	public volatile char key;
 	char last_key;
@@ -31,11 +25,17 @@ public class Player implements Runnable
 
 	public Player()
 	{
-		alive = true;
-		x = 0; 
-		y = 0;
-		console = new Scanner(System.in);
 		in = new RawConsoleInput();
+		//Image
+		char[] new_img_0 ={' ','o',' '};
+		char[] new_img_1 = {'/','|','\\'};
+		char[] new_img_2 = {'/',' ','\\'};
+		char[][] new_img = new char [3][3];
+		new_img[0] = new_img_0;
+		new_img[1] = new_img_1;
+		new_img[2] = new_img_2;
+		this.img = new Image(3,3,new_img);
+
 	}
 	public void run()
 	{
@@ -65,19 +65,11 @@ public class Player implements Runnable
 		switch (dir)
 		{
 			case DOWN: 
-				setY( (getY()+1));
+				this.setY( (this.getY()+1));
 			break;
-			
-			case UP:
-					/*
-					if( (jump_steps < 2){
-						jump_steps++;
-						jump_last_key = System.currentTimeMillis();
-					}*/
-			break;
-
+		
 			case LEFT:
-				setX(getX()-1);
+				this.setX(this.getX()-1);
 				if(speed_x>0){
 					speed_x = 0;
 				}
@@ -87,14 +79,14 @@ public class Player implements Runnable
 			break;
 
 			case RIGHT:
-				setX( (getX()+1) );
+				this.setX( (this.getX()+1) );
 				if(speed_x<0){
 					speed_x = 0;
 				}
 				else if(speed_x<3){
 					speed_x++;
 				}
-				wait_next();
+				
 			break;
 		}
 		if(status == STATE.STATIC){
@@ -126,72 +118,56 @@ public class Player implements Runnable
 	public void captureInput() 
 	{
     	char keyCode = captureKey();
-	    dir = DIRECTION.NONE;
+	    dir = Entity.Direction.NONE;
 		    switch( keyCode ) 
 		    { 
 		        case 'w':
-		            dir = DIRECTION.UP;
+		            dir = Entity.Direction.UP;
 		            status = STATE.JUMPING;
 		            break;
 		        case 's':
-		            dir = DIRECTION.DOWN;
+		            dir = Entity.Direction.DOWN;
 		            status = STATE.FALLING;
 		            break;
 		        case 'a':
-		            dir = DIRECTION.LEFT;
+		            dir = Entity.Direction.LEFT;
 		            status = STATE.WALKING;
 		            break;
 		        case 'd':
-		            dir = DIRECTION.RIGHT;
+		            dir = Entity.Direction.RIGHT;
 		            status = STATE.WALKING;
 		            break;
 		        case ':':
-		        	dir = DIRECTION.NONE;
+		        	dir = Entity.Direction.NONE;
 		        	status = STATE.PAUSED;
 		        	break;
 		       	default:
-		       		dir = DIRECTION.NONE;
+		       		dir = Entity.Direction.NONE;
 		     }
 	 }
-	public char[][] image()
-	{
-		char[][] img = new char[3][3];
-		char[] img_0 = {' ','o',' '};
-		char[] img_1 = {'/','|','\\'};
-		char[] img_2 = {'/',' ','\\'};
-		img[0] = img_0;
-		img[1] = img_1;
-		img[2] = img_2;
-		return img;
-	}
 
-	public enum DIRECTION {UP, DOWN, LEFT, RIGHT, NONE}
 	public enum STATE {JUMPING, FALLING, WALKING, STATIC, PAUSED}
-	public static class Image{
-		static final int SIZE_X = 3;
-		static final int SIZE_Y = 3;
-	}
 
 	public void collisions(char[][] frame)
 	{
 		/* drawArea
 		 * area donde se dibuja el jugador
 		 */
-		char[][] drawArea = new char[Image.SIZE_Y][Image.SIZE_X];
-		for(int pos_y=0; pos_y<Image.SIZE_Y; pos_y++)
+		char[][] drawArea = new char[this.img.SIZE_Y][this.img.SIZE_X];
+		for(int pos_y=0; pos_y<this.img.SIZE_Y; pos_y++)
 		{
-			for(int pos_x=0; pos_x<Image.SIZE_X; pos_x++)
+			for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++)
 			{
-				drawArea[pos_y][pos_x] = frame[getY()+pos_y][getX()+pos_x];
+				drawArea[pos_y][pos_x] = frame[this.getY()+pos_y][this.getX()+pos_x];
 			}	
 		}
 		/* bootm
 		 * area debajo del jugador
 		 */
-		char[] bottom = new char[Image.SIZE_X];
-		for(int pos_x=0; pos_x<Image.SIZE_X; pos_x++)
+		char[] bottom = new char[this.img.SIZE_X];
+		for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++)
 		{
-			bottom[pos_x]= frame[getY()+Image.SIZE_Y][getX()+pos_x];
+			bottom[pos_x]= frame[this.getY()+this.img.SIZE_Y][this.getX()+pos_x];
 		}
 
 		/* enemies
@@ -204,7 +180,7 @@ public class Player implements Runnable
 			{				
 				if(caracter == '*')
 				{
-				killPlayer();
+				this.kill();
 				status = STATE.PAUSED;
 				}
 			}
@@ -214,7 +190,7 @@ public class Player implements Runnable
 		 * si se encuentra un '-' debajo del drawArea hay piso
 		 * logicamente no puede atravesar el piso, lo subimos
 		 */
-		if( (getY() <= (frame.length-Image.SIZE_Y+1)))//evitamos out of ranges 
+		if( (this.getY() <= (frame.length-this.img.SIZE_Y+1)))//evitamos out of ranges 
 		{
 			boolean PISO = false;
 
@@ -222,7 +198,7 @@ public class Player implements Runnable
 			{				
 				if(caracter == '-')
 				{
-					setY(getY()-1);//sube
+					this.setY(this.getY()-1);//sube
 					status = STATE.STATIC;
 					break;
 				}
@@ -232,9 +208,10 @@ public class Player implements Runnable
 					PISO = true;
 				}
 			}
+			//caso en que no hay
 			if( (PISO == false) && (status != STATE.JUMPING) ) 
 			{
-				//System.out.println("FALLING");
+				System.out.println("FALLING");
 				status = STATE.FALLING;
 				fall(1);
 			}
@@ -250,22 +227,22 @@ public class Player implements Runnable
 		{
 			
 			if((jump_step < jump_steps)){
-				setY(getY()-1);
+				this.setY(this.getY()-1);
 			}
 			else{
 				jump_steps=2;
 				jump_step=-1;
 				jump_start = 0;
 				status = STATE.FALLING;
-				//fall(2);
+				//fall(1);
 			}
 			if(speed_x != 0){
 				if(speed_x>0){
-					setX(getX()+2+jump_step);
+					this.setX(this.getX()+2+jump_step);
 					speed_x--;		
 				}
 				else if(speed_x<0){
-					setX(getX()-2-jump_step);
+					this.setX(this.getX()-2-jump_step);
 					speed_x++;		
 				}
 			}
@@ -283,16 +260,16 @@ public class Player implements Runnable
 			}
 			else if( (System.currentTimeMillis() - fall_start) > FALL_WAIT ) 
 			{
-				setY(getY()+1);
+				this.setY(this.getY()+1);
 				if(fall_step<=2){
 					fall_step++;
 				}
 				if(speed_x != 0){
 					if(speed_x>0){
-						setX(getX()+1);
+						this.setX(this.getX()+1);
 					}
 					else if(speed_x<0){
-						setX(getX()-1);		
+						this.setX(this.getX()-1);		
 					}
 				}	
 				spaces--;
@@ -301,30 +278,5 @@ public class Player implements Runnable
 		status = STATE.STATIC;
 		fall_start = 0;
 		fall_step = 0;
-	}
-	//setters y getters para x,y 
-	public void setX(int x){
-		if( (x < (Display.SIZE_X-Player.Image.SIZE_X)) && (x>=0) )
-			this.x = x;
-	}
-	public void setY(int y){
-		if( (y < (Display.SIZE_Y-Player.Image.SIZE_Y)) && (y>=0) )
-			this.y = y;
-	}
-	public int getX(){return x;}
-	public int getY(){return y;}
-	
-	//setters y getters para alive
-	public boolean isAlive(){return this.alive;}
-	private void killPlayer(){this.alive = false;}
-
-	public void wait_next()
-	{
-		try{
-			Thread.sleep(NEXT_KEY);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
 	}
 }

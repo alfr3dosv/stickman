@@ -9,7 +9,7 @@ public class TestPlayer
 		{
 
 			System.out.println(player.dir);
-			System.out.print("x:"+player.x+" y:"+player.y);
+			System.out.print("x:"+player.getX()+" y:"+player.getY());
 		}
 		System.out.println("FIN");
 		input.interrupt();

@@ -7,13 +7,13 @@ public class TestPlayerOnDisplay
 		Player player = new Player();
 		Thread input = new Thread(player);
 		input.start();
-		System.out.print("x:"+player.x+" y:"+player.y);
+		System.out.print("x:"+player.getX()+" y:"+player.getY());
 
-		while( (player.status != Player.STATE.PAUSED) && (player.isAlive()==true) )
+		while( (player.status != Player.STATE.PAUSED)  )
 		{	
 			disp.draw();
 			player.collisions(disp.getFrame());
-			disp.draw(player.image(), player.y, player.x);	
+			disp.draw(player.img.get(), player.getY(), player.getX());	
 			disp.print();
 		}
 	}
