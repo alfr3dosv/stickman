@@ -9,7 +9,7 @@ public class TestStory
 		input.start();
 		System.out.print("x:"+player.getX()+" y:"+player.getY());
 
-		while( (player.status != Player.STATE.PAUSED)  )
+		while( (player.status != Player.State.PAUSED)  )
 		{	
 			disp.draw();
 			player.collisions(disp.getFrame());

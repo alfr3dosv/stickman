@@ -35,9 +35,10 @@ public abstract class FilesInput
 		}
 		return resource;
 	}
-	public Properties loadProperties(String path)
+	public static Properties loadProperties(String path)
 	{
 		Properties prop = new Properties();
+		FileInputStream input = null;
 		try {
 			input = new FileInputStream(path);
 			prop.load(input);

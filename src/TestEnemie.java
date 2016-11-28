@@ -3,7 +3,7 @@ public class TestEnemie
 	public static void main(String[] args)
 	{
 		Display disp = new Display();
-		disp.level.addStage("/home/alfredo/progra/java/gitman/game/assets/stages/level_1/stage_1.txt");
+		disp.level.addStage("assets/level_1/stage_1.txt");
 		Enemie enemie = new Enemie();
 		enemie.setX(5);
 		enemie.setY(5);

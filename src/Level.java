@@ -10,13 +10,14 @@ public class Level extends FilesInput
 	List<char[][]> stages = new ArrayList<char[][]>();
 	List<char[][]> assets = new ArrayList<char[][]>();
 	List<Enemie> enemies = new ArrayList<Enemie>(); 
-	//enemie
+	private String levelPath;
+	//enemie indices de data
 	final int X = 0;
 	final int Y = 1;
 	final int DIR = 2;
 	final int SPEED = 3;
 	final int STEPS = 4;
-	private String levelPath;
+
 	public Level(){
 
 	}

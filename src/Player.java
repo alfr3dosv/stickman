@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Player extends Entity implements Runnable
 {
-	public volatile STATE status = STATE.STATIC;
+	public volatile State status = State.STATIC;
 	//input
 	Scanner console;
 	RawConsoleInput in;
@@ -42,7 +42,7 @@ public class Player extends Entity implements Runnable
 	}
 	public void run()
 	{
-		while(status != STATE.PAUSED)
+		while(status != State.PAUSED)
 		{
 			captureInput();
 			move();
@@ -62,7 +62,7 @@ public class Player extends Entity implements Runnable
 	}
 	private void move()
 	{
-		if(status == STATE.JUMPING){
+		if(status == State.JUMPING){
 			jump();
 		}	
 		switch (dir)
@@ -92,7 +92,7 @@ public class Player extends Entity implements Runnable
 				
 			break;
 		}
-		if(status == STATE.STATIC){
+		if(status == State.STATIC){
 			speed_x = 0;
 		}
 	}
@@ -126,30 +126,30 @@ public class Player extends Entity implements Runnable
 		    { 
 		        case 'w':
 		            dir = Entity.Direction.UP;
-		            status = STATE.JUMPING;
+		            status = State.JUMPING;
 		            break;
 		        case 's':
 		            dir = Entity.Direction.DOWN;
-		            status = STATE.FALLING;
+		            status = State.FALLING;
 		            break;
 		        case 'a':
 		            dir = Entity.Direction.LEFT;
-		            status = STATE.WALKING;
+		            status = State.WALKING;
 		            break;
 		        case 'd':
 		            dir = Entity.Direction.RIGHT;
-		            status = STATE.WALKING;
+		            status = State.WALKING;
 		            break;
 		        case ':':
 		        	dir = Entity.Direction.NONE;
-		        	status = STATE.PAUSED;
+		        	status = State.PAUSED;
 		        	break;
 		       	default:
 		       		dir = Entity.Direction.NONE;
 		     }
 	 }
 
-	public enum STATE {JUMPING, FALLING, WALKING, STATIC, PAUSED}
+	public enum State {JUMPING, FALLING, WALKING, STATIC, PAUSED}
 
 	public void collisions(char[][] frame)
 	{
@@ -184,7 +184,7 @@ public class Player extends Entity implements Runnable
 				if(caracter == '*')
 				{
 				this.kill();
-				status = STATE.PAUSED;
+				//status = State.PAUSED;
 				}
 			}
 		}
@@ -212,7 +212,7 @@ public class Player extends Entity implements Runnable
 				if(caracter == '-')
 				{
 					this.setY(this.getY()-1);//sube
-					status = STATE.STATIC;
+					status = State.STATIC;
 					break;
 				}
 			}
@@ -222,10 +222,10 @@ public class Player extends Entity implements Runnable
 				}
 			}
 			//caso en que no hay
-			if( (PISO == false) && (status != STATE.JUMPING) ) 
+			if( (PISO == false) && (status != State.JUMPING) ) 
 			{
 				//System.out.println("FALLING"); //debug
-				status = STATE.FALLING;
+				status = State.FALLING;
 				fall(1);
 			}
 			
@@ -246,7 +246,7 @@ public class Player extends Entity implements Runnable
 				jump_steps=2;
 				jump_step=-1;
 				jump_start = 0;
-				status = STATE.FALLING;
+				status = State.FALLING;
 				//fall(1);
 			}
 			if(speed_x != 0){
@@ -266,7 +266,7 @@ public class Player extends Entity implements Runnable
 	}
 	public void fall(int spaces)
 	{
-		while( (spaces > 0) && (status == STATE.FALLING) )
+		while( (spaces > 0) && (status == State.FALLING) )
 		{
 		    if(fall_start == 0){
 				fall_start = System.currentTimeMillis();
@@ -288,7 +288,7 @@ public class Player extends Entity implements Runnable
 				spaces--;
 			}
 		}
-		status = STATE.STATIC;
+		status = State.STATIC;
 		fall_start = 0;
 		fall_step = 0;
 	}

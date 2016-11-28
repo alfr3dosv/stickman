@@ -5,7 +5,7 @@ import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.StringBuilder;
-
+import java.io.IOException;
 
 public class Display
 {
@@ -16,16 +16,17 @@ public class Display
 	private char[][] frame;
 	private int step;
 	private long start_time;
-	Level level = new Level();
-
+	Level level = new Level();//public para testing
+	private Story story = new Story();
 	//historia
-	private boolean STORY = false;
+	private boolean STORY_MODE = false;
+	private boolean isOver = false; 
 	/* Modos
 	 * History = false, modo normal: el jugador puede moverse e interactuar
 	 * History = true, modo historia: el jugador no puede interactuar 
 	 */
 	StringBuilder dialogs = null;
-
+	RawConsoleInput console_in = new RawConsoleInput();
 	public Display()
 	{
 		step = 0;
@@ -37,13 +38,23 @@ public class Display
 		start_time = System.currentTimeMillis();
 		level = new Level(levelPath);	
 	}
-
+	public Display(String storyPath, boolean mode)
+	{
+		step = 0;
+		start_time = System.currentTimeMillis();
+		story = new Story(storyPath);
+		STORY_MODE=true;	
+	}
 	public void print()
 	{
+		if( this.story.isOver && STORY_MODE)
+		{
+			isOver = true;
+		}
 		/* Si el tiempo actual - tiempo inicial > intevalo
 		 * imprime el siguiente frame
 		 */
-		if( (System.currentTimeMillis() - start_time) > WAIT_PER_FRAME)
+		else if( (System.currentTimeMillis() - start_time) > WAIT_PER_FRAME)
 		{		
 			update();
 			start_time = System.currentTimeMillis();		
@@ -61,19 +72,23 @@ public class Display
 		StringBuilder newFrame = new StringBuilder();
 		for(int y=0; y<SIZE_Y; y++)
 		{
-			//for(int x=0; x<SIZE_X; x++){
-				newFrame.append(frame[y]);
-			//}
+			newFrame.append(frame[y]);
 			newFrame.append("\n");
 		}
 		//impresion
 		System.out.println("Frame" + frames++);
         System.out.print(newFrame.toString());
-        if(STORY == true)
-        	System.out.print(dialogs.toString());
+        if(STORY_MODE == true){
+        	drawDialog( story.getDialog() );
+        	if(dialogs != null)
+        		System.out.print(dialogs.toString());
+        	System.out.flush();
+        	waitDialog();
+        }
 	}
 
-	public void fillFrame(char[][] frameToFill)// for testing
+	//testing
+	public void fillFrame(char[][] frameToFill)//no usar 
 	{
 		frameToFill = new char[SIZE_Y][SIZE_X];
 		for(int y=0; y<SIZE_Y; y++)
@@ -86,21 +101,32 @@ public class Display
 	public void draw(){
 		//deep copy del array
 		frame = new char[SIZE_Y][SIZE_X];
-		for(int y=0; y<SIZE_Y; y++)
-			for(int x=0; x<SIZE_X; x++)
-				frame[y][x]=level.stages.get(0)[y][x];	
+		if(STORY_MODE)
+		{
+			for(int y=0; y<SIZE_Y; y++)
+				for(int x=0; x<SIZE_X; x++)
+					frame[y][x]=story.scenes.get(0)[y][x];				
+		}
+		else
+		{
+			for(int y=0; y<SIZE_Y; y++)
+				for(int x=0; x<SIZE_X; x++)
+					frame[y][x]=level.stages.get(0)[y][x];	
+		}
 	}
 	public void draw(char[][] asset, int y, int x)
 	{
-		char[][] before = new char[asset.length][asset[0].length];
-		for(int pos_y=0; pos_y<asset.length; pos_y++)
-		{
-			for(int pos_x=0; pos_x<asset[0].length; pos_x++)
+		if(!STORY_MODE){
+			char[][] before = new char[asset.length][asset[0].length];
+			for(int pos_y=0; pos_y<asset.length; pos_y++)
 			{
-				before[pos_y][pos_x] = frame[y+pos_y][x+pos_x];
-				frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
-			}	
-				// inveritdo frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
+				for(int pos_x=0; pos_x<asset[0].length; pos_x++)
+				{
+					before[pos_y][pos_x] = frame[y+pos_y][x+pos_x];
+					frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
+				}	
+					// inveritdo frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
+			}
 		}
 	}
 
@@ -119,9 +145,13 @@ public class Display
 		 * la variable dialogs se imprime despues del frame
 		 * Para limpiar los dialogos enviar in string vacio
 		 */
+		if(dialogs == null){
+			dialogs = new StringBuilder();
+		}
 		dialogs.append(dialog+"\n");
-		if(dialog == "")
-		 dialogs = null;
+		if(dialog == ""){
+		 	dialogs = null;
+		}	
 	}
 
 	public static void clean()
@@ -129,8 +159,24 @@ public class Display
 		/* 
 	     * Devuelve el cursor a la parte superior
 	     */
-	    System.out.print("\033[2J\033[;H");
-	    System.out.flush();
+		String os = System.getProperty("os.name").toLowerCase();
+	    //Windows
+ 		if (os.contains("Windows")){
+ 			try{
+            	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+ 			}
+ 			catch(IOException e){
+ 				//es muy noche
+ 			}
+ 			catch(InterruptedException e){
+ 				
+ 			}
+ 		}
+	    // Linux, Mac ANSI ESCAPES
+		else{
+		    System.out.print("\033[2J\033[;H");
+		    System.out.flush();
+		}
 	}
 
 	public char[][] getFrame()
@@ -141,5 +187,15 @@ public class Display
 			for(int x=0; x<SIZE_X; x++)
 				frame[y][x]=this.frame[y][x];
 		return frame;
+	}
+	public boolean isOver(){
+		return isOver;
+	}
+	public void waitDialog()
+	{
+		try {
+			console_in.read(true);	
+		} 
+		catch(Exception ex){}  
 	}
 }

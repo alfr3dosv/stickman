@@ -7,4 +7,4 @@ rm -r build/*
 mkdir build/assets
 mv src/*.class build
 cp -r ./assets/* ./build/assets
-
+cp -r ./storyline.properties* ./build/

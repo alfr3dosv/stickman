@@ -5,7 +5,7 @@ public class TestPlayer
 		Player player = new Player();
 		Thread input = new Thread(player);
 		input.start();
-		while(player.status != Player.STATE.PAUSED)
+		while(player.status != Player.State.PAUSED)
 		{
 
 			System.out.println(player.dir);
