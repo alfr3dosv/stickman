@@ -108,7 +108,7 @@ public class Display
 		}
 	}
 
-	public void clean()
+	public static void clean()
 	{
 		/* 
 	     * Debuelve el cursor a la parte superior
