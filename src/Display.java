@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-
 import java.lang.StringBuilder;
 
 
@@ -17,8 +16,15 @@ public class Display
 	private char[][] frame;
 	private int step;
 	private long start_time;
-	Level level = new Level();	
+	Level level = new Level();
 
+	//historia
+	private boolean STORY = false;
+	/* Modos
+	 * History = false, modo normal: el jugador puede moverse e interactuar
+	 * History = true, modo historia: el jugador no puede interactuar 
+	 */
+	StringBuilder dialogs = null;
 
 	public Display()
 	{
@@ -63,7 +69,8 @@ public class Display
 		//impresion
 		System.out.println("Frame" + frames++);
         System.out.print(newFrame.toString());
-
+        if(STORY == true)
+        	System.out.print(dialogs.toString());
 	}
 
 	public void fillFrame(char[][] frameToFill)// for testing
@@ -73,6 +80,7 @@ public class Display
 			for(int x=0; x<SIZE_X; x++)
 				frameToFill[y][x]='0';	
 	}
+
 
 	//limpia el frame
 	public void draw(){
@@ -103,20 +111,24 @@ public class Display
 			enemie.update();
 			this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
 		}
-		for(Enemie enemie : level.enemies)
-		{
-		}
+	}
+
+	public void drawDialog(String dialog)
+	{ 
+		/* Agrega texto a dialogs
+		 * la variable dialogs se imprime despues del frame
+		 * Para limpiar los dialogos enviar in string vacio
+		 */
+		dialogs.append(dialog+"\n");
+		if(dialog == "")
+		 dialogs = null;
 	}
 
 	public static void clean()
 	{
 		/* 
-	     * Debuelve el cursor a la parte superior
+	     * Devuelve el cursor a la parte superior
 	     */
-	    /* final String ANSI_CLS = "\u001b[2J";
-	    final String ANSI_HOME = "\u001b[H";
-	    System.out.print(ANSI_CLS + ANSI_HOME);
-	    */
 	    System.out.print("\033[2J\033[;H");
 	    System.out.flush();
 	}

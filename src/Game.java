@@ -28,6 +28,7 @@ public class Game{
 				e.printStackTrace();
 			}
 		}
+		return op;
 	}
 	public static void printBanner(){
 		Display.clean();
@@ -54,6 +55,6 @@ public class Game{
 		System.out.println("    / /   / / / / /| | / / / /                              ");
 		System.out.println("   / /___/ /_/ / ___ |/ /_/ /                               ");
 		System.out.println("  /_____/\\____/_/  |_/_____/  ");
-		System.out.print("1) New Game, 2) Load, 3)Salir \nOption:");
+		System.out.print("1) New Game, 2) Load, 3)Exit \nOption:");
 	}
 }
