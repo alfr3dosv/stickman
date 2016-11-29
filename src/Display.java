@@ -81,13 +81,14 @@ public class Display
 			newFrame.append("\n");
 		}
 		//impresion
-		System.out.println("Frame" + frames++);
         System.out.print(newFrame.toString());
+
+        //dialogos modo historia
         if(STORY_MODE == true){
         	drawDialog( story.getDialog() );
+        	System.out.flush();
         	if(dialogs != null)
         		System.out.print(dialogs.toString());
-        	System.out.flush();
         	waitDialog();
         }
 	}

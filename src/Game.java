@@ -97,20 +97,19 @@ public class Game extends FilesInput{
 			storyPaths.add( storyline.getProperty("story"+Integer.toString(s)) );
 			s++;
 		}
-		while ( step_counter < storyline.size() )
+		//Player
+		Player player = new Player();
+		Thread input = new Thread(player);
+		input.start();
+		while ( step_counter < storySteps.size() )
 		{
-			System.out.println("vuelta");
 			sleep(1000);
 			//paso en la historia, elimina el paso
 			String step = storySteps.get(step_counter);
 			//numero del nivel o historia
 			String index = String.valueOf( step.toCharArray()[step.toCharArray().length-1] );
-			/* Eliminar el ultimo digito
-			 * Remplaza el digito por una literal vacia
-			 */
+			// elimina el ultimo digito
 			step= step.substring( 0,(step.length()-1) ); 
-			System.out.println(step+index);
-			sleep(1000);
 			//display
 			Display disp;
 			if(step.equals("story") ){ //modo historia
@@ -121,10 +120,7 @@ public class Game extends FilesInput{
 				String levelPath = levelPaths.get(Integer.valueOf(index)-1);
 				disp = new Display( "assets/" + levelPath + "/" + levelPath + ".properties");
 			}
-			//Player
-			Player player = new Player();
-			Thread input = new Thread(player);
-			input.start();
+			player.init();
 			System.out.flush();
 			while( (player.status != Player.State.PAUSED) && !player.hasKey() && player.isAlive() && !disp.isOver() )
 			{	
@@ -134,7 +130,6 @@ public class Game extends FilesInput{
 				disp.draw(player.img.get(), player.getY(), player.getX());	
 				disp.print();
 			}
-			input.interrupt();
 			// el jugador entro a la consola
 			if(player.status == Player.State.PAUSED){
 
@@ -151,9 +146,10 @@ public class Game extends FilesInput{
 			else if(disp.isOver() ){
 				step_counter++;
 			}
-			//garabage
-			System.gc(); 
 		}
+		//final del juego
+		input.interrupt();
+		printEndBanner();
 	}
 	public static void printDeadBanner()
 	{
@@ -163,6 +159,21 @@ public class Game extends FilesInput{
 		System.out.println("\t\t ||D |||E |||A |||D ||");
 		System.out.println("\t\t ||__|||__|||__|||__||");
 		System.out.println("\t\t |/__\\|/__\\|/__\\|/__\\| ");
+		sleep(3000);
+	}	
+	public static void printEndBanner()
+	{
+		Display.clean();
+		System.out.print("\n\n");
+		System.out.println("  ____________________         ");
+		System.out.println(" < The demo ends here >        ");
+		System.out.println("  --------------------         ");    
+		System.out.println("         \\   ^__^              ");               
+		System.out.println("          \\  (oo)\\_______      ");     
+		System.out.println("             (__)\\       )\\/\\  ");     
+		System.out.println("                 ||----w |     ");  
+		System.out.println("                 ||     ||     ");         
+		System.out.print("\n\n");
 		sleep(3000);
 	}
 	public static void sleep(int time){

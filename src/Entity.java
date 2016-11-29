@@ -53,4 +53,5 @@ public abstract class Entity
 	//setters y getters para alive
 	public boolean isAlive(){return this.alive;}
 	public void kill(){this.alive = false;}
+	public void setAlive(){this.alive = true;}
 }

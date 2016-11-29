@@ -65,14 +65,8 @@ public class Player extends Entity implements Runnable
 		//position
 		this.setX(0);
 		this.setY(0);
-		//jumping
-		jump_start=0;
-		jump_steps=1;
-		jump_step=0;
-		//falling
-		fall_start=0;
-		fall_step=0;
-		speed_x=0;	
+		//life
+		this.setAlive();
 	}
 	private void move()
 	{
@@ -119,7 +113,7 @@ public class Player extends Entity implements Runnable
 			{
 				char new_key = (char)in.read(false);
 				//Evita que dejen presionada alguna tecla
-				if(last_key != new_key || times > 3){
+				if(last_key != new_key || times > 2){
 					key = new_key;
 					last_key = key;
 					times = 0;

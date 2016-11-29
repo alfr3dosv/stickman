@@ -67,7 +67,6 @@ public class Story extends FilesInput
 			this.syncDialogs( Integer.parseInt( settings().getProperty("dialogs_scene"+Integer.toString(dByS)) ) );
 			dByS++;
 		}
-		scenes_total = scenes.size();
 	}
 	public void syncDialogs(int step){
 		next_dialog.add(step);
@@ -78,7 +77,7 @@ public class Story extends FilesInput
 	}
 	public String getDialog(){
 		String output="";
-		if(dialog_counter == next_dialog.get(0)){ //se leyeron todos los dialogos de esta escena
+		/*if(dialog_counter == next_dialog.get(0)){ //se leyeron todos los dialogos de esta escena
 			if(scenes.size() > 1)
 				scenes.remove(0);
 			if(next_dialog.size() > 1)
@@ -94,8 +93,20 @@ public class Story extends FilesInput
 		else{
 			dialog_counter++;
 			if(dialog_counter < dialogs.size() )
-				output = dialogs.get(dialog_counter);
-		} 
+				c
+		}*/
+		if( (dialog_counter >= next_dialog.get(0)) && (next_dialog.size()>=1) ){ //se leyeron todos los dialogos de esta escena
+			if(scenes.size() > 1)
+				scenes.remove(0);
+			if(next_dialog.size() > 1)
+				next_dialog.remove(0);
+			else
+				isOver=true;
+			output = ""; //reseteanos los dialogos, si drawDialog() recibe ""
+		}
+		else if(dialog_counter < dialogs.size() )
+			output = dialogs.get(dialog_counter);
+		dialog_counter++;
 		return output;
 	}
 }
