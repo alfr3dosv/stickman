@@ -1,0 +1,13 @@
+Anteriormente habia usado la clase level para almacenar los stages y dentro de las clase Display habia una funcion llamada loadStage().
+
+Lo correcto es que todo los assets y stages esten dentro de la clase level.
+
+<table>
+	<thead>
+		<th>level</th>
+	</thead>
+	<tr>
+		<td>*+*</td>
+        <td>List</td>
+	</tr>
+</table>
