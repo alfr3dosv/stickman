@@ -34,9 +34,7 @@ public class Display
 	}
 	public Display(String levelPath)
 	{
-		step = 0;
-		start_time = System.currentTimeMillis();
-		level = new Level(levelPath);	
+		this.init(levelPath);
 	}
 	public Display(String storyPath, boolean mode)
 	{
@@ -45,6 +43,13 @@ public class Display
 		story = new Story(storyPath);
 		STORY_MODE=true;	
 	}
+	public void init(String levelPath)
+	{		
+		step = 0;
+		start_time = System.currentTimeMillis();
+		level = new Level(levelPath);
+	}
+
 	public void print()
 	{
 		if( this.story.isOver && STORY_MODE)

@@ -5,6 +5,7 @@ public class Player extends Entity implements Runnable
 {
 	public volatile State status = State.STATIC;
 	//input
+	int times=0;
 	Scanner console;
 	RawConsoleInput in;
 	public volatile char key;
@@ -60,6 +61,19 @@ public class Player extends Entity implements Runnable
 		}
 		catch(Exception e){}
 	}
+	public void init(){
+		//position
+		this.setX(0);
+		this.setY(0);
+		//jumping
+		jump_start=0;
+		jump_steps=1;
+		jump_step=0;
+		//falling
+		fall_start=0;
+		fall_step=0;
+		speed_x=0;	
+	}
 	private void move()
 	{
 		if(status == State.JUMPING){
@@ -105,9 +119,13 @@ public class Player extends Entity implements Runnable
 			{
 				char new_key = (char)in.read(false);
 				//Evita que dejen presionada alguna tecla
-				if(last_key != new_key){
+				if(last_key != new_key || times > 3){
 					key = new_key;
 					last_key = key;
+					times = 0;
+				}
+				else{
+					times++;
 				}
 				start_time = System.currentTimeMillis();
 			}	

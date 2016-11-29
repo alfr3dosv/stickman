@@ -9,7 +9,7 @@ import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Game extends FilesInput{
+public class Demo extends FilesInput{
 	public static void main(String[] args)
 	{
 		switch( menu() ){
@@ -90,13 +90,12 @@ public class Game extends FilesInput{
 			levelPaths.add( storyline.getProperty("level"+Integer.toString(l)) );
 			l++;
 		}
-		//story
-		int s = 1;
-		while( storyline.getProperty("story"+Integer.toString(s)) != null )
-		{
-			storyPaths.add( storyline.getProperty("story"+Integer.toString(s)) );
-			s++;
-		}
+		//Display
+		Display disp = new Display();
+		//Player
+		Player player = new Player();
+		Thread input = new Thread(player);
+		input.start();
 		while ( step_counter < storyline.size() )
 		{
 			System.out.println("vuelta");
@@ -111,21 +110,11 @@ public class Game extends FilesInput{
 			step= step.substring( 0,(step.length()-1) ); 
 			System.out.println(step+index);
 			sleep(1000);
-			//display
-			Display disp;
-			if(step.equals("story") ){ //modo historia
-				String storyPath = storyPaths.get(Integer.valueOf(index)-1);
-				disp = new Display( "assets/" + storyPath + "/" + storyPath + ".properties", true );
-			}
-			else { //modo normal
-				String levelPath = levelPaths.get(Integer.valueOf(index)-1);
-				disp = new Display( "assets/" + levelPath + "/" + levelPath + ".properties");
-			}
-			//Player
-			Player player = new Player();
-			Thread input = new Thread(player);
-			input.start();
-			System.out.flush();
+			// reset display
+			String levelPath = levelPaths.get(Integer.valueOf(index)-1);
+			disp.init( "assets/" + levelPath + "/" + levelPath + ".properties");
+			//reset layer
+			player.init();
 			while( (player.status != Player.State.PAUSED) && !player.hasKey() && player.isAlive() && !disp.isOver() )
 			{	
 				disp.draw();
@@ -150,9 +139,7 @@ public class Game extends FilesInput{
 			// se acabo la parte de historia
 			else if(disp.isOver() ){
 				step_counter++;
-			}
-			//garabage
-			System.gc(); 
+			} 
 		}
 	}
 	public static void printDeadBanner()
