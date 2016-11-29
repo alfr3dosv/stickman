@@ -103,7 +103,6 @@ public class Game extends FilesInput{
 		input.start();
 		while ( step_counter < storySteps.size() )
 		{
-			sleep(1000);
 			//paso en la historia, elimina el paso
 			String step = storySteps.get(step_counter);
 			//numero del nivel o historia

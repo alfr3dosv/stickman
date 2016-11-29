@@ -1,0 +1,8 @@
+#COMPILAR
+javac -classpath jna.jar *.java
+#Copie la carpeta /assets a /src
+#Copie storyline.properties a /src
+#EJECUTAR
+java -classpath jna.jar; demo.
+#Mueva los .class a la carpeta build
+#Si no esta presente la carpeta build/Assets o esta desactualizada copiela de la raiz

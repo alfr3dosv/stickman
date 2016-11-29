@@ -19,13 +19,15 @@ public class Display
 	Level level = new Level();//public para testing
 	private Story story = new Story();
 	//historia
-	private boolean STORY_MODE = false;
-	private boolean isOver = false; 
-	/* Modos
-	 * History = false, modo normal: el jugador puede moverse e interactuar
-	 * History = true, modo historia: el jugador no puede interactuar 
-	 */
 	StringBuilder dialogs = null;
+	private boolean isOver = false;//SOLO EN MODO HOSTORIA el display termino una serie de escenas y dialogos
+	private boolean STORY_MODE = false;
+	/* Modos
+	 * STORY_MODE = false, modo normal: el jugador puede moverse e interactuar
+	 * STORY_MODE = true, modo historia: 
+	 * se imprimen varias escenes con sus dialogos, el jugador no puede interactuar  
+	 */
+	
 	RawConsoleInput console_in = new RawConsoleInput();
 	public Display()
 	{
@@ -107,13 +109,13 @@ public class Display
 	public void draw(){
 		//deep copy del array
 		frame = new char[SIZE_Y][SIZE_X];
-		if(STORY_MODE)
+		if(STORY_MODE)//modo historia
 		{
 			for(int y=0; y<SIZE_Y; y++)
 				for(int x=0; x<SIZE_X; x++)
 					frame[y][x]=story.scenes.get(0)[y][x];				
 		}
-		else
+		else//modo normal
 		{
 			for(int y=0; y<SIZE_Y; y++)
 				for(int x=0; x<SIZE_X; x++)

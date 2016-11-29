@@ -77,36 +77,22 @@ public class Story extends FilesInput
 	}
 	public String getDialog(){
 		String output="";
-		/*if(dialog_counter == next_dialog.get(0)){ //se leyeron todos los dialogos de esta escena
-			if(scenes.size() > 1)
-				scenes.remove(0);
-			if(next_dialog.size() > 1)
-				next_dialog.remove(0);
-			else
-				isOver=true;
-			output = "";
-		}
-		else if(dialog_counter >= dialogs.size()){
+		if( (next_dialog.size() < 1) || 
+			(dialog_counter >= dialogs.size()) )
+		{
 			isOver=true;
-			output = null;
 		}
-		else{
-			dialog_counter++;
-			if(dialog_counter < dialogs.size() )
-				c
-		}*/
-		if( (dialog_counter >= next_dialog.get(0)) && (next_dialog.size()>=1) ){ //se leyeron todos los dialogos de esta escena
+		else if( (dialog_counter >= next_dialog.get(0)) && 
+				 (next_dialog.size()>=1) ) 
+		//se leyeron todos los dialogos de esta escena
+		{ 
+			next_dialog.remove(0);
+			output = ""; //reseteanos los dialogos, drawDialog() recibe ""
 			if(scenes.size() > 1)
 				scenes.remove(0);
-			if(next_dialog.size() > 1)
-				next_dialog.remove(0);
-			else
-				isOver=true;
-			output = ""; //reseteanos los dialogos, si drawDialog() recibe ""
 		}
-		else if(dialog_counter < dialogs.size() )
-			output = dialogs.get(dialog_counter);
-		dialog_counter++;
+		else if( dialog_counter < dialogs.size() )
+			output = dialogs.get(dialog_counter++);
 		return output;
 	}
 }
