@@ -194,24 +194,17 @@ public class Player extends Entity implements Runnable
 		 * commprueba que el area donde se va dibujar no haya enemigos
 		 * en caso de que si mata al jugador y pausa el juego
 		 */
-		for( char[] caracteres: drawArea)
-		{
-			for( char caracter:caracteres)
-			{				
-				if(caracter == '*')
-				{
+		for( char[] caracteres: drawArea){
+			for( char caracter:caracteres){				
+				if(caracter == '*'){
 				this.kill();
-				//status = State.PAUSED;
 				}
 			}
 		}
 		//keys
-		for( char[] caracteres: drawArea)
-		{
-			for( char caracter:caracteres)
-			{				
-				if(caracter == 'K')
-				{
+		for( char[] caracteres: drawArea){
+			for( char caracter:caracteres){				
+				if(caracter == 'K'){
 				STAGE_KEY = true;
 				}
 			}
@@ -220,14 +213,13 @@ public class Player extends Entity implements Runnable
 		 * si se encuentra un '-' debajo del drawArea hay piso
 		 * logicamente no puede atravesar el piso, lo subimos
 		 */
-		if( (this.getY() <= (frame.length-this.img.SIZE_Y+1)))//evitamos out of ranges 
+		if(  this.getY() <= 
+		    (frame.length-this.img.SIZE_Y+1) )//evitamos out of ranges 
 		{
 			boolean PISO = false;
 
-			for( char caracter: drawArea[2])
-			{				
-				if(caracter == '-')
-				{
+			for( char caracter: drawArea[2]){				
+				if(caracter == '-'){
 					this.setY(this.getY()-1);//sube
 					status = State.STATIC;
 					break;
@@ -238,8 +230,9 @@ public class Player extends Entity implements Runnable
 					PISO = true;
 				}
 			}
-			//caso en que no hay
-			if( (PISO == false) && (status != State.JUMPING) ) 
+			//caso en que no hay superficie abajp
+			if( (PISO == false) && 
+				(status != State.JUMPING) ) 
 			{
 				//System.out.println("FALLING"); //debug
 				status = State.FALLING;
@@ -253,9 +246,9 @@ public class Player extends Entity implements Runnable
 	    if(jump_start <= 0){
 			jump_start = System.currentTimeMillis();
 		}
-		else if( (System.currentTimeMillis() - jump_start) > (50+(JUMP_WAIT*jump_step)) ) 
-		{
-			
+		else if( (System.currentTimeMillis() - jump_start) > 
+				 (50+(JUMP_WAIT*jump_step)) ) 
+		{	
 			if((jump_step < jump_steps)){
 				this.setY(this.getY()-1);
 			}
@@ -283,13 +276,13 @@ public class Player extends Entity implements Runnable
 	}
 	public void fall(int spaces)
 	{
-		while( (spaces > 0) && (status == State.FALLING) )
+		while( (spaces > 0) && 
+			   (status == State.FALLING) )
 		{
 		    if(fall_start == 0){
 				fall_start = System.currentTimeMillis();
 			}
-			else if( (System.currentTimeMillis() - fall_start) > FALL_WAIT ) 
-			{
+			else if( (System.currentTimeMillis() - fall_start) > FALL_WAIT ) {
 				this.setY(this.getY()+1);
 				if(fall_step<=2){
 					fall_step++;
@@ -310,7 +303,8 @@ public class Player extends Entity implements Runnable
 		fall_step = 0;
 	}
 	//getter para key
-	public boolean hasKey(){
+	public boolean hasKey()
+	{
 		return this.STAGE_KEY;
 	}
 }

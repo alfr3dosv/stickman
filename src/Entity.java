@@ -40,12 +40,18 @@ public abstract class Entity
 	
 	//setters y getters para x,y 
 	public void setX(int x){
-		if( (x < (Display.SIZE_X-this.img.SIZE_X)) && (x>=0) )
+		if( (x < (Display.SIZE_X-this.img.SIZE_X)) && 
+			(x>=0) )
+		{
 			this.x = x;
+		}
 	}
 	public void setY(int y){
-		if( (y < (Display.SIZE_Y-this.img.SIZE_Y)) && (y>=0) )
+		if( (y < (Display.SIZE_Y-this.img.SIZE_Y)) && 
+			(y>=0) )
+		{
 			this.y = y;
+		}
 	}
 	public int getX(){return x;}
 	public int getY(){return y;}
