@@ -87,8 +87,9 @@ public class Story extends FilesInput
 			if(scenes.size() > 1)
 				scenes.remove(0);
 		}
-		else if( dialog_counter < dialogs.size() )
+		else if( dialog_counter < dialogs.size() ){
 			output = dialogs.get(dialog_counter++);
+		}
 		return output;
 	}
 }

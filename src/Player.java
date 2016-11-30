@@ -217,7 +217,6 @@ public class Player extends Entity implements Runnable
 		    (frame.length-this.img.SIZE_Y+1) )//evitamos out of ranges 
 		{
 			boolean PISO = false;
-
 			for( char caracter: drawArea[2]){				
 				if(caracter == '-'){
 					this.setY(this.getY()-1);//sube

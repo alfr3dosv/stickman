@@ -17,7 +17,9 @@ public class Enemie extends Entity{
 		}
 		else
 		{
-			if( (System.currentTimeMillis() - start_time) > (1000/speed()) && (step() <getSteps()) )
+			if( (System.currentTimeMillis() - start_time) > 
+				(1000/speed()) && 
+				(step() <getSteps()) )
 			{
 				switch(dir){
 					case UP:
@@ -36,7 +38,7 @@ public class Enemie extends Entity{
 				start_time = System.currentTimeMillis();
 				step(step()+1);
 			}
-			if(step() == getSteps()){
+			if(step() == getSteps() ){
 				step(0);
 				switch(dir){
 					case UP:

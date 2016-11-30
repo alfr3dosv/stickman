@@ -57,14 +57,14 @@ public class Display
 	}
 	public void print()
 	{
-		if( this.story.isOver && STORY_MODE)
-		{
+		if( this.story.isOver && STORY_MODE){
 			isOver = true;
 		}
 		/* Si el tiempo actual - tiempo inicial > intevalo
 		 * imprime el siguiente frame
 		 */
-		else if( (System.currentTimeMillis() - start_time) > WAIT_PER_FRAME)
+		else if( (System.currentTimeMillis() - start_time) >
+				  WAIT_PER_FRAME )
 		{		
 			update();
 			start_time = System.currentTimeMillis();		
@@ -80,8 +80,7 @@ public class Display
 		clean();
 		//armando el frame
 		StringBuilder newFrame = new StringBuilder();
-		for(int y=0; y<SIZE_Y; y++)
-		{
+		for(int y=0; y<SIZE_Y; y++){
 			newFrame.append(frame[y]);
 			newFrame.append("\n");
 		}
@@ -92,8 +91,9 @@ public class Display
         if(STORY_MODE == true){
         	drawDialog( story.getDialog() );
         	System.out.flush();
-        	if(dialogs != null)
+        	if(dialogs != null){
         		System.out.print(dialogs.toString());
+        	}
         	waitDialog();
         }
 	}
@@ -104,15 +104,19 @@ public class Display
 		frame = new char[SIZE_Y][SIZE_X];
 		if(STORY_MODE)//modo historia
 		{
-			for(int y=0; y<SIZE_Y; y++)
-				for(int x=0; x<SIZE_X; x++)
+			for(int y=0; y<SIZE_Y; y++){
+				for(int x=0; x<SIZE_X; x++){
 					frame[y][x]=story.scenes.get(0)[y][x];				
+				}
+			}
 		}
 		else//modo normal
 		{
-			for(int y=0; y<SIZE_Y; y++)
-				for(int x=0; x<SIZE_X; x++)
+			for(int y=0; y<SIZE_Y; y++){
+				for(int x=0; x<SIZE_X; x++){
 					frame[y][x]=level.stages.get(0)[y][x];	
+				}
+			}
 		}
 	}
 	public void draw(char[][] asset, int y, int x)
@@ -121,8 +125,7 @@ public class Display
 			char[][] before = new char[asset.length][asset[0].length];
 			for(int pos_y=0; pos_y<asset.length; pos_y++)
 			{
-				for(int pos_x=0; pos_x<asset[0].length; pos_x++)
-				{
+				for(int pos_x=0; pos_x<asset[0].length; pos_x++){
 					before[pos_y][pos_x] = frame[y+pos_y][x+pos_x];
 					frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
 				}	
@@ -133,8 +136,7 @@ public class Display
 
 	public void drawEnemies(){
 		//Actualizando la posicion de los enemigos
-		for(Enemie enemie : level.enemies)
-		{
+		for(Enemie enemie : level.enemies){
 			enemie.update();
 			this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
 		}
@@ -170,7 +172,7 @@ public class Display
  				//es muy noche
  			}
  			catch(InterruptedException e){
- 				
+ 				//es muy noche 				
  			}
  		}
 	    // Linux, Mac ANSI ESCAPES
@@ -184,12 +186,15 @@ public class Display
 	{
 		char[][] frame = new char[SIZE_Y][SIZE_X];
 		//deep copy
-		for(int y=0; y<SIZE_Y; y++)
-			for(int x=0; x<SIZE_X; x++)
+		for(int y=0; y<SIZE_Y; y++){
+			for(int x=0; x<SIZE_X; x++){
 				frame[y][x]=this.frame[y][x];
+			}
+		}
 		return frame;
 	}
-	public boolean isOver(){
+	public boolean isOver()
+	{
 		return isOver;
 	}
 	private void waitDialog()
@@ -197,6 +202,8 @@ public class Display
 		try {
 			console_in.read(true);	
 		} 
-		catch(Exception ex){}  
+		catch(Exception ex){
+			 //es muy noche
+		}  
 	}
 }
