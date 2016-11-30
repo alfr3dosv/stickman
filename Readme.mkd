@@ -1,0 +1,29 @@
+Gitman es un juego escrito en Java y trata acerca de algunos comandos básicos de git.
+
+Controles
+<table>
+          <thead>
+            <th>Tecla/Caracter</th>
+            <th>Función</th>
+          </thead>
+          <tr>
+            <th>a</th>
+            <td>Moverse a la izquierda</td>
+          </tr>
+          <tr>
+            <th>s</th>
+            <td>Moverse hacia abajo</td>
+          </tr>
+          <tr>
+            <th>w</th>
+            <td>Saltar/Moverse hacia arriba</td>
+          </tr>
+          <tr>
+            <th>d</th>
+            <td>Moverse a la derecha</td>
+          </tr>
+          <tr>
+            <th>:</th>
+            <td>Abre la linea de comandos. En la linea de comandos podras ejecutar comandos de git.</td>
+          </tr>
+</table>

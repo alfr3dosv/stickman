@@ -19,7 +19,7 @@ public class Display
 	Level level = new Level();//public para testing
 	private Story story = new Story();
 	//historia
-	StringBuilder dialogs = null;
+	private StringBuilder dialogs = null;
 	private boolean isOver = false;//SOLO EN MODO HOSTORIA el display termino una serie de escenas y dialogos
 	private boolean STORY_MODE = false;
 	/* Modos
@@ -28,7 +28,7 @@ public class Display
 	 * se imprimen varias escenes con sus dialogos, el jugador no puede interactuar  
 	 */
 	
-	RawConsoleInput console_in = new RawConsoleInput();
+	private RawConsoleInput console_in = new RawConsoleInput();
 	public Display()
 	{
 		step = 0;
@@ -40,10 +40,7 @@ public class Display
 	}
 	public Display(String storyPath, boolean mode)
 	{
-		step = 0;
-		start_time = System.currentTimeMillis();
-		story = new Story(storyPath);
-		STORY_MODE=true;	
+		this.init(storyPath, mode);
 	}
 	public void init(String levelPath)
 	{		
@@ -51,7 +48,13 @@ public class Display
 		start_time = System.currentTimeMillis();
 		level = new Level(levelPath);
 	}
-
+	public void init(String storyPath, boolean mode)
+	{		
+		step = 0;
+		start_time = System.currentTimeMillis();
+		story = new Story(storyPath);
+		STORY_MODE=true;	
+	}
 	public void print()
 	{
 		if( this.story.isOver && STORY_MODE)
@@ -94,16 +97,6 @@ public class Display
         	waitDialog();
         }
 	}
-
-	//testing
-	public void fillFrame(char[][] frameToFill)//no usar 
-	{
-		frameToFill = new char[SIZE_Y][SIZE_X];
-		for(int y=0; y<SIZE_Y; y++)
-			for(int x=0; x<SIZE_X; x++)
-				frameToFill[y][x]='0';	
-	}
-
 
 	//limpia el frame
 	public void draw(){
@@ -169,7 +162,7 @@ public class Display
 	     */
 		String os = System.getProperty("os.name").toLowerCase();
 	    //Windows
- 		if (os.contains("Windows")){
+ 		if (os.indexOf("win") >= 0){
  			try{
             	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
  			}
@@ -199,7 +192,7 @@ public class Display
 	public boolean isOver(){
 		return isOver;
 	}
-	public void waitDialog()
+	private void waitDialog()
 	{
 		try {
 			console_in.read(true);	

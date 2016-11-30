@@ -7,17 +7,13 @@ import java.lang.StringBuilder;
 
 public class Story extends FilesInput
 {
-	List<char[][]> scenes = new ArrayList<char[][]>();
-	List<String> dialogs = new ArrayList<String>();
-	List<Integer> next_dialog = new ArrayList<Integer>();
+	public List<char[][]> scenes = new ArrayList<char[][]>();
+	private List<String> dialogs = new ArrayList<String>();
+	private List<Integer> next_dialog = new ArrayList<Integer>();
 
 	public boolean isOver = false;
-	//enemie
-	final int X = 0;
-	final int Y = 1;
 	private int dialog_counter=0;
 	private int scene_counter=1;
-	private int scenes_total=1;
 	private String storyPath;
 
 	public Story(){

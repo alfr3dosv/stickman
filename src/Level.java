@@ -7,16 +7,10 @@ import java.lang.StringBuilder;
 
 public class Level extends FilesInput
 {
-	List<char[][]> stages = new ArrayList<char[][]>();
-	List<char[][]> assets = new ArrayList<char[][]>();
-	List<Enemie> enemies = new ArrayList<Enemie>(); 
+	public List<char[][]> stages = new ArrayList<char[][]>();
+	private List<char[][]> assets = new ArrayList<char[][]>();
+	public List<Enemie> enemies = new ArrayList<Enemie>(); 
 	private String levelPath;
-	//enemie indices de data
-	final int X = 0;
-	final int Y = 1;
-	final int DIR = 2;
-	final int SPEED = 3;
-	final int STEPS = 4;
 
 	public Level(){
 
@@ -68,6 +62,11 @@ public class Level extends FilesInput
 
 	public void addEnemie(String values)
 	{
+		final int X = 0;
+		final int Y = 1;
+		final int DIR = 2;
+		final int SPEED = 3;
+		final int STEPS = 4;
 		String[] data = values.split(",");
 		Enemie enemie = new Enemie();
 		enemie.setX( Integer.parseInt(data[X]) ) ;

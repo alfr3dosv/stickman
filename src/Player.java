@@ -5,22 +5,23 @@ public class Player extends Entity implements Runnable
 {
 	public volatile State status = State.STATIC;
 	//input
-	int times=0;
-	Scanner console;
-	RawConsoleInput in;
-	public volatile char key;
-	char last_key;
-	long start_time;// contador de tiempo entre teclas
-	final int NEXT_KEY=20;//intervalo de tiempo entre teclas
+	private int times=0;
+	private RawConsoleInput in;
+	private volatile char key;
+	private char last_key;
+	private long start_time;// contador de tiempo entre teclas
+	private final int NEXT_KEY=20;//intervalo de tiempo entre teclas
+	private boolean CAPTURE_INPUT=true;
 	//jumping
-	long jump_start=0;
-	final int JUMP_WAIT=100;
-	int jump_steps=1;
-	int jump_step=0;
+	private long jump_start=0; //contadoe entre espacios
+	private final int JUMP_WAIT=100;
+	private int jump_steps=2; //cuantos caracteres salta
+	private int jump_step=0;
 	//falling
 	private long fall_start=0;
     final int FALL_WAIT=50;
 	private int fall_step=0;
+	
 	private int speed_x;
 	/* STAGE_KEY
 	 * Si el jugador encontro la llave del stage pasa al siguiente stage o nivel
@@ -43,7 +44,7 @@ public class Player extends Entity implements Runnable
 	}
 	public void run()
 	{
-		while(status != State.PAUSED)
+		while(CAPTURE_INPUT)
 		{
 			captureInput();
 			move();
@@ -57,9 +58,12 @@ public class Player extends Entity implements Runnable
 		}
 		try{
 			in.resetConsoleMode();
-			console.next();
 		}
 		catch(Exception e){}
+	}
+	public void interrupt()
+	{
+		this.CAPTURE_INPUT = false;
 	}
 	public void init(){
 		//position

@@ -9,14 +9,13 @@ import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Game extends FilesInput{
+public class Game{
 	public static void main(String[] args)
 	{
 		switch( menu() ){
 			case '1': play("storyline.properties", false);
 				break;
 			case 2:
-
 				break;
 			case 3:
 				break;
@@ -26,7 +25,7 @@ public class Game extends FilesInput{
 	{
 		RawConsoleInput input = new RawConsoleInput();
 		char op='0';
-		while( (op != '1') && (op !='2' ) && (op !='3' ))
+		while( (op != '1') && (op !='3' ))
 		{
 			printBanner();
 			printMenu();
@@ -43,6 +42,7 @@ public class Game extends FilesInput{
 		return op;
 	}
 	public static void printBanner(){
+		//hardcoded banner
 		Display.clean();
 		System.out.println();
 		System.out.println();
@@ -56,7 +56,8 @@ public class Game extends FilesInput{
 	}
 	public static void printMenu()
 	{
-				System.out.println();
+		//hardcoded
+		System.out.println();
 		System.out.println();
 		System.out.println("         _   _________       __   _________    __  _________");
 		System.out.println("        / | / / ____/ |     / /  / ____/   |  /  |/  / ____/");
@@ -67,7 +68,7 @@ public class Game extends FilesInput{
 		System.out.println("    / /   / / / / /| | / / / /                              ");
 		System.out.println("   / /___/ /_/ / ___ |/ /_/ /                               ");
 		System.out.println("  /_____/\\____/_/  |_/_____/  ");
-		System.out.print("1) New Game, 2) Load, 3)Exit \nOption:");
+		System.out.print("1) Start demo, 2)Exit \nOption:");
 	}
 
 	public static void play(String path, boolean newGame)
@@ -121,7 +122,7 @@ public class Game extends FilesInput{
 			}
 			player.init();
 			System.out.flush();
-			while( (player.status != Player.State.PAUSED) && !player.hasKey() && player.isAlive() && !disp.isOver() )
+			while( !player.hasKey() && player.isAlive() && !disp.isOver() ) //&& (player.status != Player.State.PAUSED)) consola no disponible en demo
 			{	
 				disp.draw();
 				disp.drawEnemies();
@@ -131,7 +132,8 @@ public class Game extends FilesInput{
 			}
 			// el jugador entro a la consola
 			if(player.status == Player.State.PAUSED){
-
+				System.out.println("No disponible en demo");
+				player.status = Player.State.STATIC;
 			}
 			// el jugador murio 
 			else if( !player.isAlive() ){
@@ -152,16 +154,19 @@ public class Game extends FilesInput{
 	}
 	public static void printDeadBanner()
 	{
+		//hardcoded banner
 		Display.clean();
-		System.out.print("\n\n\n\n\n\n\n\n");
+		System.out.print("\n\n\n\n\n\n\n");
 		System.out.println("\t\t  ____ ____ ____ ____   ");
 		System.out.println("\t\t ||D |||E |||A |||D ||");
 		System.out.println("\t\t ||__|||__|||__|||__||");
 		System.out.println("\t\t |/__\\|/__\\|/__\\|/__\\| ");
+		System.out.print("\n\n\n\n\n\n\n");
 		sleep(3000);
 	}	
 	public static void printEndBanner()
 	{
+		System.out.print("\n\n\n\n\n\n\n");
 		Display.clean();
 		System.out.print("\n\n");
 		System.out.println("  ____________________         ");

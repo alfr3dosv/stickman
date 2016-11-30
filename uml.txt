@@ -1,0 +1,143 @@
+@startuml
+skinparam classAttributeIconSize 0
+Player <|-- Entity
+Enemie <|-- Entity
+Level <|-- FilesInput
+Story <|-- FilesInput
+class Game #red{
+	void main()
+	int menu()
+	void printBanner()
+	void printMenu()
+	void play(path:String, newGame:boolean)
+	void printDeadBanner()
+	void printEndBanner()
+	void sleep(int time)
+}
+abstract class Entity{
+	-y:int
+	-x:int
+	-alive: volatile boolean
+	+img:Image
+	+dir: Entity.Direction
+	+void setX(x:int)
+	+void setY(y:int)
+	+int getX()
+	+int getY()
+	+boolean isAlive()
+	+void kill()
+	+setAlive()
+}
+class Player #white{
+	+status:Player.State
+	+State:enum
+	-time:int
+	-in:RawConsoleInput
+	-key:volatile
+	-last_Key:char
+	-stat_time:long
+	-NEXT_KEY:final int
+	-CAPTURE_INPUT:boolean
+	-jump_start:long
+	-JUMP_WAIT:final int
+	-jumps_steps:int
+	-jump_step:int
+	-fall_start:long
+	-FALL_WAIT:int
+	-fall_step:int
+	-speed_x:int
+	-STAGE_KEY:boolean
+	+Player()
+	+void run()
+	+void interrupt()
+	+void init()
+	-void move()
+	+char captureKey()
+	+void captureInput()
+	+void collisions(frame:char[][])
+	+void jump()
+	+void fall(spaces:int)
+	+boolean hasKey()
+}
+
+class Display #white{
+	-SIZE_X:static final int
+	-SIZE_Y:static final int
+	-WAIT_PER_FRAME:final int
+	-frames:int
+	-frame:char[][]
+	-step:int
+	-start_time:int
+	-dialogs:StringBuilder
+	+level:Level
+	-story:Story
+	-isOver:boolean
+	-STORY_MODE:boolean
+	-console_in:RawConsoleInput
+	+Display()
+	+Display(levelPath:String)
+	+Display(storyPath:String, mode:boolean)
+	+void init(levelPath:String)
+	+void init(storyPath:String, mode:boolean)
+	+void print()
+	+void update()
+	+void draw()
+	+void draw(asset:char[][], y:int, x:int)
+	+void drawEnemies()
+	+void drawDialog()
+	+void clean()
+	+char[][] getFrame()
+	+boolean isOver()
+	-private waitDialog()
+}
+
+class Story #white{
+	+scenes: List<char[][]>
+	-dialogs:List<String>
+	-next_dialog:List<Integer>
+	+isOver:boolean
+	-dialog_counter:int
+	-scene_counter:int
+	-storyPath:String
+	+void addScene(path:String)
+	+void init(path:String)
+	+void syncDialogs(step: int)
+	+void addDialog(dialog:String)
+	+String getDialog()
+}
+
+class Level #white{
+	+stages:List<char[][]>
+	+assets:List<char[][]>
+	-enemies: List<Enemie>
+	+Level(levelPath:String)
+	+void addStage(path:String)
+	+void addAsset(path:String)
+	+void init(path:String)
+	+void addEnemie(values:String)
+}
+
+abstract class FilesInput {
+	-settings:Properties 
+	-input:InputStream
+	+char[][] loadText(path:String)
+	+static Properties loadProperties(path:String)
+	+void loadSettings(settingsPath:String)
+	+Properties settings()
+	+void settings(sttgs:Properties)
+}
+class Enemie #white{
+	-start_time:long
+	-speed:int
+	-step:int
+	-steps:int
+	+Enemie()
+	+void update()
+	+int step()
+	+int speed()
+	+int getSteps()
+	+void step(step:int)
+	+void speed(speed:int)
+	+void setSteps(steps:int)
+}
+@enduml
