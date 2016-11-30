@@ -44,8 +44,7 @@ public class Player extends Entity implements Runnable
 	}
 	public void run()
 	{
-		while(CAPTURE_INPUT)
-		{
+		while(CAPTURE_INPUT){
 			captureInput();
 			move();
 			try{
@@ -65,7 +64,8 @@ public class Player extends Entity implements Runnable
 	{
 		this.CAPTURE_INPUT = false;
 	}
-	public void init(){
+	public void init()
+	{
 		//position
 		this.setX(0);
 		this.setY(0);
@@ -114,11 +114,14 @@ public class Player extends Entity implements Runnable
 		StringBuffer str = new StringBuffer();
 		char key = 'f';
 		try {
-			if( (System.currentTimeMillis() - start_time) > NEXT_KEY)
+			if( (System.currentTimeMillis() - start_time) > 
+				NEXT_KEY)
 			{
 				char new_key = (char)in.read(false);
 				//Evita que dejen presionada alguna tecla
-				if(last_key != new_key || times > 2){
+				if( (last_key != new_key) || 
+				    (times > 2) )
+				{
 					key = new_key;
 					last_key = key;
 					times = 0;
@@ -129,9 +132,10 @@ public class Player extends Entity implements Runnable
 				start_time = System.currentTimeMillis();
 			}	
 		} 
-		catch(IOException ex){key='f';}  
-		finally
-		{
+		catch(IOException ex){
+			key='f';
+		}  
+		finally{
 			return key;
 		}
 	} 
@@ -139,8 +143,7 @@ public class Player extends Entity implements Runnable
 	{
     	char keyCode = captureKey();
 	    dir = Entity.Direction.NONE;
-		    switch( keyCode ) 
-		    { 
+		    switch( keyCode ) { 
 		        case 'w':
 		            dir = Entity.Direction.UP;
 		            status = State.JUMPING;
@@ -174,10 +177,8 @@ public class Player extends Entity implements Runnable
 		 * area donde se dibuja el jugador
 		 */
 		char[][] drawArea = new char[this.img.SIZE_Y][this.img.SIZE_X];
-		for(int pos_y=0; pos_y<this.img.SIZE_Y; pos_y++)
-		{
-			for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++)
-			{
+		for(int pos_y=0; pos_y<this.img.SIZE_Y; pos_y++) {
+			for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++) {
 				drawArea[pos_y][pos_x] = frame[this.getY()+pos_y][this.getX()+pos_x];
 			}	
 		}
@@ -185,8 +186,7 @@ public class Player extends Entity implements Runnable
 		 * area debajo del jugador
 		 */
 		char[] bottom = new char[this.img.SIZE_X];
-		for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++)
-		{
+		for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++) {
 			bottom[pos_x]= frame[this.getY()+this.img.SIZE_Y][this.getX()+pos_x];
 		}
 
