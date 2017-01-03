@@ -10,13 +10,26 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import com.getgitman.gitman.git.GitCommandLine;
+import com.getgitman.gitman.*;
+public class Game
+{
+    GameInput gameInput = new GameInput();
+    Thread input = new Thread(gameInput);
+    int step_counter=0;
+    //input
+    String input_while_paused = null;
+    Properties storyline = FilesInput.loadProperties("storyline.properties");
+    //storyline
+    List<String> levelPaths = new ArrayList<String>();
+    List<String> storyPaths = new ArrayList<String>();
+    List<String> storySteps = new ArrayList<String>();  
 
-public class Game{
-	public static void main(String[] args)
+    public void start()
 	{
-		switch( menu() ){
-			case '1': play("storyline.properties", false);
+		switch( this.menu() ){
+			case '1': 
+                this.load("storyline.properties");
+                this.play();
 				break;
 			case 2:
 				break;
@@ -26,21 +39,13 @@ public class Game{
 	} 
 	public static int menu()
 	{
-		RawConsoleInput input = new RawConsoleInput();
+        GameInput input = new GameInput();
 		char op='0';
 		while( (op != '1') && (op !='3' ))
 		{
 			printBanner();
 			printMenu();
-			try{
-				op = (char)input.read(true);
-				input.resetConsoleMode();
-				input=null;
-				System.out.println(op);
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
+			op = input.getKey();
 		}
 		return op;
 	}
@@ -74,38 +79,14 @@ public class Game{
 		System.out.print("1) Start demo, 2)Exit \nOption:");
 	}
 
-	public static void play(String path, boolean newGame)
+	public void play()
 	{
-		//gitcmd
-		//GitCommandLine gitcmd = new GitCommandLine(git.properties);
-		int step_counter=0;
-		//input
-		String input_while_paused = null;
-		Properties storyline = FilesInput.loadProperties("storyline.properties");
-		//storyline
-		List<String> levelPaths = new ArrayList<String>();
-		List<String> storyPaths = new ArrayList<String>();
-		List<String> storySteps = new ArrayList<String>();		
-		//storyline 
-		for (String step : storyline.getProperty("storyline").split(",") )
-			storySteps.add(step);
-		//level
-		int l = 1;
-		while( storyline.getProperty("level"+Integer.toString(l)) != null )
-		{
-			levelPaths.add( storyline.getProperty("level"+Integer.toString(l)) );
-			l++;
-		}
-		//story
-		int s = 1;
-		while( storyline.getProperty("story"+Integer.toString(s)) != null )
-		{
-			storyPaths.add( storyline.getProperty("story"+Integer.toString(s)) );
-			s++;
-		}
+	
+		//GitCommandLine git = new GitCommandLine("git.json");
+		
+       
 		//Player
-		Player player = new Player();
-		Thread input = new Thread(player);
+		Player player = new Player(gameInput);
 		input.start();
 		while ( step_counter < storySteps.size() )
 		{
@@ -127,13 +108,33 @@ public class Game{
 			}
 			player.init();
 			System.out.flush();
-			while( !player.hasKey() && player.isAlive() && !disp.isOver() && (player.status != Player.State.PAUSED) )
+			while( !player.hasKey() && player.isAlive() && !disp.isOver() )
 			{	
 				disp.draw();
 				disp.drawEnemies();
 				player.collisions(disp.getFrame());
 				disp.draw(player.img.get(), player.getY(), player.getX());	
 				disp.print();
+                //console mode
+                if( player.status == Player.State.PAUSED )
+                {
+                    input.interrupt();
+                    String commands = "";
+                    try{
+                        RawConsoleInput in = new RawConsoleInput();
+                        char txt = (char)in.read(false);
+                        while(txt != '\n'){
+                            commands += in;
+                            txt = (char)in.read(false);
+                        }
+                        in.resetConsoleMode();
+                    }
+                    catch(Exception e){}
+                    finally{
+                        System.out.println(commands);
+       //                 git.interpreter(commands.split(" "));
+                    }
+                }
 			}
 			// el jugador entro a la consola
 			if(player.status == Player.State.PAUSED){
@@ -156,8 +157,28 @@ public class Game{
 		//final del juego
 		input.interrupt();
 		printEndBanner();
-	}
-	public static void printDeadBanner()
+    }
+    public void load(String path)
+    {
+        //storyline 
+        for (String step : storyline.getProperty("storyline").split(",") )
+            storySteps.add(step);
+        //level
+        int l = 1;
+        while( storyline.getProperty("level"+Integer.toString(l)) != null )
+        {
+            levelPaths.add( storyline.getProperty("level"+Integer.toString(l)) );
+            l++;
+        }
+        //story
+        int s = 1;
+        while( storyline.getProperty("story"+Integer.toString(s)) != null )
+        {
+            storyPaths.add( storyline.getProperty("story"+Integer.toString(s)) );
+            s++;
+        }
+    }
+	public void printDeadBanner()
 	{
 		//hardcoded banner
 		Display.clean();
@@ -169,7 +190,7 @@ public class Game{
 		System.out.print("\n\n\n\n\n\n\n");
 		sleep(3000);
 	}	
-	public static void printEndBanner()
+	public void printEndBanner()
 	{
 		System.out.print("\n\n\n\n\n\n\n");
 		Display.clean();
@@ -185,7 +206,7 @@ public class Game{
 		System.out.print("\n\n");
 		sleep(3000);
 	}
-	public static void sleep(int time){
+	public void sleep(int time){
 		try{
 			Thread.sleep(time);
 		}

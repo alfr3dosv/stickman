@@ -1,4 +1,3 @@
-/home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/TestLevel.java
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/Game.java
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/Player.java
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/Story.java
@@ -6,7 +5,7 @@
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/git/GitCommandLine.java
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/Display.java
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/Enemie.java
+/home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/GameInput.java
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/RawConsoleInput.java
-/home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/TestPlayer.java
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/FilesInput.java
 /home/alfredo/progra/java/gitman/game/src/main/java/com/getgitman/gitman/Level.java

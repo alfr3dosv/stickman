@@ -2,18 +2,13 @@ package com.getgitman.gitman;
 
 import java.util.*;
 import java.io.*;
+import com.getgitman.gitman.*;
 
-public class Player extends Entity implements Runnable
+public class Player extends Entity 
 {
 	public volatile State status = State.STATIC;
 	//input
-	private int times=0;
-	private RawConsoleInput in;
-	private volatile char key;
-	private char last_key;
-	private long start_time;// contador de tiempo entre teclas
-	private final int NEXT_KEY=20;//intervalo de tiempo entre teclas
-	private boolean CAPTURE_INPUT=true;
+    GameInput input;
 	//jumping
 	private long jump_start=0; //contadoe entre espacios
 	private final int JUMP_WAIT=100;
@@ -30,9 +25,9 @@ public class Player extends Entity implements Runnable
 	 */ 
 	private boolean STAGE_KEY = false;
 
-	public Player()
+	public Player(GameInput input)
 	{
-		in = new RawConsoleInput();
+        this.input = input;
 		//Image
 		char[] new_img_0 ={' ','o',' '};
 		char[] new_img_1 = {'/','|','\\'};
@@ -44,28 +39,7 @@ public class Player extends Entity implements Runnable
 		this.img = new Image(3,3,new_img);
 
 	}
-	public void run()
-	{
-		while(CAPTURE_INPUT){
-			captureInput();
-			move();
-			try{
-				in.resetConsoleMode();
-				System.out.flush();
-			}
-			catch (Exception e){
-				e.printStackTrace();
-			}
-		}
-		try{
-			in.resetConsoleMode();
-		}
-		catch(Exception e){}
-	}
-	public void interrupt()
-	{
-		this.CAPTURE_INPUT = false;
-	}
+
 	public void init()
 	{
 		//position
@@ -111,39 +85,10 @@ public class Player extends Entity implements Runnable
 			speed_x = 0;
 		}
 	}
-	public char captureKey()
-	{
-		StringBuffer str = new StringBuffer();
-		char key = 'f';
-		try {
-			if( (System.currentTimeMillis() - start_time) > 
-				NEXT_KEY)
-			{
-				char new_key = (char)in.read(false);
-				//Evita que dejen presionada alguna tecla
-				if( (last_key != new_key) || 
-				    (times > 2) )
-				{
-					key = new_key;
-					last_key = key;
-					times = 0;
-				}
-				else{
-					times++;
-				}
-				start_time = System.currentTimeMillis();
-			}	
-		} 
-		catch(IOException ex){
-			key='f';
-		}  
-		finally{
-			return key;
-		}
-	} 
+
 	public void captureInput() 
 	{
-    	char keyCode = captureKey();
+    	char keyCode = input.getKey();
 	    dir = Entity.Direction.NONE;
 		    switch( keyCode ) { 
 		        case 'w':
@@ -184,7 +129,7 @@ public class Player extends Entity implements Runnable
 				drawArea[pos_y][pos_x] = frame[this.getY()+pos_y][this.getX()+pos_x];
 			}	
 		}
-		/* bootm
+		/* botom
 		 * area debajo del jugador
 		 */
 		char[] bottom = new char[this.img.SIZE_X];
@@ -308,4 +253,8 @@ public class Player extends Entity implements Runnable
 	{
 		return this.STAGE_KEY;
 	}
+    public void update(){
+        this.captureInput();
+        this.move();
+    }
 }

@@ -62,4 +62,6 @@ public abstract class Entity
 	public boolean isAlive(){return this.alive;}
 	public void kill(){this.alive = false;}
 	public void setAlive(){this.alive = true;}
+
+    public abstract void update();
 }
