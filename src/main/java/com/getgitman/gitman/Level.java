@@ -6,12 +6,13 @@ import java.util.stream.Collectors;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
+import com.getgitman.*;
 
-public class Level extends FilesInput
+public class Level extends FilesInput implements Displayable
 {
 	public List<char[][]> stages = new ArrayList<char[][]>();
 	private List<char[][]> assets = new ArrayList<char[][]>();
-	public List<Enemie> enemies = new ArrayList<Enemie>(); 
+	public List<Entity> entitys = new ArrayList<Entity>(); 
 	private String levelPath;
 
 	public Level(){
@@ -52,9 +53,9 @@ public class Level extends FilesInput
 			this.addStage( levelPath+settings().getProperty("stage"+Integer.toString(s)) );
 			s++;
 		}
-		//enemies
+		//entitys
 		int e = 1;
-		while( settings().getProperty("enemie"+Integer.toString(e)) != null )
+		while (settings().getProperty("enemie"+Integer.toString(e)) != null )
 		{
 			this.addEnemie( settings().getProperty("enemie"+Integer.toString(e)) );
 			e++;
@@ -87,6 +88,36 @@ public class Level extends FilesInput
 			break;
 			default:enemie.dir = Entity.Direction.NONE;
 		}
-		this.enemies.add(enemie);
+		this.entitys.add(enemie);
 	}
+    public void addEntity(Entity enti)
+    {
+        this.entitys.add(enti);
+    }
+
+    public void update()
+    {
+        for(Entity en : entitys){
+            en.update();
+        }
+    }
+    public char[][] getImage()
+    {
+        char[][] image = new char[Display.SIZE_Y][Display.SIZE_X];
+        for(int y=0; y<Display.SIZE_Y; y++){
+            for(int x=0; x<Display.SIZE_X; x++){
+                image[y][x]=this.stages.get(0)[y][x];              
+            }
+        }
+        return image;
+    }
+
+    public String getDialogs(){
+        return null;
+    }
+    
+    public List<Entity> getEntitys()
+    {
+        return entitys;
+    }
 }

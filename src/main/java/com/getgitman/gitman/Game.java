@@ -37,15 +37,14 @@ public class Game
 				break;
 		}
 	} 
-	public static int menu()
+	public int menu()
 	{
-        GameInput input = new GameInput();
 		char op='0';
 		while( (op != '1') && (op !='3' ))
 		{
 			printBanner();
 			printMenu();
-			op = input.getKey();
+			op = (char)gameInput.rawRead(true);
 		}
 		return op;
 	}
@@ -81,11 +80,7 @@ public class Game
 
 	public void play()
 	{
-	
 		//GitCommandLine git = new GitCommandLine("git.json");
-		
-       
-		//Player
 		Player player = new Player(gameInput);
 		input.start();
 		while ( step_counter < storySteps.size() )
@@ -100,21 +95,20 @@ public class Game
 			Display disp;
 			if(step.equals("story") ){ //modo historia
 				String storyPath = storyPaths.get(Integer.valueOf(index)-1);
-				disp = new Display( "assets/" + storyPath + "/" + storyPath + ".properties", true );
+				Story story = new Story( "assets/" + storyPath + "/" + storyPath + ".properties");
+                disp = new Display(story,gameInput);
 			}
 			else { //modo normal
 				String levelPath = levelPaths.get(Integer.valueOf(index)-1);
-				disp = new Display( "assets/" + levelPath + "/" + levelPath + ".properties");
+				Level level = new Level( "assets/" + levelPath + "/" + levelPath + ".properties");
+                level.addEntity(player);
+                disp = new Display(level,gameInput);
 			}
 			player.init();
 			System.out.flush();
-			while( !player.hasKey() && player.isAlive() && !disp.isOver() )
+			while( !player.hasKey() && player.isAlive() && !disp.isOver())
 			{	
-				disp.draw();
-				disp.drawEnemies();
-				player.collisions(disp.getFrame());
-				disp.draw(player.img.get(), player.getY(), player.getX());	
-				disp.print();
+				disp.update();
                 //console mode
                 if( player.status == Player.State.PAUSED )
                 {
@@ -146,13 +140,10 @@ public class Game
 				printDeadBanner();
 			}
 			// el jugador consiguio la llave
-			else if( player.hasKey() ){
+			else if( player.hasKey() || disp.isOver() ){
 				step_counter++;
 			}
 			// se acabo la parte de historia
-			else if(disp.isOver() ){
-				step_counter++;
-			}
 		}
 		//final del juego
 		input.interrupt();
@@ -206,7 +197,7 @@ public class Game
 		System.out.print("\n\n");
 		sleep(3000);
 	}
-	public void sleep(int time){
+	public static void sleep(int time){
 		try{
 			Thread.sleep(time);
 		}

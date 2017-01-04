@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
 
-public class Story extends FilesInput
+public class Story extends FilesInput implements Displayable
 {
 	public List<char[][]> scenes = new ArrayList<char[][]>();
 	private List<String> dialogs = new ArrayList<String>();
@@ -16,6 +16,7 @@ public class Story extends FilesInput
 	private int dialog_counter=0;
 	private int scene_counter=1;
 	private String storyPath;
+    private String currentDialog = "";
 
 	public Story(){
 
@@ -68,29 +69,57 @@ public class Story extends FilesInput
 	public void syncDialogs(int step){
 		next_dialog.add(step);
 	}
+
 	public void addDialog(String dialog)
 	{
 		this.dialogs.add(dialog);
 	}
-	public String getDialog(){
-		String output="";
-		if( (next_dialog.size() < 1) || 
-			(dialog_counter >= dialogs.size()) )
-		{
-			isOver=true;
-		}
-		else if( (dialog_counter >= next_dialog.get(0)) && 
-				 (next_dialog.size()>=1) ) 
-		//se leyeron todos los dialogos de esta escena
-		{ 
-			next_dialog.remove(0);
-			output = ""; //reseteanos los dialogos, drawDialog() recibe ""
-			if(scenes.size() > 1)
-				scenes.remove(0);
-		}
-		else if( dialog_counter < dialogs.size() ){
-			output = dialogs.get(dialog_counter++);
-		}
-		return output;
-	}
+    
+    public void update()
+    {
+        String dialog=null;
+        if( (next_dialog.size() < 1) || 
+            (dialog_counter >= dialogs.size()) )
+        {
+            isOver=true;
+        }
+        else if( (dialog_counter >= next_dialog.get(0)) && 
+                 (next_dialog.size()>=1) ) 
+        //se leyeron todos los dialogos de esta escena
+        { 
+            next_dialog.remove(0);
+            //reseteanos los dialogos, drawDialog() recibe ""
+            currentDialog="";
+            dialog = "";
+            if(scenes.size() > 1)
+                scenes.remove(0);
+        }
+        else if( dialog_counter < dialogs.size() ){
+            dialog = dialogs.get(dialog_counter++);
+        }
+        currentDialog+="\n";
+        currentDialog+=dialog;  
+    }
+
+    public String getDialogs()
+    {
+        return currentDialog;
+    }
+    
+    public char[][] getImage()
+    {
+        char[][] image = new char[Display.SIZE_Y][Display.SIZE_X];
+        for(int y=0; y<Display.SIZE_Y; y++){
+            for(int x=0; x<Display.SIZE_X; x++){
+                image[y][x]=this.scenes.get(0)[y][x];              
+            }
+        }
+        if(isOver){
+            image = null;
+        }
+        return image;
+    }
+    public List<Entity> getEntitys(){
+        return null;
+    }
 }
