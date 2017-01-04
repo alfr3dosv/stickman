@@ -1,3 +1,16 @@
+// Copyright 2015 Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland
+// www.source-code.biz, www.inventec.ch/chdh
+//
+// This module is multi-licensed and may be used under the terms of any of the following licenses:
+//
+//  LGPL, GNU Lesser General Public License, V2.1 or later, http://www.gnu.org/licenses/lgpl.html
+//  EPL, Eclipse Public License, V1.0 or later, http://www.eclipse.org/legal
+//
+// Please contact the author if you need another license.
+// This module is provided "as is", without warranties of any kind.
+//
+// Home page: http://www.source-code.biz/snippets/java/RawConsoleInput
+
 package com.getgitman.gitman;
 import java.io.InputStream;
 import java.io.IOException;

@@ -34,7 +34,6 @@ public class Level extends FilesInput implements Displayable
 
 	public void init(String path)
 	{
-		//loading settings
 		this.loadSettings(path);
 		/* levelPath
 		 * hacemos un split sobre path, lo convertimos a string quitando el ultimo indice 
@@ -42,34 +41,33 @@ public class Level extends FilesInput implements Displayable
 		 */
 		StringBuilder builderPath = new StringBuilder();
 		String[] text = path.split("/"); 
-		for(int i=0; i<text.length-1; i++) {
+		for(int i=0; i<text.length-1; i++) 
+        {
 		  builderPath.append(text[i]+"/");
 		}
 		this.levelPath = builderPath.toString();
-		//stages
-		int s = 1;
-		while( settings().getProperty("stage"+Integer.toString(s)) != null )
+		int stages = 1;   // numero de stages
+		while( settings().getProperty("stage"+Integer.toString(stages)) != null )
 		{
-			this.addStage( levelPath+settings().getProperty("stage"+Integer.toString(s)) );
-			s++;
+			this.addStage( levelPath+settings().getProperty("stage"+Integer.toString(stages)) );
+			stages++;
 		}
-		//entitys
-		int e = 1;
-		while (settings().getProperty("enemie"+Integer.toString(e)) != null )
+		int entys = 1;    // numero de entitys
+		while (settings().getProperty("enemie"+Integer.toString(entys)) != null )
 		{
-			this.addEnemie( settings().getProperty("enemie"+Integer.toString(e)) );
-			e++;
+			this.addEnemie( settings().getProperty("enemie"+Integer.toString(entys)) );
+			entys++;
 		}
 		
 	}
 
 	public void addEnemie(String values)
 	{
-		final int X = 0;
-		final int Y = 1;
-		final int DIR = 2;
-		final int SPEED = 3;
-		final int STEPS = 4;
+		final byte X = 0;
+		final byte Y = 1;
+		final byte DIR = 2;
+		final byte SPEED = 3;
+		final byte STEPS = 4;
 		String[] data = values.split(",");
 		Enemie enemie = new Enemie();
 		enemie.setX( Integer.parseInt(data[X]) ) ;
@@ -90,6 +88,7 @@ public class Level extends FilesInput implements Displayable
 		}
 		this.entitys.add(enemie);
 	}
+
     public void addEntity(Entity enti)
     {
         this.entitys.add(enti);
@@ -97,15 +96,18 @@ public class Level extends FilesInput implements Displayable
 
     public void update()
     {
-        for(Entity en : entitys){
+        for(Entity en : entitys)
+        {
             en.update();
         }
     }
     public char[][] getImage()
     {
         char[][] image = new char[Display.SIZE_Y][Display.SIZE_X];
-        for(int y=0; y<Display.SIZE_Y; y++){
-            for(int x=0; x<Display.SIZE_X; x++){
+        for(int y=0; y<Display.SIZE_Y; y++)
+        {
+            for(int x=0; x<Display.SIZE_X; x++)
+            {
                 image[y][x]=this.stages.get(0)[y][x];              
             }
         }

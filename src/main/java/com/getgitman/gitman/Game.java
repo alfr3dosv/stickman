@@ -1,5 +1,6 @@
-package com.getgitman.gitman;
+// Home page: www.getgitman.com
 
+package com.getgitman.gitman;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,8 @@ public class Game
 
     public void start()
 	{
-		switch( this.menu() ){
+		switch( this.menu() )
+        {
 			case '1': 
                 this.load("storyline.properties");
                 this.play();
@@ -85,20 +87,19 @@ public class Game
 		input.start();
 		while ( step_counter < storySteps.size() )
 		{
-			//paso en la historia, elimina el paso
-			String step = storySteps.get(step_counter);
-			//numero del nivel o historia
-			String index = String.valueOf( step.toCharArray()[step.toCharArray().length-1] );
-			// elimina el ultimo digito
+			String step = storySteps.get(step_counter);  //paso en la historia
+			String index = String.valueOf( step.toCharArray()[step.toCharArray().length-1] ); //numero del nivel o histor
 			step= step.substring( 0,(step.length()-1) ); 
 			//display
 			Display disp;
-			if(step.equals("story") ){ //modo historia
+			if(step.equals("story") )    // escenas y dialogos
+            {
 				String storyPath = storyPaths.get(Integer.valueOf(index)-1);
 				Story story = new Story( "assets/" + storyPath + "/" + storyPath + ".properties");
                 disp = new Display(story,gameInput);
 			}
-			else { //modo normal
+			else     //modo normal, no escenas ni dialogos
+            {
 				String levelPath = levelPaths.get(Integer.valueOf(index)-1);
 				Level level = new Level( "assets/" + levelPath + "/" + levelPath + ".properties");
                 level.addEntity(player);
@@ -108,67 +109,52 @@ public class Game
 			System.out.flush();
 			while( !player.hasKey() && player.isAlive() && !disp.isOver())
 			{	
+                //player.update();
 				disp.update();
                 //console mode
-                if( player.status == Player.State.PAUSED )
-                {
-                    input.interrupt();
-                    String commands = "";
-                    try{
-                        RawConsoleInput in = new RawConsoleInput();
-                        char txt = (char)in.read(false);
-                        while(txt != '\n'){
-                            commands += in;
-                            txt = (char)in.read(false);
-                        }
-                        in.resetConsoleMode();
-                    }
-                    catch(Exception e){}
-                    finally{
-                        System.out.println(commands);
-       //                 git.interpreter(commands.split(" "));
-                    }
-                }
 			}
-			// el jugador entro a la consola
-			if(player.status == Player.State.PAUSED){
+			
+			if(player.status == Player.State.PAUSED)     // el jugador entro a la consola
+            {
 				System.out.println("No disponible en demo");
 				player.status = Player.State.STATIC;
 			}
-			// el jugador murio 
-			else if( !player.isAlive() ){
+			else if( !player.isAlive() )    // el jugador murio
+            {
 				printDeadBanner();
 			}
-			// el jugador consiguio la llave
-			else if( player.hasKey() || disp.isOver() ){
+			else if( player.hasKey() || disp.isOver() )      // el jugador consiguio la llave
+            { 
 				step_counter++;
 			}
-			// se acabo la parte de historia
 		}
 		//final del juego
 		input.interrupt();
 		printEndBanner();
     }
+
     public void load(String path)
     {
-        //storyline 
         for (String step : storyline.getProperty("storyline").split(",") )
+        {
             storySteps.add(step);
-        //level
-        int l = 1;
-        while( storyline.getProperty("level"+Integer.toString(l)) != null )
-        {
-            levelPaths.add( storyline.getProperty("level"+Integer.toString(l)) );
-            l++;
         }
-        //story
-        int s = 1;
-        while( storyline.getProperty("story"+Integer.toString(s)) != null )
+        
+        int levels = 1; //cantidad de niveles
+        while( storyline.getProperty("level"+Integer.toString(levels)) != null )
         {
-            storyPaths.add( storyline.getProperty("story"+Integer.toString(s)) );
-            s++;
+            levelPaths.add( storyline.getProperty("level"+Integer.toString(levels)) );
+            levels++;
+        }
+
+        int scene = 1; //cantidad de escenas
+        while( storyline.getProperty("story"+Integer.toString(scene)) != null )
+        {
+            storyPaths.add( storyline.getProperty("story"+Integer.toString(scene)) );
+            scene++;
         }
     }
+
 	public void printDeadBanner()
 	{
 		//hardcoded banner
@@ -181,6 +167,7 @@ public class Game
 		System.out.print("\n\n\n\n\n\n\n");
 		sleep(3000);
 	}	
+
 	public void printEndBanner()
 	{
 		System.out.print("\n\n\n\n\n\n\n");
@@ -197,11 +184,15 @@ public class Game
 		System.out.print("\n\n");
 		sleep(3000);
 	}
-	public static void sleep(int time){
-		try{
+
+	public static void sleep(int time)
+    {
+		try
+        {
 			Thread.sleep(time);
 		}
-		catch (Exception e){
+		catch (Exception e)
+        {
 			e.printStackTrace();
 		}
 	}
