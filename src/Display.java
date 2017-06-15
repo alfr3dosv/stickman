@@ -34,26 +34,23 @@ public class Display
 		step = 0;
 		start_time = System.currentTimeMillis();	
 	}
-	public Display(String levelPath)
-	{
-		this.init(levelPath);
-	}
+
 	public Display(String storyPath, boolean mode)
 	{
 		this.init(storyPath, mode);
 	}
-	public void init(String levelPath)
+
+	public void init(String path, boolean isAScene)
 	{		
 		step = 0;
 		start_time = System.currentTimeMillis();
-		level = new Level(levelPath);
-	}
-	public void init(String storyPath, boolean mode)
-	{		
-		step = 0;
-		start_time = System.currentTimeMillis();
-		story = new Story(storyPath);
-		STORY_MODE=true;	
+		if(isAScene) {
+			STORY_MODE=true;
+			story = new Story(path);
+		}
+		else {
+			level = new Level(path);
+		}
 	}
 	public void print()
 	{
