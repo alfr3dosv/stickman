@@ -4,7 +4,10 @@
 # Nota: llamar desde la raiz del juego
 javac -classpath jna.jar:. src/*.java src/files/*.java
 rm -r build/*
-mkdir build/assets
-mv src/*.class build
-cp -r ./assets/* ./build/assets
-cp -r ./storyline.properties* ./build/
+mkdir build/game
+mkdir build/game/assets
+mkdir build/game/files
+mv src/*.class build/game
+mv src/files/*.class build/game/files
+cp -r ./assets/* ./build/game/assets
+cp -r ./storyline.properties* ./build/game
