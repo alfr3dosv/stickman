@@ -1,11 +1,13 @@
+package game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
+import game.files.*;
 
-public class Level extends FilesInput
+public class Level extends ReadFile
 {
 	public List<char[][]> stages = new ArrayList<char[][]>();
 	private List<char[][]> assets = new ArrayList<char[][]>();

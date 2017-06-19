@@ -1,3 +1,4 @@
+package game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +9,7 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
+import game.files.*;
 
 public class Game{
     private Properties storylineFile;
@@ -128,7 +129,7 @@ public class Game{
     }
 
     private Properties readStorylineFile() {
-        Properties file = FilesInput.loadProperties("storyline.properties");
+        Properties file = ReadFile.loadProperties("storyline.properties");
         return file;
     }
 

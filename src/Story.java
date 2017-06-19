@@ -1,11 +1,13 @@
+package game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
+import game.files.*;
 
-public class Story extends FilesInput
+public class Story extends ReadFile
 {
 	public List<char[][]> scenes = new ArrayList<char[][]>();
 	private List<String> dialogs = new ArrayList<String>();

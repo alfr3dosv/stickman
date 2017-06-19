@@ -1,3 +1,4 @@
+package game.files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +10,7 @@ import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public abstract class FilesInput
+public abstract class ReadFile
 {
 	//file
 	private Properties settings = new Properties();
