@@ -1,7 +1,8 @@
-package game;
+package game.player;
 import java.util.*;
 import java.io.*;
 import game.entity.Entity;
+import game.RawConsoleInput;
 
 public class Player extends Entity implements Runnable
 {

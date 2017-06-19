@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import game.files.*;
 import game.entity.Entity;
 import game.display.Display;
+import game.player.Player;
 
 public class Game{
     private Properties storylineFile;
