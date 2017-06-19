@@ -1,4 +1,5 @@
-package game;
+package game.entity;
+import game.Display;
 
 public abstract class Entity
 {

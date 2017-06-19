@@ -1,4 +1,6 @@
 package game;
+import game.entity.Entity;
+
 public class Enemie extends Entity{
 	private long start_time=0;
 	private int speed;

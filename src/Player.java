@@ -1,6 +1,7 @@
 package game;
 import java.util.*;
 import java.io.*;
+import game.entity.Entity;
 
 public class Player extends Entity implements Runnable
 {

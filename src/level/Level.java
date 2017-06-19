@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.lang.StringBuilder;
 import game.files.*;
 import game.Enemie;
-import game.Entity;
+import game.entity.Entity;
 
 public class Level extends ReadFile
 {

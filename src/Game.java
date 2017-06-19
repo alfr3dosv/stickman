@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import game.files.*;
+import game.entity.Entity;
 
 public class Game{
     private Properties storylineFile;
