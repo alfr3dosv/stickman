@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.StringBuilder;
 import java.io.IOException;
+import game.level.*;
 
 public class Display
 {
