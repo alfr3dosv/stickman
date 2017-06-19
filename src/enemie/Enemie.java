@@ -1,4 +1,4 @@
-package game;
+package game.enemie;
 import game.entity.Entity;
 
 public class Enemie extends Entity{

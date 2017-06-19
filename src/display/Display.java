@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 import java.lang.StringBuilder;
 import java.io.IOException;
 import game.level.*;
-import game.Enemie;
+import game.enemie.Enemie;
 import game.RawConsoleInput;
 
 public class Display
