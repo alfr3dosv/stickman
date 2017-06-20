@@ -1,2 +1,30 @@
 description = 'gitman build'
 version = '0.3'
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()  
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'game.Launcher'
+    }
+}
+
+dependencies {
+    //compile 'com.google.guava:guava:20.0'  
+    compile 'net.java.dev.jna:jna:3.5.0'
+    //testCompile 'junit:junit:4.12'         
+}
+
+mainClassName = 'game.Launcher' 
