@@ -1,3 +1,4 @@
+.gradle/*
 ENV
 build/*
 tmp/*
