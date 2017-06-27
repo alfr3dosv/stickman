@@ -13,6 +13,7 @@ import game.files.*;
 import game.entity.Entity;
 import game.display.Display;
 import game.player.Player;
+import game.player.Input;
 
 public class Game{
     private Properties storylineFile;
@@ -58,13 +59,13 @@ public class Game{
         Display.clean();
         System.out.println();
         System.out.println();
-        System.out.println("    ######   #### ######## ##     ##    ###    ##    ## "); 
-        System.out.println("   ##    ##   ##     ##    ###   ###   ## ##   ###   ## "); 
-        System.out.println("   ##         ##     ##    #### ####  ##   ##  ####  ## "); 
-        System.out.println("   ##   ####  ##     ##    ## ### ## ##     ## ## ## ## "); 
-        System.out.println("   ##    ##   ##     ##    ##     ## ######### ##  #### "); 
-        System.out.println("   ##    ##   ##     ##    ##     ## ##     ## ##   ### "); 
-        System.out.println("    ######   ####    ##    ##     ## ##     ## ##    ## "); 
+        System.out.println("    ######   #### ######## ##     ##    ###    ##    ## ");
+        System.out.println("   ##    ##   ##     ##    ###   ###   ## ##   ###   ## ");
+        System.out.println("   ##         ##     ##    #### ####  ##   ##  ####  ## ");
+        System.out.println("   ##   ####  ##     ##    ## ### ## ##     ## ## ## ## ");
+        System.out.println("   ##    ##   ##     ##    ##     ## ######### ##  #### ");
+        System.out.println("   ##    ##   ##     ##    ##     ## ##     ## ##   ### ");
+        System.out.println("    ######   ####    ##    ##     ## ##     ## ##    ## ");
     }
 
     public void printMenu()
@@ -91,13 +92,12 @@ public class Game{
         do
         {
             player.init();
-            while( !player.hasKey() && player.isAlive() && !display.isOver() ) 
-            //&& (player.status != Player.State.PAUSED)) consola no disponible en demo
-            {   
+            while( !player.hasKey() && player.isAlive() && !display.isOver() )
+            {
                 display.draw();
                 display.drawEnemies();
                 player.collisions(display.getFrame());
-                display.draw(player.img.get(), player.getY(), player.getX());  
+                display.draw(player.img.get(), player.getY(), player.getX());
                 display.print();
             }
             // el jugador entro a la consola
@@ -138,7 +138,7 @@ public class Game{
 
     private List<String> getScenesFilesPaths() {
         List<String> filesPaths = new ArrayList<String>();
-        for(int i = 1; 
+        for(int i = 1;
             storylineFile.getProperty("story"+Integer.toString(i)) != null; i++)
         {
             String path = storylineFile.getProperty("story"+Integer.toString(i));
@@ -150,7 +150,7 @@ public class Game{
     private List<String> getLevelsFilesPaths() {
         List<String> filesPaths = new ArrayList<String>();
         for(int i = 1;
-            storylineFile.getProperty("level"+Integer.toString(i)) != null; i++) 
+            storylineFile.getProperty("level"+Integer.toString(i)) != null; i++)
         {
             String path = storylineFile.getProperty("level"+Integer.toString(i));
             filesPaths.add(path);
@@ -160,7 +160,7 @@ public class Game{
 
     private String getNextStep() {
         List<String> storylineSteps = new ArrayList<String>();
-        for (String step: 
+        for (String step:
              storylineFile.getProperty("storyline").split(",") )
         {
             storylineSteps.add(step);
@@ -170,20 +170,20 @@ public class Game{
         }
         else {
             return null;
-        } 
+        }
 
     }
-    
+
     private void loadNextStep() {
         String step = getNextStep();
-        String stepText = step.substring( 0,(step.length()-1) ); 
+        String stepText = step.substring( 0,(step.length()-1) );
         boolean isAScene = stepText.equals("story");
         String fileName = null;
         if(step != null) {
-            if(isAScene &&  scenesFilesPaths.size() > 0){ 
+            if(isAScene &&  scenesFilesPaths.size() > 0){
                 fileName = scenesFilesPaths.remove(0);
             }
-            else if(levelsFilesPaths.size() > 0) { 
+            else if(levelsFilesPaths.size() > 0) {
                 fileName = levelsFilesPaths.remove(0);
             }
             else {
@@ -209,7 +209,7 @@ public class Game{
         System.out.println("\t\t |/__\\|/__\\|/__\\|/__\\| ");
         System.out.print("\n\n\n\n\n\n\n");
         sleep(3000);
-    }   
+    }
 
     public void printEndBanner()
     {
@@ -218,12 +218,12 @@ public class Game{
         System.out.print("\n\n");
         System.out.println("  ____________________         ");
         System.out.println(" < The demo ends here >        ");
-        System.out.println("  --------------------         ");    
-        System.out.println("         \\   ^__^              ");               
-        System.out.println("          \\  (oo)\\_______      ");     
-        System.out.println("             (__)\\       )\\/\\  ");     
-        System.out.println("                 ||----w |     ");  
-        System.out.println("                 ||     ||     ");         
+        System.out.println("  --------------------         ");
+        System.out.println("         \\   ^__^              ");
+        System.out.println("          \\  (oo)\\_______      ");
+        System.out.println("             (__)\\       )\\/\\  ");
+        System.out.println("                 ||----w |     ");
+        System.out.println("                 ||     ||     ");
         System.out.print("\n\n");
         sleep(3000);
     }

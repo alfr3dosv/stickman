@@ -1,20 +1,14 @@
+//Captura las entradas del teclado y maneja las colisiones
 package game.player;
 import java.util.*;
 import java.io.*;
 import game.entity.Entity;
 import game.RawConsoleInput;
+import game.input.Input;
 
 public class Player extends Entity implements Runnable
 {
 	public volatile State status = State.STATIC;
-	//input
-	private int times=0;
-	private RawConsoleInput in;
-	private volatile char key;
-	private char last_key;
-	private long start_time;// contador de tiempo entre teclas
-	private final int NEXT_KEY=20;//intervalo de tiempo entre teclas
-	private boolean CAPTURE_INPUT=true;
 	//jumping
 	private long jump_start=0; //contadoe entre espacios
 	private final int JUMP_WAIT=100;
@@ -24,16 +18,17 @@ public class Player extends Entity implements Runnable
 	private long fall_start=0;
     final int FALL_WAIT=50;
 	private int fall_step=0;
-	
+	boolean CAPTURE_INPUT = true;
+	char[] context;
 	private int speed_x;
 	/* STAGE_KEY
 	 * Si el jugador encontro la llave del stage pasa al siguiente stage o nivel
-	 */ 
+	 */
 	private boolean STAGE_KEY = false;
+	public enum State {JUMPING, FALLING, WALKING, STATIC, PAUSED}
 
 	public Player()
 	{
-		in = new RawConsoleInput();
 		//Image
 		char[] new_img_0 ={' ','o',' '};
 		char[] new_img_1 = {'/','|','\\'};
@@ -51,7 +46,6 @@ public class Player extends Entity implements Runnable
 			captureInput();
 			move();
 			try{
-				in.resetConsoleMode();
 				System.out.flush();
 			}
 			catch (Exception e){
@@ -59,7 +53,7 @@ public class Player extends Entity implements Runnable
 			}
 		}
 		try{
-			in.resetConsoleMode();
+			Input.in.resetConsoleMode();
 		}
 		catch(Exception e){}
 	}
@@ -80,13 +74,13 @@ public class Player extends Entity implements Runnable
 	{
 		if(status == State.JUMPING){
 			jump();
-		}	
+		}
 		switch (dir)
 		{
-			case DOWN: 
+			case DOWN:
 				this.setY( (this.getY()+1));
 			break;
-		
+
 			case LEFT:
 				this.setX(this.getX()-1);
 				if(speed_x>0){
@@ -105,74 +99,42 @@ public class Player extends Entity implements Runnable
 				else if(speed_x<3){
 					speed_x++;
 				}
-				
+
 			break;
 		}
 		if(status == State.STATIC){
 			speed_x = 0;
 		}
 	}
-	public char captureKey()
-	{
-		StringBuffer str = new StringBuffer();
-		char key = 'f';
-		try {
-			if( (System.currentTimeMillis() - start_time) > 
-				NEXT_KEY)
-			{
-				char new_key = (char)in.read(false);
-				//Evita que dejen presionada alguna tecla
-				if( (last_key != new_key) || 
-				    (times > 2) )
-				{
-					key = new_key;
-					last_key = key;
-					times = 0;
-				}
-				else{
-					times++;
-				}
-				start_time = System.currentTimeMillis();
-			}	
-		} 
-		catch(IOException ex){
-			key='f';
-		}  
-		finally{
-			return key;
-		}
-	} 
-	public void captureInput() 
-	{
-    	char keyCode = captureKey();
-	    dir = Entity.Direction.NONE;
-		    switch( keyCode ) { 
-		        case 'w':
-		            dir = Entity.Direction.UP;
-		            status = State.JUMPING;
-		            break;
-		        case 's':
-		            dir = Entity.Direction.DOWN;
-		            status = State.FALLING;
-		            break;
-		        case 'a':
-		            dir = Entity.Direction.LEFT;
-		            status = State.WALKING;
-		            break;
-		        case 'd':
-		            dir = Entity.Direction.RIGHT;
-		            status = State.WALKING;
-		            break;
-		        case ':':
-		        	dir = Entity.Direction.NONE;
-		        	status = State.PAUSED;
-		        	break;
-		       	default:
-		       		dir = Entity.Direction.NONE;
-		     }
-	 }
 
-	public enum State {JUMPING, FALLING, WALKING, STATIC, PAUSED}
+    public void captureInput() {
+        char keyCode = Input.getKey();
+        dir = Entity.Direction.NONE;
+        switch( keyCode ) {
+            case 'w':
+                dir = Entity.Direction.UP;
+                status = State.JUMPING;
+                break;
+            case 's':
+                dir = Entity.Direction.DOWN;
+                status = State.FALLING;
+                break;
+            case 'a':
+                dir = Entity.Direction.LEFT;
+                status = State.WALKING;
+                break;
+            case 'd':
+                dir = Entity.Direction.RIGHT;
+                status = State.WALKING;
+                break;
+            case ':':
+                dir = Entity.Direction.NONE;
+                status = State.PAUSED;
+                break;
+            default:
+                dir = Entity.Direction.NONE;
+        }
+    }
 
 	public void collisions(char[][] frame)
 	{
@@ -183,7 +145,7 @@ public class Player extends Entity implements Runnable
 		for(int pos_y=0; pos_y<this.img.SIZE_Y; pos_y++) {
 			for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++) {
 				drawArea[pos_y][pos_x] = frame[this.getY()+pos_y][this.getX()+pos_x];
-			}	
+			}
 		}
 		/* bootm
 		 * area debajo del jugador
@@ -198,7 +160,7 @@ public class Player extends Entity implements Runnable
 		 * en caso de que si mata al jugador y pausa el juego
 		 */
 		for( char[] caracteres: drawArea){
-			for( char caracter:caracteres){				
+			for( char caracter:caracteres){
 				if(caracter == '*'){
 				this.kill();
 				}
@@ -206,7 +168,7 @@ public class Player extends Entity implements Runnable
 		}
 		//keys
 		for( char[] caracteres: drawArea){
-			for( char caracter:caracteres){				
+			for( char caracter:caracteres){
 				if(caracter == 'K'){
 				STAGE_KEY = true;
 				}
@@ -216,11 +178,11 @@ public class Player extends Entity implements Runnable
 		 * si se encuentra un '-' debajo del drawArea hay piso
 		 * logicamente no puede atravesar el piso, lo subimos
 		 */
-		if(  this.getY() <= 
-		    (frame.length-this.img.SIZE_Y+1) )//evitamos out of ranges 
+		if(  this.getY() <=
+		    (frame.length-this.img.SIZE_Y+1) )//evitamos out of ranges
 		{
 			boolean PISO = false;
-			for( char caracter: drawArea[2]){				
+			for( char caracter: drawArea[2]){
 				if(caracter == '-'){
 					this.setY(this.getY()-1);//sube
 					status = State.STATIC;
@@ -233,24 +195,25 @@ public class Player extends Entity implements Runnable
 				}
 			}
 			//caso en que no hay superficie abajp
-			if( (PISO == false) && 
-				(status != State.JUMPING) ) 
+			if( (PISO == false) &&
+				(status != State.JUMPING) )
 			{
 				//System.out.println("FALLING"); //debug
 				status = State.FALLING;
 				fall(1);
 			}
-			
+
 		}
 	}
+
 	public void jump()
-	{	
+	{
 	    if(jump_start <= 0){
 			jump_start = System.currentTimeMillis();
 		}
-		else if( (System.currentTimeMillis() - jump_start) > 
-				 (50+(JUMP_WAIT*jump_step)) ) 
-		{	
+		else if( (System.currentTimeMillis() - jump_start) >
+				 (50+(JUMP_WAIT*jump_step)) )
+		{
 			if((jump_step < jump_steps)){
 				this.setY(this.getY()-1);
 			}
@@ -264,11 +227,11 @@ public class Player extends Entity implements Runnable
 			if(speed_x != 0){
 				if(speed_x>0){
 					this.setX(this.getX()+2+jump_step);
-					speed_x--;		
+					speed_x--;
 				}
 				else if(speed_x<0){
 					this.setX(this.getX()-2-jump_step);
-					speed_x++;		
+					speed_x++;
 				}
 			}
 			jump_step++;
@@ -276,9 +239,10 @@ public class Player extends Entity implements Runnable
 		if(jump_steps == 2){
 		}
 	}
+
 	public void fall(int spaces)
 	{
-		while( (spaces > 0) && 
+		while( (spaces > 0) &&
 			   (status == State.FALLING) )
 		{
 		    if(fall_start == 0){
@@ -294,9 +258,9 @@ public class Player extends Entity implements Runnable
 						this.setX(this.getX()+1);
 					}
 					else if(speed_x<0){
-						this.setX(this.getX()-1);		
+						this.setX(this.getX()-1);
 					}
-				}	
+				}
 				spaces--;
 			}
 		}
