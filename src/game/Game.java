@@ -13,7 +13,7 @@ import game.files.*;
 import game.entity.Entity;
 import game.display.Display;
 import game.player.Player;
-import game.player.Input;
+import game.input.Input;
 
 public class Game{
     private Properties storylineFile;
@@ -27,24 +27,13 @@ public class Game{
 
     public void menu()
     {
-        RawConsoleInput input = new RawConsoleInput();
         char op='0';
-        while( (op != '1') && (op !='3' ))
-        {
+        while( (op != '1') && (op !='2' )) {
             printBanner();
             printMenu();
-            try{
-                op = (char)input.read(true);
-                input.resetConsoleMode();
-                input=null;
-                System.out.println(op);
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+            op = Input.waitKeyPress();
         }
-
-        switch(op){
+        switch(op) {
             case '1': start("storylineFile.properties", false);
                 break;
             case 2:

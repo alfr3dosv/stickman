@@ -42,20 +42,10 @@ public class Player extends Entity implements Runnable
 	}
 	public void run()
 	{
-		while(CAPTURE_INPUT){
+		while(CAPTURE_INPUT) {
 			captureInput();
 			move();
-			try{
-				System.out.flush();
-			}
-			catch (Exception e){
-				e.printStackTrace();
-			}
 		}
-		try{
-			Input.in.resetConsoleMode();
-		}
-		catch(Exception e){}
 	}
 	public void interrupt()
 	{

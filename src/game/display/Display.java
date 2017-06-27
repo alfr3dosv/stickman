@@ -9,13 +9,13 @@ import java.lang.StringBuilder;
 import java.io.IOException;
 import game.level.*;
 import game.enemie.Enemie;
-import game.RawConsoleInput;
+import game.input.Input;
 
 public class Display
 {
 	public static final int SIZE_X = 70;
 	public static final int SIZE_Y = 20;
-	private final int WAIT_PER_FRAME = 50; 
+	private final int WAIT_PER_FRAME = 50;
 	private int frames=0;
 	private char[][] frame;
 	private int step;
@@ -28,15 +28,14 @@ public class Display
 	private boolean STORY_MODE = false;
 	/* Modos
 	 * STORY_MODE = false, modo normal: el jugador puede moverse e interactuar
-	 * STORY_MODE = true, modo historia: 
-	 * se imprimen varias escenes con sus dialogos, el jugador no puede interactuar  
+	 * STORY_MODE = true, modo historia:
+	 * se imprimen varias escenes con sus dialogos, el jugador no puede interactuar
 	 */
-	
-	private RawConsoleInput console_in = new RawConsoleInput();
+
 	public Display()
 	{
 		step = 0;
-		start_time = System.currentTimeMillis();	
+		start_time = System.currentTimeMillis();
 	}
 
 	public Display(String storyPath, boolean mode)
@@ -45,7 +44,7 @@ public class Display
 	}
 
 	public void init(String path, boolean isAScene)
-	{		
+	{
 		step = 0;
 		start_time = System.currentTimeMillis();
 		if(isAScene) {
@@ -66,9 +65,9 @@ public class Display
 		 */
 		else if( (System.currentTimeMillis() - start_time) >
 				  WAIT_PER_FRAME )
-		{		
+		{
 			update();
-			start_time = System.currentTimeMillis();		
+			start_time = System.currentTimeMillis();
 		}
 	}
 
@@ -107,7 +106,7 @@ public class Display
 		{
 			for(int y=0; y<SIZE_Y; y++){
 				for(int x=0; x<SIZE_X; x++){
-					frame[y][x]=story.scenes.get(0)[y][x];				
+					frame[y][x]=story.scenes.get(0)[y][x];
 				}
 			}
 		}
@@ -115,7 +114,7 @@ public class Display
 		{
 			for(int y=0; y<SIZE_Y; y++){
 				for(int x=0; x<SIZE_X; x++){
-					frame[y][x]=level.stages.get(0)[y][x];	
+					frame[y][x]=level.stages.get(0)[y][x];
 				}
 			}
 		}
@@ -129,7 +128,7 @@ public class Display
 				for(int pos_x=0; pos_x<asset[0].length; pos_x++){
 					before[pos_y][pos_x] = frame[y+pos_y][x+pos_x];
 					frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
-				}	
+				}
 					// inveritdo frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
 			}
 		}
@@ -144,7 +143,7 @@ public class Display
 	}
 
 	public void drawDialog(String dialog)
-	{ 
+	{
 		/* Agrega texto a dialogs
 		 * la variable dialogs se imprime despues del frame
 		 * Para limpiar los dialogos enviar in string vacio
@@ -155,12 +154,12 @@ public class Display
 		dialogs.append(dialog+"\n");
 		if(dialog == ""){
 		 	dialogs = null;
-		}	
+		}
 	}
 
 	public static void clean()
 	{
-		/* 
+		/*
 	     * Devuelve el cursor a la parte superior
 	     */
 		String os = System.getProperty("os.name").toLowerCase();
@@ -173,7 +172,7 @@ public class Display
  				//es muy noche
  			}
  			catch(InterruptedException e){
- 				//es muy noche 				
+ 				//es muy noche
  			}
  		}
 	    // Linux, Mac ANSI ESCAPES
@@ -200,11 +199,6 @@ public class Display
 	}
 	private void waitDialog()
 	{
-		try {
-			console_in.read(true);	
-		} 
-		catch(Exception ex){
-			 //es muy noche
-		}  
+		Input.waitKeyPress();
 	}
 }
