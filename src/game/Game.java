@@ -14,16 +14,18 @@ import game.entity.Entity;
 import game.display.Display;
 import game.player.Player;
 import game.input.Input;
+import game.player.Collisions;
 
 public class Game{
     private Properties storylineFile;
     List<String> levelsFilesPaths;
     List<String> scenesFilesPaths;
-    Display display;
-    Player player;
-    Thread input;
+    Display display = new Display();
+    Player player = new Player();
+    Thread input = new Thread(player);
     int currentStep = 0;
     boolean storyEnd = false;
+    Collisions collisions = new Collisions(player);
 
     public void menu()
     {
@@ -85,7 +87,7 @@ public class Game{
             {
                 display.draw();
                 display.drawEnemies();
-                player.collisions(display.getFrame());
+                collisions.test(display.getFrame());
                 display.draw(player.img.get(), player.getY(), player.getX());
                 display.print();
             }
@@ -113,10 +115,6 @@ public class Game{
         storylineFile = this.readStorylineFile();
         levelsFilesPaths = this.getLevelsFilesPaths();
         scenesFilesPaths = this.getScenesFilesPaths();
-        currentStep = 0;
-        player = new Player();
-        display = new Display();
-        input = new Thread(player);
         input.start();
     }
 

@@ -1,16 +1,22 @@
-package game.player;
+
+package game.input;
 import game.entity.Entity;
 import game.RawConsoleInput;
 import java.io.*;
 
 public class Input {
     private static int omitTheSameKeyCounter=0;
-    public static RawConsoleInput in = new RawConsoleInput();;
+    private static RawConsoleInput in = new RawConsoleInput();;
     private static char lastKey;
     private static long elapsedTimeBetweenKeys;// contador de tiempo entre teclas
     private static final int WAIT_PER_KEY = 20;//intervalo de tiempo entre teclas
     private static final int TIMES_OMITTED_THE_SAME_KEY = 2;
     public static final char DEFAULT_KEY = 'f';
+
+    public static char waitKeyPress() {
+        char key = readUntilKeyPress();
+        return key;
+    }
 
     public static char getKey() {
         char key = DEFAULT_KEY;
@@ -43,6 +49,16 @@ public class Input {
             key = (char)in.read(false);
             if(isTheSameKey(key))
                 key = DEFAULT_KEY;
+        } catch(IOException ex) {
+
+        } finally {
+            return key;
+        }
+    }
+    private static char readUntilKeyPress() {
+        char key = DEFAULT_KEY;
+        try {
+            key = (char)in.read(true);
         } catch(IOException ex) {
 
         } finally {

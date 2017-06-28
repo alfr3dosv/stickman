@@ -1,5 +1,5 @@
-//Captura las entradas del teclado y maneja las colisiones
 package game.player;
+
 import java.util.*;
 import java.io.*;
 import game.entity.Entity;
@@ -18,12 +18,7 @@ public class Player extends Entity implements Runnable
 	private long fall_start=0;
     final int FALL_WAIT=50;
 	private int fall_step=0;
-	boolean CAPTURE_INPUT = true;
-	char[] context;
-	private int speed_x;
-	/* STAGE_KEY
-	 * Si el jugador encontro la llave del stage pasa al siguiente stage o nivel
-	 */
+	boolean CAPTURE_INPUT = true;private int speed_x;
 	private boolean STAGE_KEY = false;
 	public enum State {JUMPING, FALLING, WALKING, STATIC, PAUSED}
 
@@ -38,8 +33,8 @@ public class Player extends Entity implements Runnable
 		new_img[1] = new_img_1;
 		new_img[2] = new_img_2;
 		this.img = new Image(3,3,new_img);
-
 	}
+
 	public void run()
 	{
 		while(CAPTURE_INPUT) {
@@ -47,19 +42,20 @@ public class Player extends Entity implements Runnable
 			move();
 		}
 	}
+
 	public void interrupt()
 	{
 		this.CAPTURE_INPUT = false;
 	}
+
 	public void init()
 	{
-		//position
 		this.setX(0);
 		this.setY(0);
-		//life
 		this.setAlive();
 		this.STAGE_KEY = false;
 	}
+
 	private void move()
 	{
 		if(status == State.JUMPING){
@@ -126,76 +122,6 @@ public class Player extends Entity implements Runnable
         }
     }
 
-	public void collisions(char[][] frame)
-	{
-		/* drawArea
-		 * area donde se dibuja el jugador
-		 */
-		char[][] drawArea = new char[this.img.SIZE_Y][this.img.SIZE_X];
-		for(int pos_y=0; pos_y<this.img.SIZE_Y; pos_y++) {
-			for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++) {
-				drawArea[pos_y][pos_x] = frame[this.getY()+pos_y][this.getX()+pos_x];
-			}
-		}
-		/* bootm
-		 * area debajo del jugador
-		 */
-		char[] bottom = new char[this.img.SIZE_X];
-		for(int pos_x=0; pos_x<this.img.SIZE_X; pos_x++) {
-			bottom[pos_x]= frame[this.getY()+this.img.SIZE_Y][this.getX()+pos_x];
-		}
-
-		/* enemies
-		 * commprueba que el area donde se va dibujar no haya enemigos
-		 * en caso de que si mata al jugador y pausa el juego
-		 */
-		for( char[] caracteres: drawArea){
-			for( char caracter:caracteres){
-				if(caracter == '*'){
-				this.kill();
-				}
-			}
-		}
-		//keys
-		for( char[] caracteres: drawArea){
-			for( char caracter:caracteres){
-				if(caracter == 'K'){
-				STAGE_KEY = true;
-				}
-			}
-		}
-		/* bottom
-		 * si se encuentra un '-' debajo del drawArea hay piso
-		 * logicamente no puede atravesar el piso, lo subimos
-		 */
-		if(  this.getY() <=
-		    (frame.length-this.img.SIZE_Y+1) )//evitamos out of ranges
-		{
-			boolean PISO = false;
-			for( char caracter: drawArea[2]){
-				if(caracter == '-'){
-					this.setY(this.getY()-1);//sube
-					status = State.STATIC;
-					break;
-				}
-			}
-			for(char caracter: bottom){
-				if(caracter == '-'){
-					PISO = true;
-				}
-			}
-			//caso en que no hay superficie abajp
-			if( (PISO == false) &&
-				(status != State.JUMPING) )
-			{
-				//System.out.println("FALLING"); //debug
-				status = State.FALLING;
-				fall(1);
-			}
-
-		}
-	}
-
 	public void jump()
 	{
 	    if(jump_start <= 0){
@@ -258,9 +184,12 @@ public class Player extends Entity implements Runnable
 		fall_start = 0;
 		fall_step = 0;
 	}
-	//getter para key
-	public boolean hasKey()
-	{
+
+	public boolean hasKey(){
 		return this.STAGE_KEY;
+	}
+
+	public void setKey(boolean hasKey) {
+		this.STAGE_KEY = hasKey;
 	}
 }
