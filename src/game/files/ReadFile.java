@@ -43,15 +43,15 @@ public abstract class ReadFile
 		try {
 			input = new FileInputStream(path);
 			prop.load(input);
-		} 
+		}
 		catch (IOException ex) {
 			ex.printStackTrace();
-		} 
+		}
 		finally {
 			if (input != null) {
 				try {
 					input.close();
-				} 
+				}
 				catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -62,7 +62,7 @@ public abstract class ReadFile
 	public void loadSettings(String settingsPath)
 	{
 		settings( loadProperties(settingsPath) );
-	} 
+	}
 	//getters
 	public Properties settings(){ return this.settings;}
 
