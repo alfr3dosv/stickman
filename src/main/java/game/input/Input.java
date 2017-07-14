@@ -12,6 +12,7 @@ public class Input {
     private static final int WAIT_PER_KEY = 20;//intervalo de tiempo entre teclas
     private static final int TIMES_OMITTED_THE_SAME_KEY = 2;
     public static final char DEFAULT_KEY = 'f';
+    public static boolean stop = false;
 
     public static char waitKeyPress() {
         char key = readUntilKeyPress();
@@ -50,17 +51,18 @@ public class Input {
             if(isTheSameKey(key))
                 key = DEFAULT_KEY;
         } catch(IOException ex) {
-
+            stop = true;
         } finally {
             return key;
         }
     }
+
     private static char readUntilKeyPress() {
         char key = DEFAULT_KEY;
         try {
             key = (char)in.read(true);
         } catch(IOException ex) {
-
+            stop = true;
         } finally {
             return key;
         }

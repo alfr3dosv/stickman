@@ -37,7 +37,7 @@ public class Player extends Entity implements Runnable
 
 	public void run()
 	{
-		while(CAPTURE_INPUT) {
+		while(!Input.stop) {
 			captureInput();
 			move();
 		}

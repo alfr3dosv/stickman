@@ -4,14 +4,18 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 repositories {
-    mavenCentral()  
+    mavenCentral()
 }
 
 sourceSets {
     main {
         java {
-            srcDirs 'src'
+            srcDirs 'src/main/java'
         }
+        resources {
+            srcDir 'src/main/resources'
+        }
+        output.resourcesDir 'build/classes/java/main/game/assets'
     }
 }
 
@@ -22,9 +26,9 @@ jar {
 }
 
 dependencies {
-    //compile 'com.google.guava:guava:20.0'  
+    //compile 'com.google.guava:guava:20.0'
     compile 'net.java.dev.jna:jna:3.5.0'
-    //testCompile 'junit:junit:4.12'         
+    //testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'game.Launcher' 
+mainClassName = 'game.Launcher'
