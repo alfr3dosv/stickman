@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.lang.StringBuilder;
 import game.files.*;
 
-public class Story extends ReadFile
+public class Scene extends ReadFile
 {
 	public List<char[][]> scenes = new ArrayList<char[][]>();
 	private List<String> dialogs = new ArrayList<String>();
@@ -18,10 +18,10 @@ public class Story extends ReadFile
 	private int scene_counter=1;
 	private String storyPath;
 
-	public Story(){
+	public Scene(){
 
 	}
-	public Story(String storyPath)
+	public Scene(String storyPath)
 	{
 		this.init(storyPath);
 	}
@@ -35,11 +35,11 @@ public class Story extends ReadFile
 		//loading settings
 		this.loadSettings(path);
 		/* storyPath
-		 * hacemos un split sobre path, lo convertimos a string quitando el ultimo indice 
-		 * ejemplo path= "assets/level_3/algo.propertie" storyPath = "assets/level_3" 
+		 * hacemos un split sobre path, lo convertimos a string quitando el ultimo indice
+		 * ejemplo path= "assets/level_3/algo.propertie" storyPath = "assets/level_3"
 		 */
 		StringBuilder builderPath = new StringBuilder();
-		String[] text = path.split("/"); 
+		String[] text = path.split("/");
 		for(int i=0; i<text.length-1; i++) {
 		  builderPath.append(text[i]+"/");
 		}
@@ -75,15 +75,15 @@ public class Story extends ReadFile
 	}
 	public String getDialog(){
 		String output="";
-		if( (next_dialog.size() < 1) || 
+		if( (next_dialog.size() < 1) ||
 			(dialog_counter >= dialogs.size()) )
 		{
 			isOver=true;
 		}
-		else if( (dialog_counter >= next_dialog.get(0)) && 
-				 (next_dialog.size()>=1) ) 
+		else if( (dialog_counter >= next_dialog.get(0)) &&
+				 (next_dialog.size()>=1) )
 		//se leyeron todos los dialogos de esta escena
-		{ 
+		{
 			next_dialog.remove(0);
 			output = ""; //reseteanos los dialogos, drawDialog() recibe ""
 			if(scenes.size() > 1)

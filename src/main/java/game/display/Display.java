@@ -21,7 +21,7 @@ public class Display
 	private int step;
 	private long start_time;
 	Level level = new Level();//public para testing
-	private Story story = new Story();
+	private Scene scene = new Scene();
 	//historia
 	private StringBuilder dialogs = null;
 	private boolean isOver = false;//SOLO EN MODO HOSTORIA el display termino una serie de escenas y dialogos
@@ -38,9 +38,9 @@ public class Display
 		start_time = System.currentTimeMillis();
 	}
 
-	public Display(String storyPath, boolean mode)
+	public Display(String scenePath, boolean mode)
 	{
-		this.init(storyPath, mode);
+		this.init(scenePath, mode);
 	}
 
 	public void init(String path, boolean isAScene)
@@ -49,7 +49,7 @@ public class Display
 		start_time = System.currentTimeMillis();
 		if(isAScene) {
 			STORY_MODE=true;
-			story = new Story(path);
+			scene = new Scene(path);
 		}
 		else {
 			level = new Level(path);
@@ -57,7 +57,7 @@ public class Display
 	}
 	public void print()
 	{
-		if( this.story.isOver && STORY_MODE){
+		if( this.scene.isOver && STORY_MODE){
 			isOver = true;
 		}
 		/* Si el tiempo actual - tiempo inicial > intevalo
@@ -89,7 +89,7 @@ public class Display
 
         //dialogos modo historia
         if(STORY_MODE == true){
-        	drawDialog( story.getDialog() );
+        	drawDialog( scene.getDialog() );
         	System.out.flush();
         	if(dialogs != null){
         		System.out.print(dialogs.toString());
@@ -106,7 +106,7 @@ public class Display
 		{
 			for(int y=0; y<SIZE_Y; y++){
 				for(int x=0; x<SIZE_X; x++){
-					frame[y][x]=story.scenes.get(0)[y][x];
+					frame[y][x]=scene.scenes.get(0)[y][x];
 				}
 			}
 		}
