@@ -119,7 +119,7 @@ public class Game{
     }
 
     private Properties readStorylineFile() {
-        Properties file = ReadFile.loadProperties("storyline.properties");
+        Properties file = ReadFile.loadProperties("/storyline.properties");
         return file;
     }
 
@@ -178,7 +178,9 @@ public class Game{
             }
         }
         if (!storyEnd) {
-            String path = "assets/" + fileName + "/" + fileName + ".properties";
+            String path = "/assets/" + fileName + "/" + fileName + ".properties";
+            System.out.println(path);
+            sleep(5);
             display = new Display(path, isAScene);
         }
         currentStep++;

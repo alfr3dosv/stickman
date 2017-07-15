@@ -22,9 +22,9 @@ public abstract class ReadFile
 	{
 		char[][] resource;
 		List<String> lines = new ArrayList();
-		BufferedReader in;
-		try {
-			in = new BufferedReader(new InputStreamReader(getInputStream(path)));
+		try ( BufferedReader in = new BufferedReader(
+			  new InputStreamReader(getInputStream(path))))
+		{
 			String line;
 			while ((line = in.readLine()) != null)
 				lines.add(line);
@@ -44,23 +44,13 @@ public abstract class ReadFile
 	public static Properties loadProperties(String path)
 	{
 		Properties prop = new Properties();
-		FileInputStream input = null;
-		try {
-			input = new FileInputStream(getInputStream(path));
+		try( InputStream is = getInputStream(path)) {
 			prop.load(getInputStream(path));
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
 		}
 		finally {
-			if (input != null) {
-				try {
-					input.close();
-				}
-				catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 			return prop;
 		}
 	}
