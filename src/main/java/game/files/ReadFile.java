@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.BufferedReader;
 import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,10 +22,13 @@ public abstract class ReadFile
 	{
 		char[][] resource;
 		List<String> lines = new ArrayList();
-
-		try (Stream<String> stream = Files.lines(Paths.get(path))) {
-			lines = stream.collect(Collectors.toList());
-
+		BufferedReader in;
+		try {
+			in = new BufferedReader(new InputStreamReader(getInputStream(path)));
+			String line;
+			while ((line = in.readLine()) != null)
+				lines.add(line);
+			in.close();
 		} catch (IOException e) {
 			System.out.println("ERR: Not found file");
 			e.printStackTrace();
@@ -41,8 +46,8 @@ public abstract class ReadFile
 		Properties prop = new Properties();
 		FileInputStream input = null;
 		try {
-			input = new FileInputStream(path);
-			prop.load(input);
+			input = new FileInputStream(getInputStream(path));
+			prop.load(getInputStream(path));
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -59,6 +64,11 @@ public abstract class ReadFile
 			return prop;
 		}
 	}
+
+	static InputStream getInputStream(String path) {
+		return ReadFile.class.getClass().getResourceAsStream(path);
+	}
+
 	public void loadSettings(String settingsPath)
 	{
 		settings( loadProperties(settingsPath) );
