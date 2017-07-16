@@ -17,30 +17,34 @@ public class Scene
 	public boolean isOver = false;
 	private int dialog_counter=0;
 	private int scene_counter=1;
-	private String scenesPath;
+	private String rootPath;
 	private Properties sceneProperties;
 
 	public Scene(){
 		isOver = true;
 	}
-	public Scene(String scenesPath)
+	
+	public Scene(String pathOfFile)
 	{
-		this.init(scenesPath);
+		this.init(pathOfFile);
 	}
 
-	public void init(String path)
+	public void init(String pathOfFile)
 	{
 		sceneProperties = ReadFile.loadProperties(path);
-		StringBuilder builderPath = new StringBuilder();
-		String[] text = path.split("/");
-		for(int i=0; i<text.length-1; i++) {
-		  builderPath.append(text[i]+"/");
-		}
-		this.scenesPath = builderPath.toString();
+		rootPath = getScenesPath(pathOfFile);
 		scenes = loadScenes();
 		dialogs = loadDialogs();
 		next_dialog = syncDialogs();
+	}
 
+	public String getRootPath(String pathOfFile) {
+		StringBuilder rootPath = new StringBuilder();
+		String[] text = rootPath.split("/");
+		for(int i=0; i<text.length-1; i++) {
+		  rootPath.append(text[i]+"/");
+		}
+		return rootPath.toString();
 	}
 
 	private List<char[][]> loadScenes() {
@@ -49,7 +53,7 @@ public class Scene
 		String sceneId = "scene" + i.toString();
 		while( sceneProperties.getProperty(sceneId) != null )
 		{
-			String pathToScene = scenesPath + sceneProperties.getProperty(sceneId);
+			String pathToScene = rootPath + sceneProperties.getProperty(sceneId);
 			scenesToLoad.add(ReadFile.loadText(pathToScene));
 			i++;
 			sceneId = "scene" + i.toString();
