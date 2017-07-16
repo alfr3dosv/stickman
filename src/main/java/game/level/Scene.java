@@ -16,63 +16,77 @@ public class Scene extends ReadFile
 	public boolean isOver = false;
 	private int dialog_counter=0;
 	private int scene_counter=1;
-	private String storyPath;
+	private String scenesPath;
 
 	public Scene(){
-
+		isOver = true;
 	}
-	public Scene(String storyPath)
+	public Scene(String scenesPath)
 	{
-		this.init(storyPath);
-	}
-	public void addScene(String path)
-	{
-		scenes.add(this.loadText(path));
+		this.init(scenesPath);
 	}
 
 	public void init(String path)
 	{
 		//loading settings
 		this.loadSettings(path);
-		/* storyPath
+		/* scenesPath
 		 * hacemos un split sobre path, lo convertimos a string quitando el ultimo indice
-		 * ejemplo path= "assets/level_3/algo.propertie" storyPath = "assets/level_3"
+		 * ejemplo path= "assets/level_3/algo.propertie" scenesPath = "assets/level_3"
 		 */
 		StringBuilder builderPath = new StringBuilder();
 		String[] text = path.split("/");
 		for(int i=0; i<text.length-1; i++) {
 		  builderPath.append(text[i]+"/");
 		}
-		this.storyPath = builderPath.toString();
-		//scenes
-		int s = 1;
-		while( settings().getProperty("scene"+Integer.toString(s)) != null )
-		{
-			this.addScene( storyPath+settings().getProperty("scene"+Integer.toString(s)) );
-			s++;
-		}
-		//dialogs
-		int d = 1;
-		while( settings().getProperty("dialog"+Integer.toString(d)) != null )
-		{
-			this.addDialog( settings().getProperty("dialog"+Integer.toString(d)) );
-			d++;
-		}
-		//dialogs by scene
-		int dByS = 1;
-		while( settings().getProperty("dialogs_scene"+Integer.toString(dByS)) != null )
-		{
-			this.syncDialogs( Integer.parseInt( settings().getProperty("dialogs_scene"+Integer.toString(dByS)) ) );
-			dByS++;
-		}
+		this.scenesPath = builderPath.toString();
+		scenes = loadScenes();
+		dialogs = loadDialogs();
+		next_dialog = syncDialogs();
+
 	}
-	public void syncDialogs(int step){
-		next_dialog.add(step);
+
+	public List<char[][]> loadScenes() {
+		List<char[][]> scenesToLoad = new ArrayList<char[][]>();
+		Integer i = 1;
+		String sceneId = "scene" + i.toString();
+		while( settings().getProperty(sceneId) != null )
+		{
+			String pathToScene = scenesPath + settings().getProperty(sceneId);
+			scenesToLoad.add(this.loadText(pathToScene));
+			i++;
+			sceneId = "scene" + i.toString();
+		}
+		return scenesToLoad;
 	}
-	public void addDialog(String dialog)
-	{
-		this.dialogs.add(dialog);
+
+	public List<String> loadDialogs() {
+		List<String> dialogs = new ArrayList<String>();
+		Integer i = 1;
+		String dialogId = "dialog" + i.toString();
+		while( settings().getProperty(dialogId) != null )
+		{
+			dialogs.add( settings().getProperty(dialogId));
+			i++;
+			dialogId = "dialog" + i.toString();
+		}
+		return dialogs;
 	}
+
+	public List<Integer> syncDialogs(){
+		Integer i = 1;
+		String key = "dialogs_scene"+ i.toString();
+		List<Integer> nextDialog = new ArrayList<Integer>();
+		while( settings().getProperty(key) != null )
+		{
+			int dialog = Integer.parseInt( settings().getProperty(key));
+			nextDialog.add(dialog);
+			i++;
+			key = "dialogs_scene"+ i.toString();
+		}
+		return nextDialog;
+	}
+
 	public String getDialog(){
 		String output="";
 		if( (next_dialog.size() < 1) ||

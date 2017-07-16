@@ -18,7 +18,7 @@ public abstract class ReadFile
 	private Properties settings = new Properties();
 	private InputStream input = null;
 
-	public char[][] loadText(String path)
+	public static char[][] loadText(String path)
 	{
 		char[][] resource;
 		List<String> lines = new ArrayList();

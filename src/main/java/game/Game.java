@@ -108,11 +108,15 @@ public class Game{
 
     private void loadNext() {
         Object next = storyline.getNext();
+
         if(next instanceof Level) {
             display = new Display((Level) next);
         }
-        else {
+        else if(next instanceof Scene) {
             display = new Display((Scene) next);
+        }
+        else {
+            storyEnd = true;
         }
     }
 

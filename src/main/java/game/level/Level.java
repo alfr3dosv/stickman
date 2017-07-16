@@ -2,6 +2,7 @@ package game.level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
@@ -12,59 +13,55 @@ import game.entity.Entity;
 public class Level extends ReadFile
 {
 	public List<char[][]> stages = new ArrayList<char[][]>();
-	private List<char[][]> assets = new ArrayList<char[][]>();
-	public List<Enemie> enemies = new ArrayList<Enemie>(); 
+	public List<Enemie> enemies = new ArrayList<Enemie>();
 	private String levelPath;
+	private Properties levelProperties;
 
-	public Level(){
-
+	public Level() {
 	}
+
 	public Level (String levelPath)
 	{
 		this.init(levelPath);
 	}
-	public void addStage(String path)
-	{
-		stages.add(this.loadText(path));
-	}
-
-	public void addAsset(String path)
-	{
-		assets.add(this.loadText(path));
-	}
 
 	public void init(String path)
 	{
-		//loading settings
-		this.loadSettings(path);
-		/* levelPath
-		 * hacemos un split sobre path, lo convertimos a string quitando el ultimo indice 
-		 * ejemplo path= "assets/level_3/algo.propertie" levelPath = "assets/level_3" 
-		 */
-		StringBuilder builderPath = new StringBuilder();
-		String[] text = path.split("/"); 
-		for(int i=0; i<text.length-1; i++) {
-		  builderPath.append(text[i]+"/");
-		}
-		this.levelPath = builderPath.toString();
-		//stages
-		int s = 1;
-		while( settings().getProperty("stage"+Integer.toString(s)) != null )
-		{
-			this.addStage( levelPath+settings().getProperty("stage"+Integer.toString(s)) );
-			s++;
-		}
-		//enemies
-		int e = 1;
-		while( settings().getProperty("enemie"+Integer.toString(e)) != null )
-		{
-			this.addEnemie( settings().getProperty("enemie"+Integer.toString(e)) );
-			e++;
-		}
-		
+		levelPath = getLevelPath(path);
+		levelProperties = ReadFile.loadProperties(path);
+		stages = loadStage();
+		enemies = loadEnemies();
 	}
 
-	public void addEnemie(String values)
+	private String getLevelPath (String path) {
+		StringBuilder levelPath = new StringBuilder();
+		String[] text = path.split("/");
+		for(int i=0; i<text.length-1; i++) {
+			levelPath.append(text[i]+"/");
+		}
+		return levelPath.toString();
+	}
+
+	public List<char[][]> loadStage() {
+		List<char[][]> stages = new ArrayList<char[][]>();
+		String pathToStage = levelPath+levelProperties.getProperty("stage1");
+		stages.add(ReadFile.loadText(pathToStage));
+		return stages;
+	}
+
+	public List<Enemie> loadEnemies() {
+		Integer i = 1;
+		List<Enemie> enemies = new ArrayList<Enemie>();
+		while( levelProperties.getProperty("enemie"+i.toString()) != null )
+		{
+			Enemie e = getEnemie(levelProperties.getProperty("enemie"+i.toString()));
+			enemies.add(e);
+			i++;
+		}
+		return enemies;
+	}
+
+	public Enemie getEnemie(String values)
 	{
 		final int X = 0;
 		final int Y = 1;
@@ -89,6 +86,6 @@ public class Level extends ReadFile
 			break;
 			default:enemie.dir = Entity.Direction.NONE;
 		}
-		this.enemies.add(enemie);
+		return enemie;
 	}
 }

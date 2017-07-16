@@ -20,7 +20,7 @@ public class Display
 	private char[][] frame;
 	private int step;
 	private long start_time;
-	Level level = new Level();//public para testing
+	Level level;//public para testing
 	private Scene scene = new Scene();
 	//historia
 	private StringBuilder dialogs = null;
@@ -121,7 +121,7 @@ public class Display
 		{
 			for(int y=0; y<SIZE_Y; y++){
 				for(int x=0; x<SIZE_X; x++){
-					frame[y][x]=scene.scenes.get(0)[y][x];
+						frame[y][x]=scene.scenes.get(0)[y][x];
 				}
 			}
 		}
@@ -151,10 +151,11 @@ public class Display
 
 	public void drawEnemies(){
 		//Actualizando la posicion de los enemigos
-		for(Enemie enemie : level.enemies){
-			enemie.update();
-			this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
-		}
+		if(level != null)
+			for(Enemie enemie : level.enemies){
+				enemie.update();
+				this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
+			}
 	}
 
 	public void drawDialog(String dialog)
