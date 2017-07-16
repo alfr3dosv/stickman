@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd build/distributions
-rm -r gitman-0.3
-unzip gitman-0.3.zip
-cd gitman-0.3/bin
+rm -r stickman-0.3
+unzip stickman-0.3.zip
+cd stickman-0.3/bin
+exec ./stickman
