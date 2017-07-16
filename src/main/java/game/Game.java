@@ -11,7 +11,7 @@ import game.files.Banner;
 import game.level.*;
 
 public class Game{
-    Display display = new Display();
+    Display display;
     Player player = new Player();
     Thread input = new Thread(player);
     boolean storyEnd = false;

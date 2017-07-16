@@ -26,16 +26,6 @@ public class Display
 	private StringBuilder dialogs = null;
 	private boolean isOver = false;//SOLO EN MODO HOSTORIA el display termino una serie de escenas y dialogos
 	private boolean SCENE_MODE = false;
-	/* Modos
-	 * SCENE_MODE = false, modo normal: el jugador puede moverse e interactuar
-	 * SCENE_MODE = true, modo historia:
-	 * se imprimen varias escenes con sus dialogos, el jugador no puede interactuar
-	 */
-
-	public Display()
-	{
-		init();
-	}
 
 	public Display(Level level) {
 		init();
@@ -48,28 +38,11 @@ public class Display
 		SCENE_MODE = true;
 	}
 
-	public Display(String scenePath, boolean mode)
-	{
-		this.init(scenePath, mode);
-	}
-
 	public void init() {
 		step = 0;
 		start_time = System.currentTimeMillis();
 	}
 
-	public void init(String path, boolean isAScene)
-	{
-		step = 0;
-		start_time = System.currentTimeMillis();
-		if(isAScene) {
-			SCENE_MODE=true;
-			scene = new Scene(path);
-		}
-		else {
-			level = new Level(path);
-		}
-	}
 	public void print()
 	{
 		if( this.scene.isOver && SCENE_MODE){
