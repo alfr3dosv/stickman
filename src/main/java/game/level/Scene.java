@@ -23,7 +23,7 @@ public class Scene
 	public Scene(){
 		isOver = true;
 	}
-	
+
 	public Scene(String pathOfFile)
 	{
 		this.init(pathOfFile);
@@ -31,8 +31,8 @@ public class Scene
 
 	public void init(String pathOfFile)
 	{
-		sceneProperties = ReadFile.loadProperties(path);
-		rootPath = getScenesPath(pathOfFile);
+		sceneProperties = ReadFile.loadProperties(pathOfFile);
+		rootPath = getRootPath(pathOfFile);
 		scenes = loadScenes();
 		dialogs = loadDialogs();
 		next_dialog = syncDialogs();
@@ -40,7 +40,7 @@ public class Scene
 
 	public String getRootPath(String pathOfFile) {
 		StringBuilder rootPath = new StringBuilder();
-		String[] text = rootPath.split("/");
+		String[] text = pathOfFile.split("/");
 		for(int i=0; i<text.length-1; i++) {
 		  rootPath.append(text[i]+"/");
 		}
