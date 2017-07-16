@@ -55,7 +55,7 @@ public class Display
 
 	public void print()
 	{
-		if( this.scene.isOver && SCENE_MODE){
+		if( this.scene.isOver && SCENE_MODE) {
 			isOver = true;
 		}
 		long elapsedTime = System.currentTimeMillis() - start_time;
@@ -97,12 +97,10 @@ public class Display
 		return newFrame;
 	}
 
-	public void draw(char[][] asset, int y, int x)
-	{
-		if(!SCENE_MODE){
+	public void draw(char[][] asset, int y, int x) {
+		if(!SCENE_MODE) {
 			char[][] before = new char[asset.length][asset[0].length];
-			for(int pos_y=0; pos_y<asset.length; pos_y++)
-			{
+			for(int pos_y=0; pos_y<asset.length; pos_y++) {
 				for(int pos_x=0; pos_x<asset[0].length; pos_x++) {
 					before[pos_y][pos_x] = frame[y+pos_y][x+pos_x];
 					frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
@@ -112,15 +110,15 @@ public class Display
 	}
 
 	public void drawEnemies(){
-		if(level != null)
+		if(level != null) {
 			for(Enemie enemie : level.enemies){
 				enemie.update();
 				this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
 			}
+		}
 	}
 
-	public static void clean()
-	{
+	public static void clean() {
 		String os = System.getProperty("os.name").toLowerCase();
  		if (os.indexOf("win") >= 0) {	//Windows
  			try {
@@ -137,17 +135,15 @@ public class Display
 		}
 	}
 
-	public char[][] getFrame()
-	{
+	public char[][] getFrame() {
 		return cloneFrame(frame);
 	}
 
-	public boolean isOver()
-	{
+	public boolean isOver() {
 		return isOver;
 	}
-	private void waitDialog()
-	{
+
+	private void waitDialog() {
 		Input.waitKeyPress();
 	}
 }
