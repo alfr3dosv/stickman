@@ -109,9 +109,9 @@ public class Display
 		}
 	}
 
-	public void drawEnemies(){
+	public void drawEnemies() {
 		if(level != null) {
-			for(Enemie enemie : level.enemies){
+			for(Enemie enemie : level.enemies) {
 				enemie.update();
 				this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
 			}

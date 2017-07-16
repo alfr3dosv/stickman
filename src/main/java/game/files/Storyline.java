@@ -15,8 +15,7 @@ public class Storyline {
 
     public Storyline(String path) {
         storylineFile = ReadFile.loadProperties(path);
-        for (String step:storylineFile.getProperty("storyline").split(",") )
-        {
+        for (String step:storylineFile.getProperty("storyline").split(",")) {
             String fileName = storylineFile.getProperty(step);
             if(step.contains("level")) {
                 storyline.add(new Level(getFullPath(fileName)));

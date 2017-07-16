@@ -6,13 +6,13 @@ public class Enemie extends Entity{
 	private int speed;
 	private int step=0;
 	private int steps;
-	
-	public Enemie(){
-		//image
+
+	public Enemie() {
 		char[][] new_image = new char[1][1];
 		new_image[0][0] = '*';
 		this.img = new Image(1,1,new_image);
 	}
+
 	public void update(){
 		//primera vez
 		if(start_time == 0){
@@ -20,11 +20,11 @@ public class Enemie extends Entity{
 		}
 		else
 		{
-			if( (System.currentTimeMillis() - start_time) > 
-				(1000/speed()) && 
+			if( (System.currentTimeMillis() - start_time) >
+				(1000/speed()) &&
 				(step() <getSteps()) )
 			{
-				switch(dir){
+				switch(dir) {
 					case UP:
 							this.setY(getY()+1);
 							break;
@@ -41,9 +41,10 @@ public class Enemie extends Entity{
 				start_time = System.currentTimeMillis();
 				step(step()+1);
 			}
-			if(step() == getSteps() ){
+
+			if(step() == getSteps()) {
 				step(0);
-				switch(dir){
+				switch(dir) {
 					case UP:
 							dir = Entity.Direction.DOWN;
 							break;
@@ -58,22 +59,31 @@ public class Enemie extends Entity{
 							break;
 				}
 			}
-		//System.out.println(this.dir+" "+this.getY()+" "+this.getX()+" step:"+step); //debug
 		}
 	}
-	//getters
-	public int step(){return step;}
-	public int speed(){return speed;}
-	public int getSteps(){ return steps;}
-	//setters
-	public void step(int step){this.step = step;}	
-	public void speed(int speed)
-	{
+
+	public int step() {
+		return step;
+	}
+
+	public int speed() {
+		return speed;
+	}
+
+	public int getSteps() {
+		return steps;
+	}
+
+	public void step(int step) {
+		this.step = step;
+	}
+
+	public void speed(int speed) {
 		if(speed > 0)
 			this.speed = speed;
 	}
-	public void setSteps(int steps) 
-	{
+
+	public void setSteps(int steps) {
 		this.steps = steps;
 	}
 }

@@ -20,17 +20,11 @@ public class Scene
 	private String rootPath;
 	private Properties sceneProperties;
 
-	public Scene(){
+	public Scene() {
 		isOver = true;
 	}
 
-	public Scene(String pathOfFile)
-	{
-		this.init(pathOfFile);
-	}
-
-	public void init(String pathOfFile)
-	{
+	public Scene(String pathOfFile) {
 		sceneProperties = ReadFile.loadProperties(pathOfFile);
 		rootPath = getRootPath(pathOfFile);
 		scenes = loadScenes();
@@ -51,8 +45,7 @@ public class Scene
 		List<char[][]> scenesToLoad = new ArrayList<char[][]>();
 		Integer i = 1;
 		String sceneId = "scene" + i.toString();
-		while( sceneProperties.getProperty(sceneId) != null )
-		{
+		while(sceneProperties.getProperty(sceneId) != null) {
 			String pathToScene = rootPath + sceneProperties.getProperty(sceneId);
 			scenesToLoad.add(ReadFile.loadText(pathToScene));
 			i++;
@@ -65,8 +58,7 @@ public class Scene
 		List<String> dialogs = new ArrayList<String>();
 		Integer i = 1;
 		String dialogId = "dialog" + i.toString();
-		while( sceneProperties.getProperty(dialogId) != null )
-		{
+		while(sceneProperties.getProperty(dialogId) != null) {
 			dialogs.add( sceneProperties.getProperty(dialogId));
 			i++;
 			dialogId = "dialog" + i.toString();
@@ -78,8 +70,7 @@ public class Scene
 		Integer i = 1;
 		String key = "dialogs_scene"+ i.toString();
 		List<Integer> nextDialog = new ArrayList<Integer>();
-		while( sceneProperties.getProperty(key) != null )
-		{
+		while(sceneProperties.getProperty(key) != null) {
 			int dialog = Integer.parseInt( sceneProperties.getProperty(key));
 			nextDialog.add(dialog);
 			i++;
@@ -88,7 +79,7 @@ public class Scene
 		return nextDialog;
 	}
 
-	public String getDialog(){
+	public String getDialog() {
 		String output="";
 		if(!hasDialogs()) {
 			isOver=true;

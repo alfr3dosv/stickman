@@ -1,4 +1,5 @@
 package game.level;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,22 +21,16 @@ public class Level extends ReadFile
 	public Level() {
 	}
 
-	public Level (String levelPath)
-	{
-		this.init(levelPath);
-	}
-
-	public void init(String path)
-	{
-		levelPath = getLevelPath(path);
-		levelProperties = ReadFile.loadProperties(path);
+	public Level (String filePath) {
+		levelPath = getLevelPath(filePath);
+		levelProperties = ReadFile.loadProperties(filePath);
 		stages = loadStage();
 		enemies = loadEnemies();
 	}
 
-	private String getLevelPath (String path) {
+	private String getLevelPath (String filePath) {
 		StringBuilder levelPath = new StringBuilder();
-		String[] text = path.split("/");
+		String[] text = filePath.split("/");
 		for(int i=0; i<text.length-1; i++) {
 			levelPath.append(text[i]+"/");
 		}
@@ -52,8 +47,7 @@ public class Level extends ReadFile
 	public List<Enemie> loadEnemies() {
 		Integer i = 1;
 		List<Enemie> enemies = new ArrayList<Enemie>();
-		while( levelProperties.getProperty("enemie"+i.toString()) != null )
-		{
+		while(levelProperties.getProperty("enemie"+i.toString()) != null) {
 			Enemie e = getEnemie(levelProperties.getProperty("enemie"+i.toString()));
 			enemies.add(e);
 			i++;
@@ -61,8 +55,7 @@ public class Level extends ReadFile
 		return enemies;
 	}
 
-	public Enemie getEnemie(String values)
-	{
+	public Enemie getEnemie(String values) {
 		final int X = 0;
 		final int Y = 1;
 		final int DIR = 2;
@@ -70,12 +63,11 @@ public class Level extends ReadFile
 		final int STEPS = 4;
 		String[] data = values.split(",");
 		Enemie enemie = new Enemie();
-		enemie.setX( Integer.parseInt(data[X]) ) ;
-		enemie.setY( Integer.parseInt(data[Y]) ) ;
-		enemie.speed( Integer.parseInt(data[SPEED]) );
-		enemie.setSteps( Integer.parseInt(data[STEPS]) );
-		switch(data[DIR])
-		{
+		enemie.setX(Integer.parseInt(data[X]));
+		enemie.setY(Integer.parseInt(data[Y]));
+		enemie.speed(Integer.parseInt(data[SPEED]));
+		enemie.setSteps(Integer.parseInt(data[STEPS]));
+		switch(data[DIR]) {
 			case "UP":enemie.dir = Entity.Direction.UP;
 			break;
 			case "DOWN":enemie.dir = Entity.Direction.DOWN;

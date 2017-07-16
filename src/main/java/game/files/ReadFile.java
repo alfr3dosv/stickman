@@ -14,12 +14,7 @@ import java.nio.file.Paths;
 
 public abstract class ReadFile
 {
-	//file
-	private Properties settings = new Properties();
-	private InputStream input = null;
-
-	public static char[][] loadText(String path)
-	{
+	public static char[][] loadText(String path) {
 		char[][] resource;
 		List<String> lines = new ArrayList();
 		try ( BufferedReader in = new BufferedReader(
@@ -34,15 +29,14 @@ public abstract class ReadFile
 			e.printStackTrace();
 		}
 		resource = new char[lines.size()][lines.get(0).toCharArray().length];
-		for(int i=0; i< resource.length; i++)
-		{
+		for(int i=0; i< resource.length; i++) {
 			String s = lines.remove(0);
 			resource[i] = s.toCharArray();
 		}
 		return resource;
 	}
-	public static Properties loadProperties(String path)
-	{
+
+	public static Properties loadProperties(String path) {
 		Properties prop = new Properties();
 		try( InputStream is = getInputStream(path)) {
 			prop.load(getInputStream(path));
@@ -59,13 +53,15 @@ public abstract class ReadFile
 		return ReadFile.class.getClass().getResourceAsStream(path);
 	}
 
-	public void loadSettings(String settingsPath)
-	{
+	public void loadSettings(String settingsPath) {
 		settings( loadProperties(settingsPath) );
 	}
-	//getters
-	public Properties settings(){ return this.settings;}
 
-	//setters
-	public void settings(Properties sttgs){this.settings = sttgs;}
+	public Properties settings() {
+		return this.settings;
+	}
+
+	public void settings(Properties sttgs) {
+		this.settings = sttgs;
+	}
 }
