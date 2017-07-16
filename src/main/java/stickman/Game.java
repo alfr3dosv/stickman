@@ -36,7 +36,7 @@ public class Game{
 
     public void printMenu() {
         Display.clean();
-        Banner.print("gitman");
+        Banner.print("stickman");
         Banner.print("menu");
         System.out.print("1) Start demo, 2)Exit \nOption:");
     }
