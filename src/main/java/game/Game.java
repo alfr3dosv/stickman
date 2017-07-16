@@ -15,6 +15,7 @@ import game.display.Display;
 import game.player.Player;
 import game.input.Input;
 import game.player.Collisions;
+import game.files.FilesPaths;
 
 public class Game{
     private Properties storylineFile;
@@ -112,37 +113,11 @@ public class Game{
     }
 
     public void init() {
-        storylineFile = this.readStorylineFile();
-        levelsFilesPaths = this.getLevelsFilesPaths();
-        scenesFilesPaths = this.getScenesFilesPaths();
+        FilesPaths paths = new FilesPaths("/storylineFile.properties");
+        storylineFile = paths.getStorylineFile();
+        levelsFilesPaths = paths.getLevelsFilesPaths();
+        scenesFilesPaths = paths.getScenesFilesPaths();
         input.start();
-    }
-
-    private Properties readStorylineFile() {
-        Properties file = ReadFile.loadProperties("/storyline.properties");
-        return file;
-    }
-
-    private List<String> getScenesFilesPaths() {
-        List<String> filesPaths = new ArrayList<String>();
-        for(int i = 1;
-            storylineFile.getProperty("story"+Integer.toString(i)) != null; i++)
-        {
-            String path = storylineFile.getProperty("story"+Integer.toString(i));
-            filesPaths.add(path);
-        }
-        return filesPaths;
-    }
-
-    private List<String> getLevelsFilesPaths() {
-        List<String> filesPaths = new ArrayList<String>();
-        for(int i = 1;
-            storylineFile.getProperty("level"+Integer.toString(i)) != null; i++)
-        {
-            String path = storylineFile.getProperty("level"+Integer.toString(i));
-            filesPaths.add(path);
-        }
-        return filesPaths;
     }
 
     private String getNextStep() {
@@ -179,8 +154,6 @@ public class Game{
         }
         if (!storyEnd) {
             String path = "/assets/" + fileName + "/" + fileName + ".properties";
-            System.out.println(path);
-            sleep(5);
             display = new Display(path, isAScene);
         }
         currentStep++;
