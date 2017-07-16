@@ -43,70 +43,57 @@ public class Display
 		start_time = System.currentTimeMillis();
 	}
 
+	public void update()
+	{
+		cloneFrame();
+		drawEnemies();
+	}
+
 	public void print()
 	{
 		if( this.scene.isOver && SCENE_MODE){
 			isOver = true;
 		}
-		/* Si el tiempo actual - tiempo inicial > intevalo
-		 * imprime el siguiente frame
-		 */
-		else if( (System.currentTimeMillis() - start_time) >
-				  WAIT_PER_FRAME )
-		{
-			update();
+		long elapsedTime = System.currentTimeMillis() - start_time;
+		if(elapsedTime > WAIT_PER_FRAME ) {
+			clean();
+			printFrame();
+			if(SCENE_MODE)
+				printDialogs();
 			start_time = System.currentTimeMillis();
 		}
 	}
 
-	private void update()
-	{
-		/* Limpia la pantalla
-		 * Imprime el frame
-		 */
-
-		clean();
-		//armando el frame
-		StringBuilder newFrame = new StringBuilder();
-		for(int y=0; y<SIZE_Y; y++){
-			newFrame.append(frame[y]);
-			newFrame.append("\n");
+	private void printFrame() {
+		StringBuilder frameToPrint = new StringBuilder();
+		for(int y=0; y<SIZE_Y; y++) {
+			frameToPrint.append(frame[y]);
+			frameToPrint.append("\n");
 		}
-		//impresion
-        System.out.print(newFrame.toString());
-
-        //dialogos modo historia
-        if(SCENE_MODE == true){
-        	drawDialog( scene.getDialog() );
-        	System.out.flush();
-        	if(dialogs != null){
-        		System.out.print(dialogs.toString());
-        	}
-        	waitDialog();
-        }
+		System.out.print(frameToPrint.toString());
 	}
 
-	//limpia el frame
-	public void draw(){
-		//deep copy del array
+	private void printDialogs() {
+		drawDialog(scene.getDialog());
+		if(dialogs != null)
+			System.out.print(dialogs.toString());
+		waitDialog();
+	}
+
+	public void cloneFrame() {
 		frame = new char[SIZE_Y][SIZE_X];
-		if(SCENE_MODE)//modo historia
-		{
-			for(int y=0; y<SIZE_Y; y++){
-				for(int x=0; x<SIZE_X; x++){
-						frame[y][x]=scene.scenes.get(0)[y][x];
-				}
-			}
-		}
-		else//modo normal
-		{
-			for(int y=0; y<SIZE_Y; y++){
-				for(int x=0; x<SIZE_X; x++){
-					frame[y][x]=level.stages.get(0)[y][x];
-				}
+		char[][] source;
+		if(SCENE_MODE)
+			source = scene.scenes.get(0);
+		else
+			source = level.stages.get(0);
+		for(int y=0; y<SIZE_Y; y++) {
+			for(int x=0; x<SIZE_X; x++) {
+				frame[y][x] = source[y][x];
 			}
 		}
 	}
+
 	public void draw(char[][] asset, int y, int x)
 	{
 		if(!SCENE_MODE){

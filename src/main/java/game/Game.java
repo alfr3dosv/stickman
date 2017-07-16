@@ -52,8 +52,7 @@ public class Game{
             player.init();
             while( !player.hasKey() && player.isAlive() && !display.isOver() )
             {
-                display.draw();
-                display.drawEnemies();
+                display.update();;
                 collisions.test(display.getFrame());
                 display.draw(player.img.get(), player.getY(), player.getX());
                 display.print();
