@@ -2,12 +2,13 @@ package game.level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
 import game.files.*;
 
-public class Scene extends ReadFile
+public class Scene
 {
 	public List<char[][]> scenes = new ArrayList<char[][]>();
 	private List<String> dialogs = new ArrayList<String>();
@@ -17,6 +18,7 @@ public class Scene extends ReadFile
 	private int dialog_counter=0;
 	private int scene_counter=1;
 	private String scenesPath;
+	private Properties sceneProperties;
 
 	public Scene(){
 		isOver = true;
@@ -28,12 +30,7 @@ public class Scene extends ReadFile
 
 	public void init(String path)
 	{
-		//loading settings
-		this.loadSettings(path);
-		/* scenesPath
-		 * hacemos un split sobre path, lo convertimos a string quitando el ultimo indice
-		 * ejemplo path= "assets/level_3/algo.propertie" scenesPath = "assets/level_3"
-		 */
+		sceneProperties = ReadFile.loadProperties(path);
 		StringBuilder builderPath = new StringBuilder();
 		String[] text = path.split("/");
 		for(int i=0; i<text.length-1; i++) {
@@ -50,10 +47,10 @@ public class Scene extends ReadFile
 		List<char[][]> scenesToLoad = new ArrayList<char[][]>();
 		Integer i = 1;
 		String sceneId = "scene" + i.toString();
-		while( settings().getProperty(sceneId) != null )
+		while( sceneProperties.getProperty(sceneId) != null )
 		{
-			String pathToScene = scenesPath + settings().getProperty(sceneId);
-			scenesToLoad.add(this.loadText(pathToScene));
+			String pathToScene = scenesPath + sceneProperties.getProperty(sceneId);
+			scenesToLoad.add(ReadFile.loadText(pathToScene));
 			i++;
 			sceneId = "scene" + i.toString();
 		}
@@ -64,9 +61,9 @@ public class Scene extends ReadFile
 		List<String> dialogs = new ArrayList<String>();
 		Integer i = 1;
 		String dialogId = "dialog" + i.toString();
-		while( settings().getProperty(dialogId) != null )
+		while( sceneProperties.getProperty(dialogId) != null )
 		{
-			dialogs.add( settings().getProperty(dialogId));
+			dialogs.add( sceneProperties.getProperty(dialogId));
 			i++;
 			dialogId = "dialog" + i.toString();
 		}
@@ -77,9 +74,9 @@ public class Scene extends ReadFile
 		Integer i = 1;
 		String key = "dialogs_scene"+ i.toString();
 		List<Integer> nextDialog = new ArrayList<Integer>();
-		while( settings().getProperty(key) != null )
+		while( sceneProperties.getProperty(key) != null )
 		{
-			int dialog = Integer.parseInt( settings().getProperty(key));
+			int dialog = Integer.parseInt( sceneProperties.getProperty(key));
 			nextDialog.add(dialog);
 			i++;
 			key = "dialogs_scene"+ i.toString();
