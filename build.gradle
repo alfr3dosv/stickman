@@ -1,4 +1,4 @@
-description = 'gitman build'
+description = 'stickman build'
 version = '0.3'
 apply plugin: 'java'
 apply plugin: 'application'
@@ -15,13 +15,13 @@ sourceSets {
         resources {
             srcDir 'src/main/resources'
         }
-        output.resourcesDir 'build/classes/java/main/game/assets'
+        output.resourcesDir 'build/classes/java/main/stickman/assets'
     }
 }
 
 jar {
     manifest {
-        attributes 'Main-Class': 'game.Launcher'
+        attributes 'Main-Class': 'stickman.Launcher'
     }
 }
 
