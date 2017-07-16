@@ -23,7 +23,7 @@ public class Display
 	Level level;//public para testing
 	private Scene scene = new Scene();
 	//historia
-	private StringBuilder dialogs = null;
+	private StringBuilder dialogs = new StringBuilder();
 	private boolean isOver = false;//SOLO EN MODO HOSTORIA el display termino una serie de escenas y dialogos
 	private boolean SCENE_MODE = false;
 
@@ -74,8 +74,11 @@ public class Display
 	}
 
 	private void printDialogs() {
-		drawDialog(scene.getDialog());
-		if(dialogs != null)
+		String dialog = scene.getDialog();
+		dialogs.append(dialog + "\n");
+		if(dialog == "")
+			dialogs = new StringBuilder();
+		else
 			System.out.print(dialogs.toString());
 		waitDialog();
 	}
@@ -124,13 +127,7 @@ public class Display
 		 * la variable dialogs se imprime despues del frame
 		 * Para limpiar los dialogos enviar in string vacio
 		 */
-		if(dialogs == null){
-			dialogs = new StringBuilder();
-		}
-		dialogs.append(dialog+"\n");
-		if(dialog == ""){
-		 	dialogs = null;
-		}
+
 	}
 
 	public static void clean()
