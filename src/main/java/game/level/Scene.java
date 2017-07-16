@@ -46,7 +46,7 @@ public class Scene extends ReadFile
 
 	}
 
-	public List<char[][]> loadScenes() {
+	private List<char[][]> loadScenes() {
 		List<char[][]> scenesToLoad = new ArrayList<char[][]>();
 		Integer i = 1;
 		String sceneId = "scene" + i.toString();
@@ -60,7 +60,7 @@ public class Scene extends ReadFile
 		return scenesToLoad;
 	}
 
-	public List<String> loadDialogs() {
+	private List<String> loadDialogs() {
 		List<String> dialogs = new ArrayList<String>();
 		Integer i = 1;
 		String dialogId = "dialog" + i.toString();
@@ -73,7 +73,7 @@ public class Scene extends ReadFile
 		return dialogs;
 	}
 
-	public List<Integer> syncDialogs(){
+	private List<Integer> syncDialogs(){
 		Integer i = 1;
 		String key = "dialogs_scene"+ i.toString();
 		List<Integer> nextDialog = new ArrayList<Integer>();
@@ -89,23 +89,26 @@ public class Scene extends ReadFile
 
 	public String getDialog(){
 		String output="";
-		if( (next_dialog.size() < 1) ||
-			(dialog_counter >= dialogs.size()) )
-		{
+		if(!hasDialogs()) {
 			isOver=true;
 		}
-		else if( (dialog_counter >= next_dialog.get(0)) &&
-				 (next_dialog.size()>=1) )
-		//se leyeron todos los dialogos de esta escena
-		{
+		else if(!sceneHasDialogs()) {
 			next_dialog.remove(0);
-			output = ""; //reseteanos los dialogos, drawDialog() recibe ""
+			output = "";
 			if(scenes.size() > 1)
 				scenes.remove(0);
 		}
-		else if( dialog_counter < dialogs.size() ){
+		else if(sceneHasDialogs()) {
 			output = dialogs.get(dialog_counter++);
 		}
 		return output;
+	}
+
+	private boolean hasDialogs () {
+		return !((next_dialog.size() < 1) || dialog_counter >= dialogs.size());
+	}
+
+	private boolean sceneHasDialogs() {
+		return !(dialog_counter >= next_dialog.get(0) && next_dialog.size()>=1);
 	}
 }
