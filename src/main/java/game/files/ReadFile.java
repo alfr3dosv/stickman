@@ -52,16 +52,4 @@ public abstract class ReadFile
 	static InputStream getInputStream(String path) {
 		return ReadFile.class.getClass().getResourceAsStream(path);
 	}
-
-	public void loadSettings(String settingsPath) {
-		settings( loadProperties(settingsPath) );
-	}
-
-	public Properties settings() {
-		return this.settings;
-	}
-
-	public void settings(Properties sttgs) {
-		this.settings = sttgs;
-	}
 }
