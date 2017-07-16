@@ -20,11 +20,10 @@ public class Display
 	private char[][] frame;
 	private int step;
 	private long start_time;
-	Level level;//public para testing
+	private Level level;
 	private Scene scene = new Scene();
-	//historia
 	private StringBuilder dialogs = new StringBuilder();
-	private boolean isOver = false;//SOLO EN MODO HOSTORIA el display termino una serie de escenas y dialogos
+	private boolean isOver = false;
 	private boolean SCENE_MODE = false;
 
 	public Display(Level level) {
@@ -104,11 +103,10 @@ public class Display
 			char[][] before = new char[asset.length][asset[0].length];
 			for(int pos_y=0; pos_y<asset.length; pos_y++)
 			{
-				for(int pos_x=0; pos_x<asset[0].length; pos_x++){
+				for(int pos_x=0; pos_x<asset[0].length; pos_x++) {
 					before[pos_y][pos_x] = frame[y+pos_y][x+pos_x];
 					frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
 				}
-					// inveritdo frame[SIZE_Y-(y+pos_y)-1][SIZE_X-(x+pos_x)-1]=asset[pos_y][pos_x];
 			}
 		}
 	}
@@ -123,24 +121,17 @@ public class Display
 
 	public static void clean()
 	{
-		/*
-	     * Devuelve el cursor a la parte superior
-	     */
 		String os = System.getProperty("os.name").toLowerCase();
-	    //Windows
- 		if (os.indexOf("win") >= 0){
- 			try{
+ 		if (os.indexOf("win") >= 0) {	//Windows
+ 			try {
             	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
  			}
- 			catch(IOException e){
- 				//es muy noche
+ 			catch(IOException e) {
  			}
- 			catch(InterruptedException e){
- 				//es muy noche
+ 			catch(InterruptedException e) {
  			}
  		}
-	    // Linux, Mac ANSI ESCAPES
-		else{
+		else {	// Linux, Mac ANSI ESCAPES
 		    System.out.print("\033[2J\033[;H");
 		    System.out.flush();
 		}
