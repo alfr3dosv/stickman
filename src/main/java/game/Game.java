@@ -7,6 +7,7 @@ import game.player.Player;
 import game.input.Input;
 import game.player.Collisions;
 import game.files.Storyline;
+import game.files.Banner;
 import game.level.*;
 
 public class Game{
@@ -15,13 +16,12 @@ public class Game{
     Thread input = new Thread(player);
     boolean storyEnd = false;
     Collisions collisions = new Collisions(player);
-    Storyline storyline;
+    Storyline storyline = new Storyline("/storyline.properties");
 
     public void menu()
     {
         char op='0';
         while( (op != '1') && (op !='2' )) {
-            printBanner();
             printMenu();
             op = Input.waitKeyPress();
         }
@@ -35,40 +35,17 @@ public class Game{
         }
     }
 
-    public void printBanner(){
-        //hardcoded banner
-        Display.clean();
-        System.out.println();
-        System.out.println();
-        System.out.println("    ######   #### ######## ##     ##    ###    ##    ## ");
-        System.out.println("   ##    ##   ##     ##    ###   ###   ## ##   ###   ## ");
-        System.out.println("   ##         ##     ##    #### ####  ##   ##  ####  ## ");
-        System.out.println("   ##   ####  ##     ##    ## ### ## ##     ## ## ## ## ");
-        System.out.println("   ##    ##   ##     ##    ##     ## ######### ##  #### ");
-        System.out.println("   ##    ##   ##     ##    ##     ## ##     ## ##   ### ");
-        System.out.println("    ######   ####    ##    ##     ## ##     ## ##    ## ");
-    }
-
     public void printMenu()
     {
-        //hardcoded
-        System.out.println();
-        System.out.println();
-        System.out.println("         _   _________       __   _________    __  _________");
-        System.out.println("        / | / / ____/ |     / /  / ____/   |  /  |/  / ____/");
-        System.out.println("       /  |/ / __/  | | /| / /  / / __/ /| | / /|_/ / __/   ");
-        System.out.println("      / /|  / /___  | |/ |/ /  / /_/ / ___ |/ /  / / /___   ");
-        System.out.println("     /__ |_/_____/_____/|____  \\____/_/  |_/_/  /_/_____/   ");
-        System.out.println("     / /   / __ \\/   |  / __ \\                              ");
-        System.out.println("    / /   / / / / /| | / / / /                              ");
-        System.out.println("   / /___/ /_/ / ___ |/ /_/ /                               ");
-        System.out.println("  /_____/\\____/_/  |_/_____/  ");
+        Display.clean();
+        Banner.print("gitman");
+        Banner.print("menu");
         System.out.print("1) Start demo, 2)Exit \nOption:");
     }
 
     public void start(String path, boolean newGame)
     {
-        init();
+        input.start();
         loadNext();
         do
         {
@@ -101,11 +78,6 @@ public class Game{
         printEndBanner();
     }
 
-    public void init() {
-        storyline = new Storyline("/storyline.properties");
-        input.start();
-    }
-
     private void loadNext() {
         Object next = storyline.getNext();
 
@@ -120,34 +92,17 @@ public class Game{
         }
     }
 
-
     public void printDeadBanner()
     {
-        //hardcoded banner
         Display.clean();
-        System.out.print("\n\n\n\n\n\n\n");
-        System.out.println("\t\t  ____ ____ ____ ____   ");
-        System.out.println("\t\t ||D |||E |||A |||D ||");
-        System.out.println("\t\t ||__|||__|||__|||__||");
-        System.out.println("\t\t |/__\\|/__\\|/__\\|/__\\| ");
-        System.out.print("\n\n\n\n\n\n\n");
+        Banner.print("dead");
         sleep(3000);
     }
 
     public void printEndBanner()
     {
-        System.out.print("\n\n\n\n\n\n\n");
         Display.clean();
-        System.out.print("\n\n");
-        System.out.println("  ____________________         ");
-        System.out.println(" < The demo ends here >        ");
-        System.out.println("  --------------------         ");
-        System.out.println("         \\   ^__^              ");
-        System.out.println("          \\  (oo)\\_______      ");
-        System.out.println("             (__)\\       )\\/\\  ");
-        System.out.println("                 ||----w |     ");
-        System.out.println("                 ||     ||     ");
-        System.out.print("\n\n");
+        Banner.print("end");
         sleep(3000);
     }
 
