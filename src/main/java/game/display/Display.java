@@ -45,7 +45,12 @@ public class Display
 
 	public void update()
 	{
-		cloneFrame();
+		char[][] source;
+		if(SCENE_MODE)
+			source = scene.scenes.get(0);
+		else
+			source = level.stages.get(0);
+		frame = cloneFrame(source);
 		drawEnemies();
 	}
 
@@ -83,18 +88,14 @@ public class Display
 		waitDialog();
 	}
 
-	public void cloneFrame() {
-		frame = new char[SIZE_Y][SIZE_X];
-		char[][] source;
-		if(SCENE_MODE)
-			source = scene.scenes.get(0);
-		else
-			source = level.stages.get(0);
+	public char[][] cloneFrame(char[][] source) {
+		char[][] newFrame = new char[SIZE_Y][SIZE_X];
 		for(int y=0; y<SIZE_Y; y++) {
 			for(int x=0; x<SIZE_X; x++) {
-				frame[y][x] = source[y][x];
+				newFrame[y][x] = source[y][x];
 			}
 		}
+		return newFrame;
 	}
 
 	public void draw(char[][] asset, int y, int x)
@@ -113,21 +114,11 @@ public class Display
 	}
 
 	public void drawEnemies(){
-		//Actualizando la posicion de los enemigos
 		if(level != null)
 			for(Enemie enemie : level.enemies){
 				enemie.update();
 				this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
 			}
-	}
-
-	public void drawDialog(String dialog)
-	{
-		/* Agrega texto a dialogs
-		 * la variable dialogs se imprime despues del frame
-		 * Para limpiar los dialogos enviar in string vacio
-		 */
-
 	}
 
 	public static void clean()
@@ -157,15 +148,9 @@ public class Display
 
 	public char[][] getFrame()
 	{
-		char[][] frame = new char[SIZE_Y][SIZE_X];
-		//deep copy
-		for(int y=0; y<SIZE_Y; y++){
-			for(int x=0; x<SIZE_X; x++){
-				frame[y][x]=this.frame[y][x];
-			}
-		}
-		return frame;
+		return cloneFrame(frame);
 	}
+
 	public boolean isOver()
 	{
 		return isOver;
