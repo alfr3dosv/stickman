@@ -1,32 +1,21 @@
 package game;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import game.files.*;
 import game.entity.Entity;
 import game.display.Display;
 import game.player.Player;
 import game.input.Input;
 import game.player.Collisions;
-import game.files.FilesPaths;
+import game.files.Storyline;
+import game.level.*;
 
 public class Game{
-    private Properties storylineFile;
-    List<String> levelsFilesPaths;
-    List<String> scenesFilesPaths;
     Display display = new Display();
     Player player = new Player();
     Thread input = new Thread(player);
-    int currentStep = 0;
     boolean storyEnd = false;
     Collisions collisions = new Collisions(player);
+    Storyline storyline;
 
     public void menu()
     {
@@ -80,7 +69,7 @@ public class Game{
     public void start(String path, boolean newGame)
     {
         init();
-        loadNextStep();
+        loadNext();
         do
         {
             player.init();
@@ -101,10 +90,10 @@ public class Game{
                 printDeadBanner();
             }
             else if( player.hasKey() ){
-                loadNextStep();
+                loadNext();
             }
             else if(display.isOver() ){
-                loadNextStep();
+                loadNext();
             }
         } while(!storyEnd);
         //final del juego
@@ -113,50 +102,18 @@ public class Game{
     }
 
     public void init() {
-        FilesPaths paths = new FilesPaths("/storylineFile.properties");
-        storylineFile = paths.getStorylineFile();
-        levelsFilesPaths = paths.getLevelsFilesPaths();
-        scenesFilesPaths = paths.getScenesFilesPaths();
+        storyline = new Storyline("/storyline.properties");
         input.start();
     }
 
-    private String getNextStep() {
-        List<String> storylineSteps = new ArrayList<String>();
-        for (String step:
-             storylineFile.getProperty("storyline").split(",") )
-        {
-            storylineSteps.add(step);
-        }
-        if(currentStep < storylineSteps.size()) {
-            return storylineSteps.get(currentStep);
+    private void loadNext() {
+        Object next = storyline.getNext();
+        if(next instanceof Level) {
+            display = new Display((Level) next);
         }
         else {
-            return null;
+            display = new Display((Scene) next);
         }
-
-    }
-
-    private void loadNextStep() {
-        String step = getNextStep();
-        String stepText = step.substring( 0,(step.length()-1) );
-        boolean isAScene = stepText.equals("story");
-        String fileName = null;
-        if(step != null) {
-            if(isAScene &&  scenesFilesPaths.size() > 0){
-                fileName = scenesFilesPaths.remove(0);
-            }
-            else if(levelsFilesPaths.size() > 0) {
-                fileName = levelsFilesPaths.remove(0);
-            }
-            else {
-                storyEnd = true;
-            }
-        }
-        if (!storyEnd) {
-            String path = "/assets/" + fileName + "/" + fileName + ".properties";
-            display = new Display(path, isAScene);
-        }
-        currentStep++;
     }
 
 

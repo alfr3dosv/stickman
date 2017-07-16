@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd build/distributions
+rm -r gitman-0.3
+unzip gitman-0.3.zip
+cd gitman-0.3/bin

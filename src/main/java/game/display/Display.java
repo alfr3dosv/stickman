@@ -25,17 +25,27 @@ public class Display
 	//historia
 	private StringBuilder dialogs = null;
 	private boolean isOver = false;//SOLO EN MODO HOSTORIA el display termino una serie de escenas y dialogos
-	private boolean STORY_MODE = false;
+	private boolean SCENE_MODE = false;
 	/* Modos
-	 * STORY_MODE = false, modo normal: el jugador puede moverse e interactuar
-	 * STORY_MODE = true, modo historia:
+	 * SCENE_MODE = false, modo normal: el jugador puede moverse e interactuar
+	 * SCENE_MODE = true, modo historia:
 	 * se imprimen varias escenes con sus dialogos, el jugador no puede interactuar
 	 */
 
 	public Display()
 	{
-		step = 0;
-		start_time = System.currentTimeMillis();
+		init();
+	}
+
+	public Display(Level level) {
+		init();
+		this.level = level;
+	}
+
+	public Display(Scene scene) {
+		init();
+		this.scene = scene;
+		SCENE_MODE = true;
 	}
 
 	public Display(String scenePath, boolean mode)
@@ -43,12 +53,17 @@ public class Display
 		this.init(scenePath, mode);
 	}
 
+	public void init() {
+		step = 0;
+		start_time = System.currentTimeMillis();
+	}
+
 	public void init(String path, boolean isAScene)
 	{
 		step = 0;
 		start_time = System.currentTimeMillis();
 		if(isAScene) {
-			STORY_MODE=true;
+			SCENE_MODE=true;
 			scene = new Scene(path);
 		}
 		else {
@@ -57,7 +72,7 @@ public class Display
 	}
 	public void print()
 	{
-		if( this.scene.isOver && STORY_MODE){
+		if( this.scene.isOver && SCENE_MODE){
 			isOver = true;
 		}
 		/* Si el tiempo actual - tiempo inicial > intevalo
@@ -88,7 +103,7 @@ public class Display
         System.out.print(newFrame.toString());
 
         //dialogos modo historia
-        if(STORY_MODE == true){
+        if(SCENE_MODE == true){
         	drawDialog( scene.getDialog() );
         	System.out.flush();
         	if(dialogs != null){
@@ -102,7 +117,7 @@ public class Display
 	public void draw(){
 		//deep copy del array
 		frame = new char[SIZE_Y][SIZE_X];
-		if(STORY_MODE)//modo historia
+		if(SCENE_MODE)//modo historia
 		{
 			for(int y=0; y<SIZE_Y; y++){
 				for(int x=0; x<SIZE_X; x++){
@@ -121,7 +136,7 @@ public class Display
 	}
 	public void draw(char[][] asset, int y, int x)
 	{
-		if(!STORY_MODE){
+		if(!SCENE_MODE){
 			char[][] before = new char[asset.length][asset[0].length];
 			for(int pos_y=0; pos_y<asset.length; pos_y++)
 			{
