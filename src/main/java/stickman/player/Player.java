@@ -5,6 +5,7 @@ import java.io.*;
 import stickman.entity.Entity;
 import stickman.RawConsoleInput;
 import stickman.input.Input;
+import stickman.entity.*;
 
 public class Player extends Entity implements Runnable
 {

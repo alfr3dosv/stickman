@@ -1,5 +1,5 @@
 package stickman.enemie;
-import stickman.entity.Entity;
+import stickman.entity.*;
 
 public class Enemie extends Entity{
 	private long start_time=0;
