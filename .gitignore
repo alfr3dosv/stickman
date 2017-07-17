@@ -2,3 +2,5 @@
 ENV
 build/*
 tmp/*
+_site/*
+.sass-cache/*
