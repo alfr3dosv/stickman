@@ -1,4 +1,4 @@
-package game.display;
+package stickman.display;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedOutputStream;
@@ -7,9 +7,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.StringBuilder;
 import java.io.IOException;
-import game.level.*;
-import game.enemie.Enemie;
-import game.input.Input;
+import stickman.level.*;
+import stickman.enemie.Enemie;
+import stickman.input.Input;
 
 public class Display
 {

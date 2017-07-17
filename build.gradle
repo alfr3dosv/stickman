@@ -15,7 +15,7 @@ sourceSets {
         resources {
             srcDir 'src/main/resources'
         }
-        output.resourcesDir 'build/classes/java/main/stickman/assets'
+//        output.resourcesDir 'build/classes/java/main/stickman/assets'
     }
 }
 
@@ -31,4 +31,4 @@ dependencies {
     //testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'game.Launcher'
+mainClassName = 'stickman.Launcher'

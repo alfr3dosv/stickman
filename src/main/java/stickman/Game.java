@@ -1,14 +1,14 @@
-package game;
+package stickman;
 import java.util.ArrayList;
 import java.util.List;
-import game.entity.Entity;
-import game.display.Display;
-import game.player.Player;
-import game.input.Input;
-import game.player.Collisions;
-import game.files.Storyline;
-import game.files.Banner;
-import game.level.*;
+import stickman.entity.Entity;
+import stickman.display.Display;
+import stickman.player.Player;
+import stickman.input.Input;
+import stickman.player.Collisions;
+import stickman.files.Storyline;
+import stickman.files.Banner;
+import stickman.level.*;
 
 public class Game{
     Display display;

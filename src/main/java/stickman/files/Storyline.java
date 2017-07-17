@@ -1,4 +1,4 @@
-package game.files;
+package stickman.files;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import game.level.*;
+import stickman.level.*;
 
 public class Storyline {
     private Properties storylineFile;

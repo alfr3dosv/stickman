@@ -1,8 +1,8 @@
-package game.files;
+package stickman.files;
 
 import java.util.List;
 import java.util.HashMap;
-import game.files.ReadFile;
+import stickman.files.ReadFile;
 import java.lang.StringBuilder;
 
 public class Banner {

@@ -1,4 +1,4 @@
-package game.level;
+package stickman.level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
-import game.files.*;
+import stickman.files.*;
 
 public class Scene
 {

@@ -1,5 +1,5 @@
-package game.entity;
-import game.display.Display;
+package stickman.entity;
+import stickman.display.Display;
 
 public abstract class Entity
 {
@@ -26,7 +26,7 @@ public abstract class Entity
 		public Image(int SIZE_X, int SIZE_Y, char[][] img )
 		{
 			this.init(SIZE_Y, SIZE_X);
-			this.img = img;  	
+			this.img = img;
 		}
 		public void init(int SIZE_X, int SIZE_Y)
 		{
@@ -40,17 +40,17 @@ public abstract class Entity
 			return this.img;
 		}
 	}
-	
-	//setters y getters para x,y 
+
+	//setters y getters para x,y
 	public void setX(int x){
-		if( (x < (Display.SIZE_X-this.img.SIZE_X)) && 
+		if( (x < (Display.SIZE_X-this.img.SIZE_X)) &&
 			(x>=0) )
 		{
 			this.x = x;
 		}
 	}
 	public void setY(int y){
-		if( (y < (Display.SIZE_Y-this.img.SIZE_Y)) && 
+		if( (y < (Display.SIZE_Y-this.img.SIZE_Y)) &&
 			(y>=0) )
 		{
 			this.y = y;

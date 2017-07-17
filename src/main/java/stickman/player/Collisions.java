@@ -1,6 +1,6 @@
-package game.player;
+package stickman.player;
 
-import game.player.Player;
+import stickman.player.Player;
 
 public class Collisions {
     char[][] frame;

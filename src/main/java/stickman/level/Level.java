@@ -1,4 +1,4 @@
-package game.level;
+package stickman.level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.StringBuilder;
-import game.files.*;
-import game.enemie.Enemie;
-import game.entity.Entity;
+import stickman.files.*;
+import stickman.enemie.Enemie;
+import stickman.entity.Entity;
 
 public class Level extends ReadFile
 {

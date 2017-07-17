@@ -1,7 +1,7 @@
 
-package game.input;
-import game.entity.Entity;
-import game.RawConsoleInput;
+package stickman.input;
+import stickman.entity.Entity;
+import stickman.RawConsoleInput;
 import java.io.*;
 
 public class Input {
