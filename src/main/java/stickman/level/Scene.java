@@ -13,7 +13,6 @@ public class Scene
 	public List<char[][]> scenes = new ArrayList<char[][]>();
 	private List<String> dialogs = new ArrayList<String>();
 	private List<Integer> next_dialog = new ArrayList<Integer>();
-
 	public boolean isOver = false;
 	private int dialog_counter=0;
 	private int scene_counter=1;
@@ -66,7 +65,7 @@ public class Scene
 		return dialogs;
 	}
 
-	private List<Integer> syncDialogs(){
+	private List<Integer> syncDialogs() {
 		Integer i = 1;
 		String key = "dialogs_scene"+ i.toString();
 		List<Integer> nextDialog = new ArrayList<Integer>();

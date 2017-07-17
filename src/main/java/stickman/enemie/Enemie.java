@@ -13,9 +13,8 @@ public class Enemie extends Entity{
 		this.img = new Image(1,1,new_image);
 	}
 
-	public void update(){
-		//primera vez
-		if(start_time == 0){
+	public void update() {
+		if(start_time == 0) {
 			start_time = System.currentTimeMillis();
 		}
 		else

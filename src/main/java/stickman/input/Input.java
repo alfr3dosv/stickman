@@ -38,7 +38,7 @@ public class Input {
             omitTheSameKeyCounter = 0;
             return false;
         }
-        else{
+        else {
             omitTheSameKeyCounter++;
             return true;
         }

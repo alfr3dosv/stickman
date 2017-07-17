@@ -42,8 +42,7 @@ public class Display
 		start_time = System.currentTimeMillis();
 	}
 
-	public void update()
-	{
+	public void update() {
 		char[][] source;
 		if(SCENE_MODE)
 			source = scene.scenes.get(0);
@@ -53,8 +52,7 @@ public class Display
 		drawEnemies();
 	}
 
-	public void print()
-	{
+	public void print() {
 		if( this.scene.isOver && SCENE_MODE) {
 			isOver = true;
 		}
