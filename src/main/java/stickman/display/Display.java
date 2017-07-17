@@ -122,10 +122,9 @@ public class Display
  			try {
             	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
  			}
- 			catch(IOException e) {
- 			}
- 			catch(InterruptedException e) {
- 			}
+ 			catch(Exception e) {
+				throw new RuntimeException("[Windows] No se pudo limpiar la pantalla", e);
+			}
  		}
 		else {	// Linux, Mac ANSI ESCAPES
 		    System.out.print("\033[2J\033[;H");

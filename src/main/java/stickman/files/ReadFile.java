@@ -24,9 +24,8 @@ public abstract class ReadFile
 			while ((line = in.readLine()) != null)
 				lines.add(line);
 			in.close();
-		} catch (IOException e) {
-			System.out.println("ERR: Not found file");
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new RuntimeException("No se puede leer el archivo",e);
 		}
 		resource = new char[lines.size()][lines.get(0).toCharArray().length];
 		for(int i=0; i< resource.length; i++) {
@@ -41,8 +40,8 @@ public abstract class ReadFile
 		try( InputStream is = getInputStream(path)) {
 			prop.load(getInputStream(path));
 		}
-		catch (IOException ex) {
-			ex.printStackTrace();
+		catch (Exception e) {
+			throw new RuntimeException("No se puede leer el archivo",e);
 		}
 		finally {
 			return prop;

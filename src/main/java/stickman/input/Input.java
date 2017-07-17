@@ -52,6 +52,7 @@ public class Input {
                 key = DEFAULT_KEY;
         } catch(IOException ex) {
             stop = true;
+            throw new RuntimeException("[Input] No puede leer las teclas");
         } finally {
             return key;
         }
@@ -63,6 +64,7 @@ public class Input {
             key = (char)in.read(true);
         } catch(IOException ex) {
             stop = true;
+            throw new RuntimeException("[Input] No puede leer las teclas");
         } finally {
             return key;
         }
