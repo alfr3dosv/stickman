@@ -1,0 +1,6 @@
+.gradle/*
+ENV
+build/*
+tmp/*
+_site/*
+.sass-cahe/*
