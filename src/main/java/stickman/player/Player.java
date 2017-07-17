@@ -17,7 +17,8 @@ public class Player extends Entity implements Runnable
 	private long fall_start=0;
     final int FALL_WAIT=50;
 	private int fall_step=0;
-	boolean CAPTURE_INPUT = true;private int speed_x;
+	boolean CAPTURE_INPUT = true;
+	private int speed_x;
 	private boolean STAGE_KEY = false;
 	public enum State {JUMPING, FALLING, WALKING, STATIC, PAUSED}
 
@@ -44,8 +45,6 @@ public class Player extends Entity implements Runnable
 	}
 
 	public void init() {
-		this.setX(0);
-		this.setY(0);
 		this.setAlive();
 		this.STAGE_KEY = false;
 	}
