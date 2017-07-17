@@ -170,6 +170,9 @@ pre {
 .menu-brand {
   text-align: left;
   display: block; }
+  .menu-brand h1 {
+    padding-top: 20px;
+    font-size: 2em; }
 
 .menu-content {
   top: 20px;
@@ -195,7 +198,7 @@ pre {
   padding-top: 50px;
   padding-bottom: 50px;
   color: #fff;
-  font-weight: 900; }
+  font-weight: 100 !important; }
 
 @media screen and (max-width: 480px) {
   .menu-content {

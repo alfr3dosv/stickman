@@ -6,14 +6,15 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: Gitman
+title: Stickman
 email: 97alfredosv@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Gitman es un juego escrito en Java y trata acerca de algunos comandos basicos de git.
+  Stickman es un juego de plataformas escrito en Java, el objetivo es simple
+  obtener la llave, ya mencione que corre en la consola?.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: 
-github_username:  deepbluejacket
+twitter_username:
+github_username:  alfr3dosv
 
 # Build settings
 markdown: kramdown

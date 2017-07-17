@@ -1,0 +1,24 @@
+---
+layout: index
+---
+  <div class="container">
+    <div>
+    <section>
+      <div class="container">
+        <div class="blog-brand">
+          <h5>Blog</h5>
+          <hr>
+        </div>
+            {% for post in site.posts reversed %}
+              <div class="entry" id="blog">
+                <div class="timeline">|</div>
+                <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+                <h2>
+                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                </h2>
+              </div>
+            {% endfor %}
+        </div>
+    </section>
+    </div>
+</div>

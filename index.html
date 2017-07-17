@@ -4,9 +4,30 @@ layout: index
 <div>
   <!--THUMBNAILS-->
   <section>
+    <center><h5></h5></center>
+    <div class="row">
+      <div class="four columns">
+        <div class="thumbnail">
+          <img src="img/f_1.jpg">
+        </div>
+      </div>
+      <div class="four columns">
+        <div class="thumbnail">
+          <img src="img/f_2.jpg">
+        </div>
+      </div>
+      <div class="four columns">
+        <div class="thumbnail">
+          <img src="img/f_3.jpg">
+        </div>
+      </div>
+    </div>
+    <br />
+  </section>
+  <section>
     <div class="container">
       <div>
-        <h5>Que es gitman?</h5>
+        <h5>¿Que es stickman?</h5>
         <p>Es un juego de plataformas 2D escrito en Java. El objetivo del juego es cruzar al siguiente nivel usando comandos de <a href="https://es.wikipedia.org/wiki/Git">git</a> como poderes del personaje principal.</p>
         <br>
         <strong>Controles</strong>
@@ -31,60 +52,10 @@ layout: index
             <th>d</th>
             <td>Moverse a la derecha</td>
           </tr>
-          <tr>
-            <th>: c</th>
-            <td>Abre la linea de comandos. En la linea de comandos podras ejecutar comandos de git.</td>
-          </tr>
         </table>
         <br>
       </div>
     </div>
   </section>
-  <section>
-    <center><h5>Capturas</h5></center>
-    <div class="row">
-      <div class="four columns">
-        <div class="thumbnail">
-          <img src="img/f_1.jpg">
-        </div>
-      </div>
-      <div class="four columns">
-        <div class="thumbnail">
-          <img src="img/f_2.jpg">
-        </div>
-      </div>
-      <div class="four columns">
-        <div class="thumbnail">
-          <img src="img/f_3.jpg">
-        </div>
-      </div>
-    </div>
-  </section>
-  <section>
-    <div class="container pad-top">
-      <h5>Como instalar?</h5>
-      <p>Para instalarlo es necesario descargar el .jar o exe que se encuentra en <strong>download</strong> y seguir los pasos de instalación en el readme.md</p>
-    </div>
-  </section>
   <!--END THUMBNAILS-->
-  <!--BLOG-->
-  <section>
-    <div class="container">
-      <div class="blog-brand">
-        <h5>Blog</h5>
-        <hr>
-      </div>
-      {% for post in site.posts reversed %}
-        <div class="entry" id="blog">
-          <div class="timeline">|</div>
-          <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-          <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-          </h2>
-        </div>
-      {% endfor %}
-    </div>
-  </section>
-  <!--END BLOG-->
-</div>
 </div>
