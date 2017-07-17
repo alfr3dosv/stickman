@@ -33,6 +33,12 @@ background-position: 5% -250%;
 background-repeat: no-repeat;
 }
 
+.header-wrapper {
+    -webkit-box-shadow: 0px 3px 7px 0.8px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 3px 7px 0.8px rgba(0,0,0,0.75);
+box-shadow: 0px 3px 7px 0.8px rgba(0,0,0,0.75);
+}
+
 .header-text
 {
     height: auto;
@@ -122,8 +128,20 @@ background-repeat: no-repeat;
     }
 }
 
+/**
+ * Wrappers
+ */
+.description-wrapper {
+    padding-top: 50px;
+}
 
+.thumbnail-wraper {
+    padding-top: 50px;
+}
 
+.controls-wrapper {
+    padding-top: 50px;
+}
 /**
  * Page content
  */
