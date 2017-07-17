@@ -9,8 +9,7 @@ public class Collisions {
     char charToTest;
     Player player;
 
-	public Collisions(Player player)
-	{
+	public Collisions(Player player) {
         this.player = player;
         setCharToTest('*');
     }
@@ -65,15 +64,15 @@ public class Collisions {
 		    (frame.length-player.img.SIZE_Y+1) )
 		{
 			boolean PISO = false;
-			for( char caracter: drawArea[2]){
-				if(caracter == '-'){
+			for( char caracter: drawArea[2]) {
+				if(caracter == '-') {
 					player.setY(player.getY()-1);//sube
 					player.status = Player.State.STATIC;
 					break;
 				}
 			}
-			for(char caracter: bottom){
-				if(caracter == '-'){
+			for(char caracter: bottom) {
+				if(caracter == '-') {
 					PISO = true;
 				}
 			}
