@@ -1,5 +1,4 @@
 description = 'stickman build'
-version = '0.3'
 apply plugin: 'java'
 apply plugin: 'application'
 

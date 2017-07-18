@@ -1,7 +1,0 @@
-#!/bin/bash
-
-cd build/distributions
-rm -r stickman-0.3
-unzip stickman-0.3.zip
-cd stickman-0.3/bin
-exec ./stickman
