@@ -44,30 +44,26 @@ public class Game{
     public void start(String path, boolean newGame) {
         input.start();
         loadNext();
-        do {
-            player.init();
-            while(!player.hasKey() && player.isAlive() && !display.isOver()) {
-                display.update();;
+        while(!storyEnd) {
+            if(!player.isAlive()) {
+                printDeadBanner();
+                player.init();
+            }
+            else if(player.hasKey()) {
+                loadNext();
+                player.init();
+            }
+            else if(display.isOver()) {
+                loadNext();
+                player.init();
+            }
+            else {
+                display.update();
                 collisions.test(display.getFrame());
                 display.draw(player.img, player.position);
                 display.print();
             }
-            // el jugador entro a la consola
-            if(player.status == Player.State.PAUSED) {
-                System.out.println("No disponible en demo");
-                player.status = Player.State.STATIC;
-            }
-            else if(!player.isAlive()) {
-                printDeadBanner();
-            }
-            else if(player.hasKey()) {
-                loadNext();
-            }
-            else if(display.isOver()) {
-                loadNext();
-            }
-        } while(!storyEnd);
-        //final del juego
+        }
         input.interrupt();
         printEndBanner();
     }

@@ -72,7 +72,7 @@ public class Display
 	private void printFrame() {
 		StringBuilder frameToPrint = new StringBuilder();
 		char[][] source = frame.chars();
-		for(int y=0; y < size.y; y++) {
+		for(int y = 0; y < size.y; y++) {
 			frameToPrint.append(source[y]);
 			frameToPrint.append("\n");
 		}

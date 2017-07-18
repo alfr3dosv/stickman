@@ -27,8 +27,8 @@ public class Image
 
     public Image clone() {
         char[][] newImg = new char[size.y][size.x];
-        for(int y=0; y<size.y; y++) {
-            for(int x=0; x<size.x; x++) {
+        for(int y=0; y < size.y; y++) {
+            for(int x=0; x < size.x; x++) {
                 newImg[y][x] = img[y][x];
             }
         }
@@ -37,8 +37,8 @@ public class Image
 
     public char[][] cloneChars(char[][] source) {
         char[][] newImg = new char[size.y][size.x];
-        for(int y=0; y<size.y; y++) {
-            for(int x=0; x<size.x; x++) {
+        for(int y = 0; y < size.y; y++) {
+            for(int x = 0; x < size.x; x++) {
                 newImg[y][x] = source[y][x];
             }
         }
@@ -50,7 +50,7 @@ public class Image
         char[][] sourceChars = sourceCopy.chars();
         Size size = source.getSize();
         for(int y = 0; y < size.y; y++)
-            for(int x=0; x < size.x; x++)
+            for(int x = 0; x < size.x; x++)
                 img[sourcePosition.y + y][sourcePosition.x + x] = sourceChars[y][x];
     }
 }
