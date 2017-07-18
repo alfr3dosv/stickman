@@ -10,8 +10,7 @@ import java.io.IOException;
 import stickman.level.*;
 import stickman.enemie.Enemie;
 import stickman.input.Input;
-import stickman.entity.Image;
-import stickman.entity.Size;
+import stickman.entity.*;
 
 public class Display
 {
@@ -20,7 +19,6 @@ public class Display
 	public static final int SIZE_Y = 20;
 	private final int WAIT_PER_FRAME = 50;
 	private int frames=0;
-	private char[][] frame;
 	private int step;
 	private long start_time;
 	private Level level;
@@ -28,7 +26,7 @@ public class Display
 	private StringBuilder dialogs = new StringBuilder();
 	private boolean isOver = false;
 	private boolean SCENE_MODE = false;
-	private Image frameImage;
+	private Image frame;
 
 	public Display(Level level) {
 		init();
@@ -53,8 +51,7 @@ public class Display
 			source = scene.scenes.get(0);
 		else
 			source = level.stages.get(0);
-		frame = cloneFrame(source);
-		frameImage = new Image(size, source);
+		frame = new Image(size, source);
 		drawEnemies();
 	}
 
@@ -74,8 +71,9 @@ public class Display
 
 	private void printFrame() {
 		StringBuilder frameToPrint = new StringBuilder();
+		char[][] source = frame.chars();
 		for(int y=0; y<size.y; y++) {
-			frameToPrint.append(frame[y]);
+			frameToPrint.append(source[y]);
 			frameToPrint.append("\n");
 		}
 		System.out.print(frameToPrint.toString());
@@ -91,25 +89,10 @@ public class Display
 		waitDialog();
 	}
 
-	public char[][] cloneFrame(char[][] source) {
-		char[][] newFrame = new char[size.y][size.x];
-		for(int y=0; y<size.y; y++) {
-			for(int x=0; x<size.x; x++) {
-				newFrame[y][x] = source[y][x];
-			}
-		}
-		return newFrame;
-	}
-
-	public void draw(char[][] asset, int y, int x) {
+	public void draw(Image img, int y, int x) {
 		if(!SCENE_MODE) {
-			char[][] before = new char[asset.length][asset[0].length];
-			for(int pos_y=0; pos_y<asset.length; pos_y++) {
-				for(int pos_x=0; pos_x<asset[0].length; pos_x++) {
-					before[pos_y][pos_x] = frame[y+pos_y][x+pos_x];
-					frame[y+pos_y][x+pos_x]=asset[pos_y][pos_x];
-				}
-			}
+			Point position = new Point(x,y);
+			frame.draw(img, position);
 		}
 	}
 
@@ -117,7 +100,8 @@ public class Display
 		if(level != null) {
 			for(Enemie enemie : level.enemies) {
 				enemie.update();
-				this.draw( enemie.img.get(), enemie.getY(), enemie.getX() );
+				Point position = new Point(enemie.getX(), enemie.getY());
+				frame.draw(enemie.img, position);
 			}
 		}
 	}
@@ -139,7 +123,7 @@ public class Display
 	}
 
 	public char[][] getFrame() {
-		return cloneFrame(frame);
+		return frame.cloneChars(frame.chars());
 	}
 
 	public boolean isOver() {

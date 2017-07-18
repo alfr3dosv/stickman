@@ -23,7 +23,7 @@ public class Image
     {
         size = newSize;
         this.init(size.x, size.y);
-        this.img = img;
+        this.img = cloneChars(img);
     }
 
     public void init(int SIZE_X, int SIZE_Y) {
@@ -37,6 +37,7 @@ public class Image
     }
 
     public Size getSize() {
+        size = new Size(SIZE_X, SIZE_Y);
         return size;
     }
 
@@ -52,6 +53,16 @@ public class Image
             }
         }
         return new Image(SIZE_X, SIZE_Y, img);
+    }
+
+    public char[][] cloneChars(char[][] source) {
+        char[][] newImg = new char[SIZE_Y][SIZE_X];
+        for(int y=0; y<SIZE_Y; y++) {
+            for(int x=0; x<SIZE_X; x++) {
+                newImg[y][x] = source[y][x];
+            }
+        }
+        return newImg;
     }
 
     public void draw(Image source, Point sourcePosition) {
