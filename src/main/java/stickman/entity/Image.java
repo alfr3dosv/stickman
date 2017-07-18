@@ -4,7 +4,7 @@ import stickman.display.Display;
 
 public class Image
 {
-    private char[][] img;
+    public char[][] img;
     public Size size;
 
     public Image(Size newSize, char[][] img)
