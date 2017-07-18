@@ -30,7 +30,7 @@ public class Player extends Entity implements Runnable
 		new_img[0] = new_img_0;
 		new_img[1] = new_img_1;
 		new_img[2] = new_img_2;
-		this.img = new Image(3,3,new_img);
+		this.img = new Image(new Size(3,3), new_img);
 	}
 
 	public void run() {

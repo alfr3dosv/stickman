@@ -5,31 +5,12 @@ import stickman.display.Display;
 public class Image
 {
     private char[][] img;
-    public int SIZE_X;
-    public int SIZE_Y;
     public Size size;
-
-    public Image(int SIZE_X, int SIZE_Y) {
-        this.init(SIZE_Y, SIZE_X);
-    }
-
-    public Image(int SIZE_X, int SIZE_Y, char[][] img )
-    {
-        this.init(SIZE_Y, SIZE_X);
-        this.img = img;
-    }
 
     public Image(Size newSize, char[][] img)
     {
         size = newSize;
-        this.init(size.x, size.y);
         this.img = cloneChars(img);
-    }
-
-    public void init(int SIZE_X, int SIZE_Y) {
-        this.SIZE_Y = SIZE_Y;
-        this.SIZE_X = SIZE_X;
-        this.img = new char[SIZE_Y][SIZE_X];
     }
 
     public char[][] get() {
@@ -37,7 +18,6 @@ public class Image
     }
 
     public Size getSize() {
-        size = new Size(SIZE_X, SIZE_Y);
         return size;
     }
 
@@ -46,19 +26,19 @@ public class Image
     }
 
     public Image clone() {
-        char[][] newImg = new char[SIZE_Y][SIZE_X];
-        for(int y=0; y<SIZE_Y; y++) {
-            for(int x=0; x<SIZE_X; x++) {
+        char[][] newImg = new char[size.y][size.x];
+        for(int y=0; y<size.y; y++) {
+            for(int x=0; x<size.x; x++) {
                 newImg[y][x] = img[y][x];
             }
         }
-        return new Image(SIZE_X, SIZE_Y, img);
+        return new Image(size, img);
     }
 
     public char[][] cloneChars(char[][] source) {
-        char[][] newImg = new char[SIZE_Y][SIZE_X];
-        for(int y=0; y<SIZE_Y; y++) {
-            for(int x=0; x<SIZE_X; x++) {
+        char[][] newImg = new char[size.y][size.x];
+        for(int y=0; y<size.y; y++) {
+            for(int x=0; x<size.x; x++) {
                 newImg[y][x] = source[y][x];
             }
         }

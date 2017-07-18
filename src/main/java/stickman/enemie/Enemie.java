@@ -10,7 +10,7 @@ public class Enemie extends Entity{
 	public Enemie() {
 		char[][] new_image = new char[1][1];
 		new_image[0][0] = '*';
-		this.img = new Image(1,1,new_image);
+		this.img = new Image(new Size(1,1), new_image);
 	}
 
 	public void update() {
