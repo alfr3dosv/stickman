@@ -72,7 +72,7 @@ public class Display
 	private void printFrame() {
 		StringBuilder frameToPrint = new StringBuilder();
 		char[][] source = frame.chars();
-		for(int y=0; y<size.y; y++) {
+		for(int y=0; y < size.y; y++) {
 			frameToPrint.append(source[y]);
 			frameToPrint.append("\n");
 		}
@@ -89,9 +89,8 @@ public class Display
 		waitDialog();
 	}
 
-	public void draw(Image img, int y, int x) {
+	public void draw(Image img, Point position) {
 		if(!SCENE_MODE) {
-			Point position = new Point(x,y);
 			frame.draw(img, position);
 		}
 	}
@@ -100,8 +99,7 @@ public class Display
 		if(level != null) {
 			for(Enemie enemie : level.enemies) {
 				enemie.update();
-				Point position = new Point(enemie.getX(), enemie.getY());
-				frame.draw(enemie.img, position);
+				frame.draw(enemie.img, enemie.position);
 			}
 		}
 	}

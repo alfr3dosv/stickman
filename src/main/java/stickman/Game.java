@@ -49,7 +49,7 @@ public class Game{
             while(!player.hasKey() && player.isAlive() && !display.isOver()) {
                 display.update();;
                 collisions.test(display.getFrame());
-                display.draw(player.img, player.getY(), player.getX());
+                display.draw(player.img, player.position);
                 display.print();
             }
             // el jugador entro a la consola
