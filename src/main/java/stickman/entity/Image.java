@@ -19,8 +19,14 @@ public class Image
         this.img = img;
     }
 
+    public Image(Size newSize, char[][] img)
+    {
+        size = newSize;
+        this.init(size.x, size.y);
+        this.img = img;
+    }
+
     public void init(int SIZE_X, int SIZE_Y) {
-        //no negativos
         this.SIZE_Y = SIZE_Y;
         this.SIZE_X = SIZE_X;
         this.img = new char[SIZE_Y][SIZE_X];

@@ -10,9 +10,12 @@ import java.io.IOException;
 import stickman.level.*;
 import stickman.enemie.Enemie;
 import stickman.input.Input;
+import stickman.entity.Image;
+import stickman.entity.Size;
 
 public class Display
 {
+	public static Size size;
 	public static final int SIZE_X = 70;
 	public static final int SIZE_Y = 20;
 	private final int WAIT_PER_FRAME = 50;
@@ -25,6 +28,7 @@ public class Display
 	private StringBuilder dialogs = new StringBuilder();
 	private boolean isOver = false;
 	private boolean SCENE_MODE = false;
+	private Image frameImage;
 
 	public Display(Level level) {
 		init();
@@ -38,6 +42,7 @@ public class Display
 	}
 
 	public void init() {
+		size = new Size(70,20);
 		step = 0;
 		start_time = System.currentTimeMillis();
 	}
@@ -49,6 +54,7 @@ public class Display
 		else
 			source = level.stages.get(0);
 		frame = cloneFrame(source);
+		frameImage = new Image(size, source);
 		drawEnemies();
 	}
 
@@ -68,7 +74,7 @@ public class Display
 
 	private void printFrame() {
 		StringBuilder frameToPrint = new StringBuilder();
-		for(int y=0; y<SIZE_Y; y++) {
+		for(int y=0; y<size.y; y++) {
 			frameToPrint.append(frame[y]);
 			frameToPrint.append("\n");
 		}
@@ -86,9 +92,9 @@ public class Display
 	}
 
 	public char[][] cloneFrame(char[][] source) {
-		char[][] newFrame = new char[SIZE_Y][SIZE_X];
-		for(int y=0; y<SIZE_Y; y++) {
-			for(int x=0; x<SIZE_X; x++) {
+		char[][] newFrame = new char[size.y][size.x];
+		for(int y=0; y<size.y; y++) {
+			for(int x=0; x<size.x; x++) {
 				newFrame[y][x] = source[y][x];
 			}
 		}
