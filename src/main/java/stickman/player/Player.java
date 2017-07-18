@@ -45,6 +45,8 @@ public class Player extends Entity implements Runnable
 	}
 
 	public void init() {
+		this.setX(0);
+		this.setY(0);
 		this.setAlive();
 		this.STAGE_KEY = false;
 	}
