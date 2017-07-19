@@ -11,6 +11,7 @@ import stickman.level.*;
 import stickman.enemie.Enemie;
 import stickman.input.Input;
 import stickman.entity.*;
+import stickman.display.Frame;
 
 public class Display
 {
@@ -26,7 +27,7 @@ public class Display
 	private StringBuilder dialogs = new StringBuilder();
 	private boolean isOver = false;
 	private boolean SCENE_MODE = false;
-	private Image frame;
+    private Frame frame;
 
 	public Display(Level level) {
 		init();
@@ -51,7 +52,7 @@ public class Display
 			source = scene.scenes.get(0);
 		else
 			source = level.stages.get(0);
-		frame = new Image(size, source);
+        frame = new Frame(size, source);
 		drawEnemies();
 	}
 
@@ -91,7 +92,7 @@ public class Display
 
 	public void draw(Image img, Point position) {
 		if(!SCENE_MODE) {
-			frame.draw(img, position);
+            frame.draw(img, position);
 		}
 	}
 

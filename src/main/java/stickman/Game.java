@@ -59,7 +59,7 @@ public class Game{
             }
             else {
                 display.update();
-                collisions.test(display.getFrame());
+                //collisions.test(display.getFrame());
                 display.draw(player.img, player.position);
                 display.print();
             }

@@ -14,15 +14,13 @@ public abstract class Entity
 	public enum Direction {UP, DOWN, LEFT, RIGHT, NONE}
 
 	public void setX(int x) {
-		if((x < (Display.SIZE_X - img.size.x)) & (x >= 0)) {
+		//if((x < (Display.SIZE_X - img.size.x)) & (x >= 0))
 			position.x = x;
-		}
 	}
 
 	public void setY(int y) {
-		if((y < (Display.SIZE_Y - img.size.y)) && (y >= 0)) {
+		//if((y < (Display.SIZE_Y - img.size.y)) && (y >= 0)) 
 			position.y = y;
-		}
 	}
 
 	public int getX() {
