@@ -46,7 +46,7 @@ public class Player extends Entity implements Runnable
 
 	public void init() {
 		this.setX(0);
-		this.setY(0);
+		setY(0);
 		this.setAlive();
 		this.STAGE_KEY = false;
 	}
@@ -57,25 +57,25 @@ public class Player extends Entity implements Runnable
 		}
 		switch (dir) {
 			case DOWN:
-				this.setY( (this.getY()+1));
+				setY((getY() - 1));
 			break;
 
 			case LEFT:
-				this.setX(this.getX()-1);
-				if(speed_x>0) {
+				this.setX(getX() - 1);
+				if(speed_x > 0) {
 					speed_x = 0;
 				}
-				else if(speed_x>-3) {
+				else if(speed_x > -3) {
 					speed_x--;
 				}
 			break;
 
 			case RIGHT:
-				this.setX( (this.getX()+1) );
-				if(speed_x<0) {
+				this.setX((getX() + 1));
+				if(speed_x < 0) {
 					speed_x = 0;
 				}
-				else if(speed_x<3) {
+				else if(speed_x < 3) {
 					speed_x++;
 				}
 
@@ -123,22 +123,22 @@ public class Player extends Entity implements Runnable
 				 (50+(JUMP_WAIT*jump_step)) )
 		{
 			if((jump_step < jump_steps)) {
-				this.setY(this.getY()-1);
+				setY(getY() + 1);
 			}
 			else{
-				jump_steps=2;
-				jump_step=-1;
+				jump_steps = 2;
+				jump_step = -1;
 				jump_start = 0;
 				status = State.FALLING;
 				//fall(1);
 			}
 			if(speed_x != 0) {
-				if(speed_x>0) {
-					this.setX(this.getX()+2+jump_step);
+				if(speed_x > 0) {
+					this.setX(getX() + jump_step + 2);
 					speed_x--;
 				}
-				else if(speed_x<0) {
-					this.setX(this.getX()-2-jump_step);
+				else if(speed_x < 0) {
+					this.setX(getX() - jump_step - 2);
 					speed_x++;
 				}
 			}
@@ -156,16 +156,16 @@ public class Player extends Entity implements Runnable
 				fall_start = System.currentTimeMillis();
 			}
 			else if( (System.currentTimeMillis() - fall_start) > FALL_WAIT ) {
-				this.setY(this.getY()+1);
+				setY(getY() + 1);
 				if(fall_step<=2) {
 					fall_step++;
 				}
 				if(speed_x != 0) {
 					if(speed_x>0) {
-						this.setX(this.getX()+1);
+						setX(getX() + 1);
 					}
 					else if(speed_x<0) {
-						this.setX(this.getX()-1);
+						setX(getX() - 1);
 					}
 				}
 				spaces--;
