@@ -3,7 +3,7 @@ import stickman.display.Display;
 import stickman.entity.Image;
 import stickman.entity.Point;
 
-public abstract class Entity
+public class Entity
 {
 	private int y=0;
 	private int x=0;
@@ -19,7 +19,7 @@ public abstract class Entity
 	}
 
 	public void setY(int y) {
-		//if((y < (Display.SIZE_Y - img.size.y)) && (y >= 0)) 
+		//if((y < (Display.SIZE_Y - img.size.y)) && (y >= 0))
 			position.y = y;
 	}
 

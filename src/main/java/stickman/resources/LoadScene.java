@@ -7,16 +7,16 @@ import stickman.files.ReadFile;
 
 public class LoadScene
 {
-    private static final String scenesPath = "/assets/";
+    private static final String scenesPath = "/scene/";
     private static String pathToFolder;
     private static Properties properties;
     private static HashMap <Image, List<String>> dialogsPerScene;
 
-    public static Level load(String folderName) {
-        pathToFolder = scenesPath + "/" + folderName;
+    public static Scene load(String folderName) {
+        pathToFolder = scenesPath + folderName;
         properties = ReadFile.loadProperties(pathToFolder + "/" + folderName + ".properties");
         dialogsPerScene = getDialogsPerScene();
-        return new Level();
+        return new Scene(dialogsPerScene);
     }
 
     private static HashMap <Image, List<String>> getDialogsPerScene() {
@@ -30,7 +30,7 @@ public class LoadScene
         while(properties.getProperty(key) != null) {
             int end = Integer.parseInt(properties.getProperty(key)) - 1;
             dialogs = loadDialogs(begin, end);
-            dialogsPerScene.put(scenes.get(i), dialogs);
+            dialogsPerScene.put(scenes.get(i - 1), dialogs);
             begin = end;
             key = "dialogs_scene" + (++i).toString();
         }
@@ -42,7 +42,7 @@ public class LoadScene
         Integer i = 1;
         String sceneId = "scene" + i.toString();
         while(properties.getProperty(sceneId) != null) {
-            String pathToScene = pathToFolder + properties.getProperty(sceneId);
+            String pathToScene = pathToFolder + "/" + properties.getProperty(sceneId);
             scenes.add(ReadFile.loadImage(pathToScene));
             i++;
             sceneId = "scene" + i.toString();
@@ -54,7 +54,7 @@ public class LoadScene
         List<String> dialogs = new ArrayList<String>();
         Integer i = begin;
         String dialogId = "dialog" + i.toString();
-        while((properties.getProperty(dialogId) != null) || (i == end)) {
+        while((properties.getProperty(dialogId) != null)) {
             dialogs.add(properties.getProperty(dialogId));
             i++;
             dialogId = "dialog" + i.toString();

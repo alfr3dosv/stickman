@@ -9,12 +9,12 @@ public class Resources
 {
     public static Object lookup(String key) {
         String type = key.split("/")[0];
-        String name = key.split("/")[0];
+        String name = key.split("/")[1];
         Object resource = null;
-        if(key.equals("level"))
+        if(type.equals("level"))
             resource = (Object) LoadLevel.load(name);
-        else if(key.equals("scene"))
-            resource = (Object) LoadLevel.load(name);
+        else if(type.equals("scene"))
+            resource = (Object) LoadScene.load(name);
         return resource;
     }
 }

@@ -8,16 +8,16 @@ import stickman.files.ReadFile;
 
 public class LoadLevel
 {
-    private static final String levelsPath = "/assets/";
+    private static final String levelsPath = "/level/";
 
     public static Level load(String folderName) {
         String pathToFolder = levelsPath + "/" + folderName;
         String pathToProperties = pathToFolder + "/" + folderName + ".properties";
         Properties properties = ReadFile.loadProperties(pathToProperties);
-        String pathToStage = pathToFolder + properties.getProperty("stage");
+        String pathToStage = pathToFolder + "/" + properties.getProperty("stage");
         Image stage = ReadFile.loadImage(pathToStage);
         List<Enemie> enemies = loadEnemies(properties);
-        return new Level();
+        return new Level(stage, enemies);
     }
 
     private static List<Enemie> loadEnemies(Properties levelProperties) {

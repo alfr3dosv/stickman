@@ -4,3 +4,7 @@ build/*
 tmp/*
 _site/*
 .sass-cache/*
+out/*
+gradle/*
+.idea/*
+stickman.iml

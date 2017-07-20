@@ -1,19 +1,19 @@
-package stickman.display;
+package stickman.util;
 
 import java.util.Arrays;
 import stickman.entity.Image;
 import stickman.entity.Size;
 import stickman.entity.Point;
 
-public class ImageUtil {
+public class ImageDrawer {
     private static int spaces;
     private static Image source;
     private static Point whereToDraw;
     private static Image destination;
     private static Point position = new Point(0,0);
 
-    public ImageUtil(Image newDestination) {
-        destination = newDestination;
+    public void setOutput(Image output) {
+        destination = output;
     }
 
     public void draw(Image newSource, Point where) {
@@ -50,6 +50,9 @@ public class ImageUtil {
         return isXValid && isYValid;
     }
 
+    public Image getImage() {
+        return destination;
+    }
     // public void cut(Size size, Point where) {
     //     source = newSource.clone();
     //     whereToDraw = where;

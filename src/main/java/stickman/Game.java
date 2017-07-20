@@ -43,42 +43,9 @@ public class Game{
 
     public void start(String path, boolean newGame) {
         input.start();
-        loadNext();
-        while(!storyEnd) {
-            if(!player.isAlive()) {
-                printDeadBanner();
-                player.init();
-            }
-            else if(player.hasKey()) {
-                loadNext();
-                player.init();
-            }
-            else if(display.isOver()) {
-                loadNext();
-                player.init();
-            }
-            else {
-                display.update();
-                //collisions.test(display.getFrame());
-                display.draw(player.img, player.position);
-                display.print();
-            }
-        }
+
         input.interrupt();
         printEndBanner();
-    }
-
-    private void loadNext() {
-        Object next = storyline.getNext();
-        if(next instanceof Level) {
-            display = new Display((Level) next);
-        }
-        else if(next instanceof Scene) {
-            display = new Display((Scene) next);
-        }
-        else {
-            storyEnd = true;
-        }
     }
 
     public void printDeadBanner() {
