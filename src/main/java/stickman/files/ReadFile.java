@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.util.Properties;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import stickman.entity.*;
 
 public abstract class ReadFile
 {
@@ -32,6 +33,22 @@ public abstract class ReadFile
 			String s = lines.remove(0);
 			resource[i] = s.toCharArray();
 		}
+		return resource;
+	}
+
+    public static Image loadImage(String path) {
+		List<String> lines = new ArrayList();
+		try ( BufferedReader in = new BufferedReader(
+			  new InputStreamReader(getInputStream(path))))
+		{
+			String line;
+			while ((line = in.readLine()) != null)
+				lines.add(line);
+			in.close();
+		} catch (Exception e) {
+			throw new RuntimeException("No se puede leer el archivo",e);
+		}
+		Image resource = new Image(lines);
 		return resource;
 	}
 
