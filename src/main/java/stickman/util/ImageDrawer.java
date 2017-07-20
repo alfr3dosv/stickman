@@ -9,11 +9,12 @@ public class ImageDrawer {
     private static int spaces;
     private static Image source;
     private static Point whereToDraw;
-    private static Image destination;
+    private static Point whereToCut;
+    private static Image origin;
     private static Point position = new Point(0,0);
 
     public void setOutput(Image output) {
-        destination = output;
+        origin = output;
     }
 
     public void draw(Image newSource, Point where) {
@@ -28,56 +29,56 @@ public class ImageDrawer {
     }
 
     private void drawLine(char[] line, int y) {
-        spaces = line.length;
-        char[][] destinationChars = destination.getChars();
+        int spaces = line.length;
+        char[][] originChars = origin.getChars();
         int offsetX = whereToDraw.x;
-        int offsetY = destination.size.y;
-        int relativeX = 0;
-        int relativeY = 0;
-        while(spaces > destination.size.x)
+        int offsetY = origin.size.y;
+        while(spaces > origin.size.x)
             spaces--;
         for(int x = 0; x < spaces; x++) {
-            relativeX = x + offsetX;
-            relativeY = offsetY - y;
+            int relativeX = x + offsetX;
+            int relativeY = offsetY - y;
             if(isInsideFrame(relativeX, relativeY))
-                destinationChars[relativeY][relativeX] = line[x];
+                originChars[relativeY][relativeX] = line[x];
         }
     }
 
     private boolean isInsideFrame(int x, int y) {
-        boolean isXValid = (x < destination.size.x) && (x > 0);
-        boolean isYValid = (y < destination.size.y) && (y >= 0);
+        boolean isXValid = (x < origin.size.x) && (x > 0);
+        boolean isYValid = (y < origin.size.y) && (y >= 0);
         return isXValid && isYValid;
     }
 
-    public Image getImage() {
-        return destination;
+    public Image cut(Size size, Point where) {
+        whereToCut = where;
+        Image imageCut = new Image(size);
+        char[][] imgChars = new char[size.y][size.x];
+        int y = whereToCut.y + 1;
+        for (int i = imgChars.length - 1; i >= 0; i--) {
+            imgChars[i] = cutLine(size.x, y);
+            y++;
+        }
+        return new Image(size, imgChars);
     }
-    // public void cut(Size size, Point where) {
-    //     source = newSource.clone();
-    //     whereToDraw = where;
-    //     char[][] sourceChars = source.getChars();
-    //     int y = whereToDraw.y + 1;
-    //     for (int i = sourceChars.length-1; i >= 0 ; i--) {
-    //         drawLine(sourceChars[i], y);
-    //         y++;
-    //     }
-    // }
-    //
-    // private String cutLine(char[] line, int y) {
-    //     spaces = line.length;
-    //     char[][] destinationChars = destination.getChars();
-    //     int offsetX = whereToDraw.x;
-    //     int offsetY = destination.size.y;
-    //     int relativeX = 0;
-    //     int relativeY = 0;
-    //     while(spaces > destination.size.x)
-    //         spaces--;
-    //     for(int x = 0; x < spaces; x++) {
-    //         relativeX = x + offsetX;
-    //         relativeY = offsetY - y;
-    //         if(isInsideFrame(relativeX, relativeY))
-    //             destinationChars[relativeY][relativeX] = line[x];
-    //     }
-    // }
+
+    private char[] cutLine(int spaces, int y) {
+        char[] line = new char[spaces];
+        char[][] originChars = origin.getChars();
+        int offsetX = whereToCut.x;
+        int offsetY = origin.size.y;
+        while(spaces > origin.size.x)
+            spaces--;
+
+        for(int x = 0; x < spaces; x++) {
+            int relativeX = x + offsetX;
+            int relativeY = offsetY - y;
+            if(isInsideFrame(relativeX, relativeY))
+                line[x] = originChars[relativeY][relativeX];
+        }
+        return line;
+    }
+    
+    public Image getImage() {
+        return origin;
+    }
 }

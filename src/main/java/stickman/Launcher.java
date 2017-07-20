@@ -7,6 +7,7 @@ import stickman.resources.*;
 import stickman.player.Player;
 import stickman.display.Display;
 import stickman.entity.*;
+import stickman.util.ImageDrawer;
 
 public class Launcher {
     public static void main(String[] args) {
@@ -21,15 +22,6 @@ public class Launcher {
 //            System.out.println(x.img.size.x);
 //            System.out.println(x.img.size.y);
 //        }
-        Display d = new Display();
-        Image i = ReadFile.loadImage("/level/caminar/stage_1.txt");
-        Image i2 = x.img.clone();
-        Image i3 = new Image(new Size(20,70));
-
-        System.out.println("HI");
-        d.render(i, x);
-        while(true) {
-            d.print();
-        }
+}
     }
 }
