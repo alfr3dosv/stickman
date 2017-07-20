@@ -1,16 +1,11 @@
-package stickman.files;
+package stickman.resources;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.io.InputStream;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.Properties;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import stickman.entity.*;
 
 public abstract class ReadFile

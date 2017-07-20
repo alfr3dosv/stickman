@@ -17,6 +17,20 @@ public class Image
         this.img = cloneChars(img);
     }
 
+    public Image(Size newSize)
+    {
+        size = newSize;
+        img = new char[size.y][size.x];
+        List<String> lines = new ArrayList<String>();
+        for(int i = 0; i < size.y; i++) {
+            lines.add(fillSpaces("", size.x));
+        }
+        int y = 0;
+        for(String s: lines) {
+            img[y++] = s.toCharArray();
+        }
+    }
+
     public Image(List<String> lines)
     {
         int max = 0;

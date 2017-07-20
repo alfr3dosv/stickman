@@ -41,6 +41,11 @@ public class Display
 			frame.draw(e.img, e.position);
 	}
 
+	public void render(Image base, Entity e) {
+		frame.setOutput(base);
+		frame.draw(e.img, e.position);
+	}
+
 	public static void clean() {
 		String os = System.getProperty("os.name").toLowerCase();
  		if (os.indexOf("win") >= 0) {	//Windows

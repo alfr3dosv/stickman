@@ -4,7 +4,6 @@ import java.util.*;
 import stickman.entity.*;
 import stickman.level.*;
 import stickman.enemie.*;
-import stickman.files.ReadFile;
 
 public class LoadLevel
 {

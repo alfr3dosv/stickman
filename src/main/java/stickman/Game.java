@@ -1,22 +1,19 @@
 package stickman;
-import java.util.ArrayList;
-import java.util.List;
-import stickman.entity.Entity;
 import stickman.display.Display;
-import stickman.player.Player;
 import stickman.input.Input;
-import stickman.player.Collisions;
-import stickman.files.Storyline;
-import stickman.files.Banner;
+import stickman.resources.*;
 import stickman.level.*;
 
 public class Game{
     Display display;
-    Player player = new Player();
-    Thread input = new Thread(player);
+    Thread input;
     boolean storyEnd = false;
-    Collisions collisions = new Collisions(player);
-    Storyline storyline = new Storyline("/storyline.properties");
+    Storyline storyline;
+
+    public Game(Storyline storyline, Thread input) {
+        this.storyline = storyline;
+        this.input = input;
+    }
 
     public void menu() {
         char op='0';
@@ -25,7 +22,7 @@ public class Game{
             op = Input.waitKeyPress();
         }
         switch(op) {
-            case '1': start("storylineFile.properties", false);
+            case '1': start();
                 break;
             case 2:
                 break;
@@ -36,28 +33,21 @@ public class Game{
 
     public void printMenu() {
         Display.clean();
-        Banner.print("stickman");
-        Banner.print("menu");
         System.out.print("1) Start demo, 2)Exit \nOption:");
     }
 
-    public void start(String path, boolean newGame) {
+    public void start() {
         input.start();
-
+        Object next = Resources.lookup(storyline.getNext());
+        while(next != null) {
+            if (next instanceof Level)
+                ((Level) next).play();
+            else if (next instanceof Scene)
+                ((Scene) next).play();
+            next = Resources.lookup(storyline.getNext());
+        }
         input.interrupt();
-        printEndBanner();
-    }
-
-    public void printDeadBanner() {
-        Display.clean();
-        Banner.print("dead");
-        sleep(3000);
-    }
-
-    public void printEndBanner() {
-        Display.clean();
-        Banner.print("end");
-        sleep(3000);
+        System.out.println(Resources.lookup("banner/dead").toString());;
     }
 
     public void sleep(int time) {

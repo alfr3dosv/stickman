@@ -3,7 +3,6 @@ package stickman.resources;
 import java.util.*;
 import stickman.entity.*;
 import stickman.level.*;
-import stickman.files.ReadFile;
 
 public class LoadScene
 {

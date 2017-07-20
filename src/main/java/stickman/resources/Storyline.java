@@ -1,23 +1,20 @@
-package stickman.files;
+package stickman.resources;
 
 import java.util.*;
-import stickman.level.*;
-import stickman.files.ReadFile;
 
 public class Storyline {
     private List<String> storyline;
     int last = 0;
 
     public Storyline(String path) {
+        storyline = new ArrayList<>();
         try {
             Properties properties = ReadFile.loadProperties(path);
             for (String step : properties.getProperty("storyline").split(",")) {
-                String folderName = properties.getProperty(step);
-                if (step.contains("level")) {
-                    storyline.add(last++, "level/" + folderName);
-                } else if (step.contains("scene")) {
-                    storyline.add(last++, "scene/" + folderName);
-                }
+                String key = properties.getProperty(step);
+                if(key == null)
+                    throw new RuntimeException("Cannot find level or scene named " + step);
+                storyline.add(key);
             }
         } catch(Exception e) {
             throw new RuntimeException("Cannot parse storyline", e);
@@ -25,14 +22,10 @@ public class Storyline {
 
     }
 
-    private String getFullPat(String fileName) {
-        return "/assets/" + fileName + "/" + fileName + ".properties";
-    }
-
-    public Object getNext() {
+    public String getNext() {
         if(storyline.size() > 0)
             return storyline.remove(0);
         else
-            return null;
+            return "";
     }
 }

@@ -22,15 +22,9 @@ public class Player extends Entity implements Runnable
 	private boolean STAGE_KEY = false;
 	public enum State {JUMPING, FALLING, WALKING, STATIC, PAUSED}
 
-	public Player()	{
-		char[] new_img_0 ={' ','o',' '};
-		char[] new_img_1 = {'/','|','\\'};
-		char[] new_img_2 = {'/',' ','\\'};
-		char[][] new_img = new char [3][3];
-		new_img[0] = new_img_0;
-		new_img[1] = new_img_1;
-		new_img[2] = new_img_2;
-		this.img = new Image(new Size(3,3), new_img);
+	public Player(Image imageOfPlayer)	{
+		img = imageOfPlayer;
+		init();
 	}
 
 	public void run() {
@@ -45,10 +39,10 @@ public class Player extends Entity implements Runnable
 	}
 
 	public void init() {
-		this.setX(0);
+		setX(0);
 		setY(0);
-		this.setAlive();
-		this.STAGE_KEY = false;
+		setAlive();
+		STAGE_KEY = false;
 	}
 
 	private void move() {

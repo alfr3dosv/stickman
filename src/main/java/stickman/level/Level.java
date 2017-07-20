@@ -1,11 +1,11 @@
 package stickman.level;
 
 import java.util.*;
-import stickman.files.*;
+
 import stickman.entity.*;
 import stickman.enemie.Enemie;
 
-public class Level extends ReadFile
+public class Level
 {
 	public Image stage;
 	public List<Enemie> enemies;
@@ -13,5 +13,9 @@ public class Level extends ReadFile
 	public Level (Image newStage, List<Enemie> newEnemies) {
         stage = newStage;
         enemies = newEnemies;
+	}
+
+	public void play() {
+		;
 	}
 }
