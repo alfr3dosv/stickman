@@ -20,15 +20,8 @@ public class Image
     public Image(Size newSize)
     {
         size = newSize;
-        img = new char[size.y][size.x];
-        List<String> lines = new ArrayList<String>();
-        for(int i = 0; i < size.y; i++) {
-            lines.add(fillSpaces("", size.x));
-        }
-        int y = 0;
-        for(String s: lines) {
-            img[y++] = s.toCharArray();
-        }
+        char[][] previous = new char[size.y][size.x];
+        img = cloneChars(previous);
     }
 
     public Image(List<String> lines)
@@ -39,22 +32,45 @@ public class Image
                 max = s.length();
         }
         size = new Size(max, lines.size());
-        img = new char[size.y][size.x];
+        char[][] previous = new char[size.y][size.x];
         int i = 0;
         for(String s: lines) {
-            s = fillSpaces(s, size.x - s.length());
-            img[i++] = s.toCharArray();
+            previous[i++] = s.toCharArray();
         }
+        img = cloneChars(previous);
     }
 
-    public String fillSpaces(String line, int spacesToFill) {
-        for(int i = 0; i < spaces; i++)
-            line += " ";
-        return line;
+    public Image clone() {
+        return new Image(size, cloneChars(img));
     }
 
-    public char[][] get() {
-        return this.img;
+    private char[][] cloneChars(char[][] img) {
+        char[][] newImg = new char[size.y][size.x];
+        for(int y=0; y < size.y; y++) {
+            newImg[y] = cloneCharsArray(img[y]);
+        }
+        return newImg;
+    }
+    private char[] cloneCharsArray(char[] charsToCopy) {
+        char[] chars = new char[size.x];
+        for(int i = 0; i < size.x; i++) {
+            if(i >= charsToCopy.length)
+                chars[i] = ' ';
+            else if(charsToCopy[i] == '\0')
+                chars[i] = ' ';
+            else
+                chars[i] = charsToCopy[i];
+        }
+        return chars;
+    }
+
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        for(int y = 0; y < size.y; y++) {
+            str.append(img[y]);
+            str.append("\n");
+        }
+        return str.toString();
     }
 
     public Size getSize() {
@@ -67,43 +83,5 @@ public class Image
 
     public char[][] getChars() {
         return this.img;
-    }
-
-    public Image clone() {
-        char[][] newImg = new char[size.y][size.x];
-        for(int y=0; y < size.y; y++) {
-            for(int x=0; x < size.x; x++) {
-                newImg[y][x] = img[y][x];
-            }
-        }
-        return new Image(size, img);
-    }
-
-    public char[][] cloneChars(char[][] source) {
-        char[][] newImg = new char[size.y][size.x];
-        for(int y = 0; y < size.y; y++) {
-            for(int x = 0; x < size.x; x++) {
-                newImg[y][x] = source[y][x];
-            }
-        }
-        return newImg;
-    }
-
-    public void draw(Image source, Point sourcePosition) {
-        Image sourceCopy = source.clone();
-        char[][] sourceChars = sourceCopy.chars();
-        Size size = source.getSize();
-        for(int y = 0; y < size.y; y++)
-            for(int x = 0; x < size.x; x++)
-                img[sourcePosition.y + y][sourcePosition.x + x] = sourceChars[y][x];
-    }
-
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-        for(int y = 0; y < size.y; y++) {
-            str.append(img[y]);
-            str.append("\n");
-        }
-        return str.toString();
     }
 }

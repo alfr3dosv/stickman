@@ -9,7 +9,7 @@ public class Display
 	public static Size size;
 	public static final int SIZE_X = 70;
 	public static final int SIZE_Y = 20;
-	private final int WAIT_PER_FRAME = 50;
+	private static final int WAIT_PER_FRAME = 50;
 	private long startTime;
     private String text;
     private ImageDrawer frame;
@@ -18,16 +18,14 @@ public class Display
         frame = new ImageDrawer();
 		size = new Size(70,20);
 		startTime = System.currentTimeMillis();
+		text = "";
 	}
 
 	public void print() {
-		long elapsedTime = System.currentTimeMillis() - startTime;
-		if(elapsedTime > WAIT_PER_FRAME ) {
-			clean();
-            System.out.print(frame.getImage().toString());
-            System.out.print(text);
-			startTime = System.currentTimeMillis();
-		}
+		clean();
+		System.out.print(frame.getImage().toString());
+		System.out.print(text);
+		startTime = System.currentTimeMillis();
 	}
 
     public void render(Image base, String dialog) {
@@ -59,6 +57,14 @@ public class Display
 		else {	// Linux, Mac ANSI ESCAPES
 		    System.out.print("\033[2J\033[;H");
 		    System.out.flush();
+		}
+	}
+
+	public static void sleep() {
+		try {
+			Thread.sleep(WAIT_PER_FRAME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
