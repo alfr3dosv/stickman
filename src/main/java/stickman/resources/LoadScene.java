@@ -21,13 +21,13 @@ public class LoadScene
     private static HashMap <Image, List<String>> getDialogsPerScene() {
         List<Image> scenes = loadScenes();
         List<String> dialogs;
-        HashMap <Image, List<String>> dialogsPerScene = new HashMap<Image, List<String>>();
+        HashMap <Image, List<String>> dialogsPerScene = new LinkedHashMap<Image, List<String>>();
 
         Integer i = 1;
-        int begin = 0;
+        int begin = 1;
         String key = "dialogs_scene"+ i.toString();
         while(properties.getProperty(key) != null) {
-            int end = Integer.parseInt(properties.getProperty(key)) - 1;
+            int end = Integer.parseInt(properties.getProperty(key));
             dialogs = loadDialogs(begin, end);
             dialogsPerScene.put(scenes.get(i - 1), dialogs);
             begin = end;
@@ -53,7 +53,7 @@ public class LoadScene
         List<String> dialogs = new ArrayList<String>();
         Integer i = begin;
         String dialogId = "dialog" + i.toString();
-        while((properties.getProperty(dialogId) != null)) {
+        while((properties.getProperty(dialogId) != null) && (i <= end))  {
             dialogs.add(properties.getProperty(dialogId));
             i++;
             dialogId = "dialog" + i.toString();

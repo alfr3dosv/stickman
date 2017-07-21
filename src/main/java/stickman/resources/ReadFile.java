@@ -21,7 +21,7 @@ public abstract class ReadFile
 				lines.add(line);
 			in.close();
 		} catch (Exception e) {
-			throw new RuntimeException("No se puede leer el archivo",e);
+			throw new RuntimeException("Can' read " + path, e);
 		}
 		resource = new char[lines.size()][lines.get(0).toCharArray().length];
 		for(int i=0; i< resource.length; i++) {
@@ -41,7 +41,7 @@ public abstract class ReadFile
 				lines.add(line);
 			in.close();
 		} catch (Exception e) {
-			throw new RuntimeException("No se puede leer el archivo",e);
+			throw new RuntimeException("Can't read " + path,e);
 		}
 		Image resource = new Image(lines);
 		return resource;

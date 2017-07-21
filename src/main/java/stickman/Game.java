@@ -6,13 +6,11 @@ import stickman.level.*;
 
 public class Game{
     Display display;
-    Thread input;
     boolean storyEnd = false;
     Storyline storyline;
 
-    public Game(Storyline storyline, Thread input) {
+    public Game(Storyline storyline) {
         this.storyline = storyline;
-        this.input = input;
     }
 
     public void menu() {
@@ -21,6 +19,7 @@ public class Game{
             printMenu();
             op = Input.waitKeyPress();
         }
+
         switch(op) {
             case '1': start();
                 break;
@@ -37,7 +36,6 @@ public class Game{
     }
 
     public void start() {
-        input.start();
         Object next = Resources.lookup(storyline.getNext());
         while(next != null) {
             if (next instanceof Level)
@@ -46,16 +44,6 @@ public class Game{
                 ((Scene) next).play();
             next = Resources.lookup(storyline.getNext());
         }
-        input.interrupt();
         System.out.println(Resources.lookup("banner/dead").toString());;
-    }
-
-    public void sleep(int time) {
-        try {
-            Thread.sleep(time);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

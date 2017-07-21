@@ -33,9 +33,9 @@ public class Display
         text = dialog;
 	}
 
-	public void render(Image base, Entity[] entitys) {
+	public void render(Image base, List<Entity> entities) {
         frame.setOutput(base);
-        for(Entity e : entitys)
+        for(Entity e : entities)
 			frame.draw(e.img, e.position);
 	}
 
