@@ -11,7 +11,7 @@ public class Entity
 	private volatile boolean alive = true;
 	public Image img;
 	public volatile Direction dir = Entity.Direction.NONE;
-	public enum Direction {UP, DOWN, LEFT, RIGHT, NONE}
+	public enum Direction {NONE, UP, DOWN, LEFT, RIGHT}
 
 	public void setX(int x) {
 		//if((x < (Display.SIZE_X - img.size.x)) & (x >= 0))

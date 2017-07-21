@@ -9,7 +9,7 @@ public class Input {
     private static RawConsoleInput in = new RawConsoleInput();;
     private static char lastKey;
     private static long elapsedTimeBetweenKeys;// contador de tiempo entre teclas
-    private static final int WAIT_PER_KEY = 20;//intervalo de tiempo entre teclas
+    public static final int WAIT_PER_KEY = 20;//intervalo de tiempo entre teclas
     private static final int TIMES_OMITTED_THE_SAME_KEY = 2;
     public static final char DEFAULT_KEY = 'f';
     public static boolean stop = false;

@@ -1,11 +1,11 @@
 package stickman.level;
 
 import java.util.*;
-
 import stickman.entity.*;
 import stickman.display.Display;
 import stickman.player.Player;
 import stickman.resources.Resources;
+import stickman.player.Movement;
 
 public class Level
 {
@@ -18,8 +18,11 @@ public class Level
 	}
 
 	public void play() {
-		Display display = new Display();
 		Player player = (Player) Resources.lookup("player");
+		Movement movement = new Movement(player);
+		Thread movementThread = new Thread(movement);
+		movementThread.start();
+		Display display = new Display();
 		entities.add(player);
 		while(true) {
 			display.render(stage, entities);

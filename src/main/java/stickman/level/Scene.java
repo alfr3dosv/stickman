@@ -4,6 +4,7 @@ import java.util.*;
 
 import stickman.display.Display;
 import stickman.entity.*;
+import stickman.input.Input;
 import stickman.player.Player;
 import stickman.resources.Resources;
 
@@ -34,7 +35,7 @@ public class Scene
 			String dialog = dialogs.remove(0);
 			display.render(scene, dialog);
 			display.print();
-			Display.sleep();
-		}
+            Input.waitKeyPress();
+        }
 	}
 }
