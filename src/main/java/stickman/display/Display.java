@@ -12,6 +12,7 @@ public class Display
 	private static final int WAIT_PER_FRAME = 50;
 	private long startTime;
     private String text;
+    private Image base;
     private ImageDrawer frame;
 
 	public Display() {
@@ -28,12 +29,14 @@ public class Display
 		startTime = System.currentTimeMillis();
 	}
 
-    public void render(Image base, String dialog) {
+    public void render(Image destination, String dialog) {
+	    base = destination.clone();
         frame.setOutput(base);
         text = dialog;
 	}
 
-	public void render(Image base, List<Entity> entities) {
+	public void render(Image destination, List<Entity> entities) {
+	    base = destination.clone();
         frame.setOutput(base);
         for(Entity e : entities)
 			frame.draw(e.img, e.position);
