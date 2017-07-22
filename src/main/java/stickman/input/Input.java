@@ -21,12 +21,12 @@ public class Input {
 
     public static char getKey() {
         char key = DEFAULT_KEY;
-        if( (System.currentTimeMillis() - elapsedTimeBetweenKeys) >
-            WAIT_PER_KEY)
-        {
+//        if( (System.currentTimeMillis() - elapsedTimeBetweenKeys) >
+//            WAIT_PER_KEY)
+//        {
             key = read();
             elapsedTimeBetweenKeys = System.currentTimeMillis();
-        }
+//        }
         return key;
     }
 
@@ -48,8 +48,8 @@ public class Input {
         char key = DEFAULT_KEY;
         try {
             key = (char)in.read(false);
-            if(isTheSameKey(key))
-                key = DEFAULT_KEY;
+//            if(isTheSameKey(key))
+//                key = DEFAULT_KEY;
         } catch(IOException ex) {
             stop = true;
             throw new RuntimeException("[Input] No puede leer las teclas");

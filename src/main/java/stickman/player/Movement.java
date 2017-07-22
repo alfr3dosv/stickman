@@ -7,76 +7,99 @@ public class Movement implements Runnable
 {
     private Speed speed;
     public Player player;
+    private int jumps;
+    private long jumpBegin;
+    private long slowDownBegin;
 
     private class Speed
     {
         int x = 0;
         int y = 0;
-    }
 
+    }
     public Movement(Player newPlayer) {
         player = newPlayer;
         speed = new Speed();
+        jumps = 0;
+        slowDownBegin = System.currentTimeMillis();
     }
 
     public void run() {
         while(true) {
             char key = Input.getKey();
              onKeyPress(key);
+             slowdown();
+             jump();
+             //sleep(0);
         }
     }
 
     public void onKeyPress(char key) {
-        if (key == 'w') {
-            player.dir = Entity.Direction.UP;
-        } else if (key == 's') {
-            player.dir = Entity.Direction.DOWN;
-        } else if (key == 'a') {
-            player.dir = Entity.Direction.LEFT;
-        } else if (key == 'd') {
-            player.dir = Entity.Direction.RIGHT;
-        }
-        move();
+        if (key == 'w')
+            moveUp();
+        else if (key == 's')
+            moveDown();
+        else if (key == 'a')
+            moveLeft();
+        else if (key == 'd')
+            moveRight();
         resetDirection();
     }
 
-    private void move() {
-        switch (player.dir) {
-            case UP:
-                jump();
-                break;
+    public void moveUp() {
+        player.dir = Entity.Direction.UP;
+        jumps++;
+        //jump();
+    }
 
-            case DOWN:
-                player.setY(player.getY() - 1);
-                break;
+    private void moveDown() {
+        player.dir = Entity.Direction.DOWN;
+        player.setY(player.getY() - 1);
+    }
 
-            case LEFT:
-                player.setX(player.getX() - 1);
-                increaseSpeed(-1);
-                break;
+    private void moveLeft() {
+        player.dir = Entity.Direction.LEFT;
+        player.setX(player.getX() - 1);
+        increaseSpeed(-1);
+    }
 
-            case RIGHT:
-                player.setX(player.getX() + 1);
-                increaseSpeed(1);
-                break;
+    private  void moveRight() {
+        player.dir = Entity.Direction.RIGHT;
+        player.setX(player.getX() + 1);
+        increaseSpeed(1);
+    }
+
+    private void slowdown() {
+        final long WAIT_MILLIS = 100;
+        long elapsedTime = System.currentTimeMillis() - slowDownBegin;
+
+        if(elapsedTime > WAIT_MILLIS) {
+            if (speed.x > 0)
+                player.setX(player.getX() + (speed.x--));
+            else if (speed.x < 0)
+                player.setX(player.getX() + (speed.x++));
+            slowDownBegin = System.currentTimeMillis();
         }
     }
 
     private void jump() {
-        final long WAIT_MILLIS = 100;
-        sleep(WAIT_MILLIS);
-        player.setY(player.getY() + 1);
+        final long WAIT_RESET = 1000;
+        final long WAIT_NEXT = 50;
+        long elapsedTime = System.currentTimeMillis() - jumpBegin;
 
-        if(speed.x <= 1 && speed.x >= -1) {
-            player.setX(player.getX() + speed.x);
-            resetSpeedX();
+        if((jumps > 0 && jumps <= 3) && elapsedTime > WAIT_NEXT) {
+            player.setY(player.getY() + 1);
+            jumps++;
+            jumpBegin = System.currentTimeMillis();
+        } else if(elapsedTime > WAIT_RESET) {
+            jumps = 0;
         }
     }
 
     private void increaseSpeed(int increase) {
         if((increase > 0 && speed.x < 0) || (increase < 0 && speed.x > 0))
             resetSpeedX();
-        else if((speed.x > -3) && (speed.x < 3))
+        else if((speed.x > -5) && (speed.x < 5))
             speed.x += increase;
 
     }
@@ -85,7 +108,7 @@ public class Movement implements Runnable
         speed.x = 0;
     }
 
-    private void resetDirection() {
+    private void  resetDirection() {
         player.dir = Entity.Direction.NONE;
     }
 
