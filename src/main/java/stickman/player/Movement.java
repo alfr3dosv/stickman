@@ -10,6 +10,7 @@ public class Movement implements Runnable
     private int jumps;
     private long jumpBegin;
     private long slowDownBegin;
+    
 
     private class Speed
     {
@@ -28,9 +29,9 @@ public class Movement implements Runnable
         while(true) {
             char key = Input.getKey();
              onKeyPress(key);
-             slowdown();
-             jump();
-             //sleep(0);
+            jump();
+            slowdown();
+            //sleep(0);
         }
     }
 
@@ -48,8 +49,10 @@ public class Movement implements Runnable
 
     public void moveUp() {
         player.dir = Entity.Direction.UP;
-        jumps++;
-        //jump();
+        if(jumps == 0)
+            jumps++;
+        jump();
+        sleep(5);
     }
 
     private void moveDown() {
@@ -83,7 +86,7 @@ public class Movement implements Runnable
     }
 
     private void jump() {
-        final long WAIT_RESET = 1000;
+        final long WAIT_RESET = 500;
         final long WAIT_NEXT = 50;
         long elapsedTime = System.currentTimeMillis() - jumpBegin;
 
@@ -91,15 +94,26 @@ public class Movement implements Runnable
             player.setY(player.getY() + 1);
             jumps++;
             jumpBegin = System.currentTimeMillis();
-        } else if(elapsedTime > WAIT_RESET) {
+        }
+        else if((jumps > 3 && jumps <= 5) && elapsedTime > WAIT_NEXT) {
+            jumps++;
+            jumpBegin = System.currentTimeMillis();
+        }
+        else if((jumps > 5 && jumps <= 8) && elapsedTime > WAIT_NEXT) {
+            player.setY(player.getY() - 1);
+            jumps++;
+            jumpBegin = System.currentTimeMillis();
+        }
+        else if((jumps >= 9) && elapsedTime > WAIT_RESET) {
             jumps = 0;
         }
+
     }
 
     private void increaseSpeed(int increase) {
         if((increase > 0 && speed.x < 0) || (increase < 0 && speed.x > 0))
             resetSpeedX();
-        else if((speed.x > -5) && (speed.x < 5))
+        else if((speed.x > -4) && (speed.x < 4))
             speed.x += increase;
 
     }
