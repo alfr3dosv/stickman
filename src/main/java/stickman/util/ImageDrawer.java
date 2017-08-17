@@ -1,6 +1,8 @@
 package stickman.util;
 
 import java.util.Arrays;
+
+import stickman.entity.Entity;
 import stickman.entity.Image;
 import stickman.entity.Size;
 import stickman.entity.Point;

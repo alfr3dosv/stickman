@@ -1,8 +1,10 @@
-package stickman.player;
+package stickman.collision;
 
+import java.util.*;
 import stickman.player.Player;
 import stickman.entity.*;
 import stickman.util.ImageDrawer;
+import stickman.util.ImageOverlapping;
 
 
 public class CollisionDetector {
@@ -11,11 +13,16 @@ public class CollisionDetector {
     char[][] drawArea;
     char[] bottom;
     char charToTest;
-    Player player;
+    List<Entity> entities;
+    List<Hittable> hittables;
     private final char FLOOR = '-';
 
-	public CollisionDetector(Player player) {
-        this.player = player;
+	public CollisionDetector(List<Entity> entities) {
+        this.entities = entities;
+        hittables = new ArrayList<>();
+        for(Entity e : entities)
+            if(e instanceof Hittable)
+                hittables.add((Hittable) e);
         setCharToTest('*');
     }
 
@@ -27,24 +34,23 @@ public class CollisionDetector {
 	    base = context;
     }
 
-    public void testPlayer() {
-        ImageDrawer drawAreaCut = new ImageDrawer();
-        Size drawAreaSize = new Size(player.img.size.x + 1, player.img.size.y + 1);
-        Point drawArePosition = new Point(player.position.x -1, player.position.y -1 );
-        Image drawArea = drawAreaCut.cut(drawAreaSize, drawArePosition);
 
-        if(isOverFloor())
-           player.movement.fall(1);
+    public void update() {
+	    for(Hittable h : hittables) {
+            findCollisions(h);
+        }
     }
 
-    public boolean isOverFloor() {
-	    for(char c : bottom)
-	        if(c == FLOOR)
-	            return true;
-	    return false;
+    private boolean findCollisions(Hittable h) {
+        for (Entity e : entities)
+            if (ImageOverlapping.isOverlapping((Entity) h, e)) {
+                h.onHit((Object) e);
+                return true;
+            }
+        return false;
     }
 
-    public interface Hitable {
+    public interface Hittable {
 	    public void onHit(Object who);
     }
 }

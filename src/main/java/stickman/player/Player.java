@@ -6,8 +6,9 @@ import stickman.entity.Entity;
 import stickman.RawConsoleInput;
 import stickman.input.Input;
 import stickman.entity.*;
+import stickman.collision.*;
 
-public class Player extends Entity
+public class Player extends Entity implements CollisionDetector.Hittable
 {
 	private boolean STAGE_KEY = false;
 	Movement movement;
@@ -25,7 +26,16 @@ public class Player extends Entity
 		STAGE_KEY = false;
 	}
 
-	public boolean hasKey() {
+    @Override
+    public void onHit(Object who) {
+        if (who instanceof Enemie) {
+
+        } else if (who instanceof ) {
+
+        }
+    }
+
+    public boolean hasKey() {
 		return this.STAGE_KEY;
 	}
 
