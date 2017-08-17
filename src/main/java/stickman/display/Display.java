@@ -2,29 +2,31 @@ package stickman.display;
 
 import java.util.*;
 import stickman.entity.*;
+import stickman.player.Player;
+import stickman.resources.Resources;
 import stickman.util.ImageDrawer;
 
 public class Display
 {
-	public static Size size;
-	public static final int SIZE_X = 70;
-	public static final int SIZE_Y = 20;
-	private static final int WAIT_PER_FRAME = 50;
+    private static final int WAIT_PER_FRAME = 50;
+    public static Size size;
 	private long startTime;
     private String text;
     private Image base;
     private ImageDrawer frame;
+    private Player player;
 
 	public Display() {
         frame = new ImageDrawer();
 		size = new Size(70,20);
 		startTime = System.currentTimeMillis();
 		text = "";
+		player = (Player) Resources.lookup("player");
 	}
 
 	public void print() {
 		clean();
-		System.out.print(frame.getImage().toString());
+		System.out.print(frame.cut(size, getViewPoint()).toString());
 		System.out.print(text);
 		startTime = System.currentTimeMillis();
 	}
@@ -69,6 +71,18 @@ public class Display
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private Point getViewPoint() {
+		int halfWidth = size.x/2;
+		int halfHeight = size.y/2;
+		int x = player.position.x + 35;
+		Point pos = new Point(0,0);
+		if(player.position.x > halfWidth)
+			pos.x = player.position.x - halfWidth;
+		if(player.position.y > halfHeight)
+			pos.y = player.position.y - halfHeight;
+		return pos;
 	}
 
 }

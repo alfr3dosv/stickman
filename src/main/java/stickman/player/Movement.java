@@ -1,26 +1,18 @@
 package stickman.player;
-import stickman.entity.Entity;
+import stickman.entity.*;
 import stickman.player.Player;
 import stickman.input.Input;
 
 public class Movement implements Runnable
 {
-    private Speed speed;
     public Player player;
     private int jumps;
     private long jumpBegin;
     private long slowDownBegin;
-    
 
-    private class Speed
-    {
-        int x = 0;
-        int y = 0;
-
-    }
     public Movement(Player newPlayer) {
         player = newPlayer;
-        speed = new Speed();
+
         jumps = 0;
         slowDownBegin = System.currentTimeMillis();
     }
@@ -77,10 +69,10 @@ public class Movement implements Runnable
         long elapsedTime = System.currentTimeMillis() - slowDownBegin;
 
         if(elapsedTime > WAIT_MILLIS) {
-            if (speed.x > 0)
-                player.setX(player.getX() + (speed.x--));
-            else if (speed.x < 0)
-                player.setX(player.getX() + (speed.x++));
+            if (player.speed.x > 0)
+                player.setX(player.getX() + (player.speed.x--));
+            else if (player.speed.x < 0)
+                player.setX(player.getX() + (player.speed.x++));
             slowDownBegin = System.currentTimeMillis();
         }
     }
@@ -111,21 +103,22 @@ public class Movement implements Runnable
     }
 
     private void increaseSpeed(int increase) {
-        if((increase > 0 && speed.x < 0) || (increase < 0 && speed.x > 0))
+        if((increase > 0 && player.speed.x < 0) || (increase < 0 && player.speed.x > 0))
             resetSpeedX();
-        else if((speed.x > -4) && (speed.x < 4))
-            speed.x += increase;
+        else if((player.speed.x > -4) && (player.speed.x < 4))
+            player.speed.x += increase;
 
     }
 
     private void  resetSpeedX() {
-        speed.x = 0;
+        player.speed.x = 0;
     }
 
     private void  resetDirection() {
         player.dir = Entity.Direction.NONE;
     }
 
+    
     public void sleep(long millis) {
         try {
             Thread.sleep(millis);

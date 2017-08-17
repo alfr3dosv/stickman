@@ -10,10 +10,12 @@ import stickman.entity.*;
 public class Player extends Entity
 {
 	private boolean STAGE_KEY = false;
+	Movement movement;
 
 	public Player(Image imageOfPlayer)	{
 		img = imageOfPlayer;
 		init();
+		movement = new Movement(this);
 	}
 
 	public void init() {

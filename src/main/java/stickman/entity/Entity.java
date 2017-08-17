@@ -10,6 +10,7 @@ public class Entity
 	public Point position = new Point();
 	private volatile boolean alive = true;
 	public Image img;
+	public Speed speed;
 	public volatile Direction dir = Entity.Direction.NONE;
 	public enum Direction {NONE, UP, DOWN, LEFT, RIGHT}
 

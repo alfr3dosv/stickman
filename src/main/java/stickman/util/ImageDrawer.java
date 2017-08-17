@@ -44,8 +44,8 @@ public class ImageDrawer {
     }
 
     private boolean isInsideFrame(int x, int y) {
-        boolean isXValid = (x < origin.size.x) && (x > 0);
-        boolean isYValid = (y < origin.size.y) && (y >= 0);
+        boolean isXValid = (x < origin.size.x) && (x > position.x);
+        boolean isYValid = (y < origin.size.y) && (y >= position.y);
         return isXValid && isYValid;
     }
 
