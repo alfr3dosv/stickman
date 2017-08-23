@@ -11,6 +11,14 @@ public class Image
     public Size size;
     public int spaces;
 
+    public Image(char c) {
+        this(new char[][] {{c}});
+    }
+
+    public Image(Image i) {
+        this(i.img);
+    }
+
     public Image(Size newSize, char[][] img)
     {
         size = newSize;
@@ -22,6 +30,10 @@ public class Image
         size = newSize;
         char[][] previous = new char[size.y][size.x];
         img = cloneChars(previous);
+    }
+
+    public Image(char[][] matrix) {
+        this(charsToList(matrix));
     }
 
     public Image(List<String> lines)
@@ -40,14 +52,24 @@ public class Image
         img = cloneChars(previous);
     }
 
+    private static List<String> charsToList(char[][] matrix) {
+        List<String> lines = new ArrayList<>();
+        for (char[] c : matrix)
+            lines.add(new String(c));
+        return lines;
+    }
+
     public Image clone() {
         return new Image(size, cloneChars(img));
     }
 
-    private char[][] cloneChars(char[][] img) {
+    private char[][] cloneChars(char[][] source) {
         char[][] newImg = new char[size.y][size.x];
-        for(int y=0; y < size.y; y++) {
-            newImg[y] = cloneCharsArray(img[y]);
+        for(int y = 0; y < size.y; y++) {
+            if(y < source.length)
+                newImg[y] = cloneCharsArray(source[y]);
+            else  //bigger than source
+                newImg[y] = cloneCharsArray(new char[size.x]);
         }
         return newImg;
     }
@@ -65,6 +87,8 @@ public class Image
     }
 
     public String toString() {
+        if(isEmpty(this))
+            return " ";
         StringBuilder str = new StringBuilder();
         for(int y = 0; y < size.y; y++) {
             str.append(img[y]);
@@ -83,5 +107,9 @@ public class Image
 
     public char[][] getChars() {
         return this.img;
+    }
+
+    public boolean isEmpty(Image i) {
+        return i.size.x == 0 && i.size.y == 0;
     }
 }

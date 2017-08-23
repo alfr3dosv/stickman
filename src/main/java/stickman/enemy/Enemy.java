@@ -1,13 +1,13 @@
-package stickman.enemie;
+package stickman.enemy;
 import stickman.entity.*;
 
-public class Enemie extends Entity{
+public class Enemy extends Entity {
 	private long start_time=0;
 	private int speed;
 	private int step=0;
 	private int steps;
 
-	public Enemie() {
+	public Enemy() {
 		char[][] new_image = new char[1][1];
 		new_image[0][0] = '*';
 		this.img = new Image(new Size(1,1), new_image);

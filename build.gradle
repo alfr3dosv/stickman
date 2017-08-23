@@ -27,7 +27,7 @@ jar {
 dependencies {
     //compile 'com.google.guava:guava:20.0'
     compile 'net.java.dev.jna:jna:3.5.0'
-    //testCompile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
 }
 
 mainClassName = 'stickman.Launcher'

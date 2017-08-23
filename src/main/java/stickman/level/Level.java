@@ -1,10 +1,12 @@
 package stickman.level;
 
 import java.util.*;
+
+import stickman.collision.CollisionDetector;
 import stickman.entity.*;
 import stickman.display.Display;
 import stickman.player.*;
-import stickman.enemie.*;
+import stickman.enemy.*;
 import stickman.resources.Resources;
 
 public class Level
@@ -19,13 +21,15 @@ public class Level
 
 	public void play() {
 		Player player = (Player) Resources.lookup("player");
-		Movement movement = new Movement(player);
-		Thread movementThread = new Thread(movement);
-		movementThread.start();
-		Display display = new Display();
-		entities.add(player);
-		while(true) {
+        entities.add(player);
+        Thread movementThread = new Thread(player.movement);
+        movementThread.start();
+        CollisionDetector cd = new CollisionDetector(stage, entities);
+        Display display = new Display();
+        while(true) {
+		    cd.update();
 			display.render(stage, entities);
+			display.render(player.movement.debugText);
 			display.print();
 			display.sleep();
 		}
@@ -33,8 +37,8 @@ public class Level
 
 	private void updateEnemies() {
 		for(Entity e : entities) {
-			if(e instanceof Enemie) {
-				((Enemie) e).update();
+			if(e instanceof Enemy) {
+				((Enemy) e).update();
 			}
 		}
 	}

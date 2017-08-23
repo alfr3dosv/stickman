@@ -27,7 +27,7 @@ public class Display
 	public void print() {
 		clean();
 		System.out.print(frame.cut(size, getViewPoint()).toString());
-		System.out.print(text);
+		System.out.println(text);
 		startTime = System.currentTimeMillis();
 	}
 
@@ -42,6 +42,10 @@ public class Display
         frame.setOutput(base);
         for(Entity e : entities)
 			frame.draw(e.img, e.position);
+	}
+
+	public void render(String text) {
+		this.text = text;
 	}
 
 	public void render(Image base, Entity e) {

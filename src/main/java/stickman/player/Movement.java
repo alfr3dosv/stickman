@@ -1,7 +1,12 @@
 package stickman.player;
+import stickman.enemy.*;
 import stickman.entity.*;
 import stickman.player.Player;
 import stickman.input.Input;
+
+import java.util.List;
+
+import static stickman.entity.Entity.Direction;
 
 public class Movement implements Runnable
 {
@@ -9,10 +14,11 @@ public class Movement implements Runnable
     private int jumps;
     private long jumpBegin;
     private long slowDownBegin;
+    public String debugText = "";
+    private List<Point> outside;
 
     public Movement(Player newPlayer) {
         player = newPlayer;
-
         jumps = 0;
         slowDownBegin = System.currentTimeMillis();
     }
@@ -23,24 +29,26 @@ public class Movement implements Runnable
              onKeyPress(key);
             jump();
             slowdown();
-            //sleep(0);
+            sleep(20);
         }
     }
 
     public void onKeyPress(char key) {
-        if (key == 'w')
+        if (key == 'w') {
             moveUp();
-        else if (key == 's')
+        } else if (key == 's') {
             moveDown();
-        else if (key == 'a')
-            moveLeft();
-        else if (key == 'd')
-            moveRight();
-        resetDirection();
+        } else if (key == 'a') {
+            left();
+            increaseSpeed(-1);
+        } else if (key == 'd') { 
+            right(1);
+            increaseSpeed(1);
+        } resetDirection();
     }
 
     public void moveUp() {
-        player.dir = Entity.Direction.UP;
+        player.dir = Direction.UP;
         if(jumps == 0)
             jumps++;
         jump();
@@ -48,20 +56,34 @@ public class Movement implements Runnable
     }
 
     private void moveDown() {
-        player.dir = Entity.Direction.DOWN;
+        player.dir = Direction.DOWN;
         player.setY(player.getY() - 1);
     }
 
-    private void moveLeft() {
-        player.dir = Entity.Direction.LEFT;
-        player.setX(player.getX() - 1);
-        increaseSpeed(-1);
+    private void left(int i) {
+        for(int j = 0; j < i; j++) {
+            if (isRightClear()) {
+                player.dir = Direction.LEFT;
+                player.setX(player.getX() - 1);
+            } else {
+                player.dir = Direction.NONE;
+                resetSpeedX();
+                break;
+            }
+        }
     }
 
-    private  void moveRight() {
-        player.dir = Entity.Direction.RIGHT;
-        player.setX(player.getX() + 1);
-        increaseSpeed(1);
+    public void right(int i) {
+        for(int j = 0; j < i; j++) {
+            if (isRightClear()) {
+                player.dir = Direction.RIGHT;
+                player.setX(player.getX() + 1);
+            } else {
+                player.dir = Direction.NONE;
+                resetSpeedX();
+                break;
+            }
+        }
     }
 
     private void slowdown() {
@@ -70,9 +92,12 @@ public class Movement implements Runnable
 
         if(elapsedTime > WAIT_MILLIS) {
             if (player.speed.x > 0)
-                player.setX(player.getX() + (player.speed.x--));
+                //if(isClear(player.position.x + 1, player.position.y))
+                if(isRightClear())
+                    player.setX(player.getX() + (player.speed.x--));
             else if (player.speed.x < 0)
-                player.setX(player.getX() + (player.speed.x++));
+                if(isClear(player.position.x + 1, player.position.y))
+                    player.setX(player.getX() + (player.speed.x++));
             slowDownBegin = System.currentTimeMillis();
         }
     }
@@ -103,9 +128,10 @@ public class Movement implements Runnable
     }
 
     private void increaseSpeed(int increase) {
+        final int MAX_SPEED = 2;
         if((increase > 0 && player.speed.x < 0) || (increase < 0 && player.speed.x > 0))
             resetSpeedX();
-        else if((player.speed.x > -4) && (player.speed.x < 4))
+        else if((player.speed.x > -MAX_SPEED) && (player.speed.x < MAX_SPEED))
             player.speed.x += increase;
 
     }
@@ -115,16 +141,61 @@ public class Movement implements Runnable
     }
 
     private void  resetDirection() {
-        player.dir = Entity.Direction.NONE;
+        player.dir = Direction.NONE;
     }
 
-    
+
     public void sleep(long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void handleHit(Object who, Point where) {
+        final int LEFT = 0;
+        final int RIGHT = 2;
+        final int TOP = 2;
+        final int BOTTOM = 0;
+        if(who instanceof Enemy) {
+            System.out.println("Asterisck ");
+        } else if(who instanceof Character) {
+            char c = (Character) who;
+            if(where.x >= RIGHT) {
+                moveLeft();
+                debugText = "LOCKED";
+            }
+        }
+    }
+
+    public void setOutside(List<Point> outside) {
+        this.outside = outside;
+    }
+
+    private boolean isClear(int x, int y) {
+        int width = x + player.img.size.x;
+        int height = y + player.img.size.y;
+        for(Point p : outside) {
+            boolean isXInside = p.x >= x && p.x <= width;
+            boolean isYInside = p.y >= y && p.y <= height;
+            if(isXInside && isYInside)
+                return false;
+        }
+        return true;
+    }
+
+    private boolean isRightClear() {
+        int width = player.position.x + player.img.size.x;
+        for(Point p : outside) {
+//            boolean isXClear = p.x != (width + 1);
+//            boolean isYClear = (player.position.y - 1 != p.y;
+//            if(isXInside && isYInside)
+//                return false;
+            if(p.x == width + 2)
+                return false;
+        }
+        return true;
     }
 }
 

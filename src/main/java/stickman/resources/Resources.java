@@ -14,6 +14,8 @@ public class Resources
             resource = (Object) LoadScene.load(name);
         else if(type.equals("banner"))
             resource = (Object) ReadFile.loadImage("/" + key + ".txt");
+        else if(type.equals("test"))
+            resource = (Object) ReadFile.loadImage("/" + key + ".txt");
         else if(type.equals("player"))
             resource = (Object) LoadPlayer.load();
         return resource;

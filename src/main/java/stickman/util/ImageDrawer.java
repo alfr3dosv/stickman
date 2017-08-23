@@ -33,7 +33,7 @@ public class ImageDrawer {
     private void drawLine(char[] line, int y) {
         int spaces = line.length;
         char[][] originChars = origin.getChars();
-        int offsetX = whereToDraw.x;
+        int offsetX = whereToDraw.x + 1;
         int offsetY = origin.size.y;
         while(spaces > origin.size.x)
             spaces--;
@@ -46,7 +46,7 @@ public class ImageDrawer {
     }
 
     private boolean isInsideFrame(int x, int y) {
-        boolean isXValid = (x < origin.size.x) && (x > position.x);
+        boolean isXValid = (x < origin.size.x) && (x >= position.x);
         boolean isYValid = (y < origin.size.y) && (y >= position.y);
         return isXValid && isYValid;
     }
