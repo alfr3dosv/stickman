@@ -17,11 +17,9 @@ public class Movement implements Runnable
     private Thread threadSlowdown;
     private Thread threadJump;
     private Thread threadFall;
-    public boolean isJumping = false;
-    private boolean isDoubleJump = false;
-    private int jump = 0;
     private enum JumpStatus {jump, doubleJump, waiting, complete}
     private JumpStatus jumpStatus = JumpStatus.complete;
+    private int jump = 0;
 
     public Movement(Player newPlayer) {
         player = newPlayer;
@@ -43,7 +41,7 @@ public class Movement implements Runnable
         while(true) {
             char key = Input.getKey();
             onKeyPress(key);
-            sleep(20);
+            sleep(10);
         }
     }
 
@@ -53,11 +51,23 @@ public class Movement implements Runnable
         } else if (key == 's') {
             down();
         } else if (key == 'a') {
-            left(1);
-            increaseSpeed(-1);
-        } else if (key == 'd') { 
-            right(1);
-            increaseSpeed(1);
+            if(jumpStatus == JumpStatus.jump || jumpStatus != JumpStatus.doubleJump) {
+                left(2);
+                increaseSpeed(-1);
+            }
+            else {
+                left(1);
+                increaseSpeed(-1);
+            }
+        } else if (key == 'd') {
+            if(jumpStatus == JumpStatus.jump || jumpStatus != JumpStatus.doubleJump) {
+                right(2);
+                increaseSpeed(1);
+            }
+            else {
+                right(1);
+                increaseSpeed(1);
+            }
         }
         player.dir = Direction.NONE;
     }
@@ -112,22 +122,25 @@ public class Movement implements Runnable
     }
 
     public void jump() {
-        final int MOVES_PER_JUMP = 2;
-        long wait = WAIT_NEXT;
-        int moves = MOVES_PER_JUMP;
+        long wait = WAIT_NEXT * 2;
+        int movesPerjump = 4;
+//        if(jumpStatus == JumpStatus.doubleJump)
+//            movesPerjump += 2;
+
         switch (jumpStatus) {
             case jump:
             case doubleJump:
-                if (jump < moves) {
+                if (jump < movesPerjump) {
                     if (isClear(Direction.UP)) {
                         player.dir = Direction.UP;
                         player.setY(player.getY() + 1);
                         jump++;
                         wait = wait * jump;
+                    } else {
+                        resetJump();
                     }
                 } else {
-                    jump = 0;
-                    jumpStatus = JumpStatus.waiting;
+                    resetJump();
                 }
                 break;
             case waiting:
@@ -140,19 +153,22 @@ public class Movement implements Runnable
         sleep(wait);
     }
 
+    private void resetJump() {
+        jump = 0;
+        jumpStatus = JumpStatus.waiting;
+    }
+
     public void fall() {
         if(jumpStatus != JumpStatus.jump && jumpStatus != JumpStatus.doubleJump)
         {
             if(isClear(Direction.DOWN))
                 player.setY(player.getY() -1 );
         }
-        if(jumpStatus == JumpStatus.waiting && !isClear(Direction.DOWN))
-            jumpStatus = JumpStatus.complete;
         sleep(WAIT_NEXT * 2);
     }
 
     private void increaseSpeed(int increase) {
-        final int MAX_SPEED = 8;
+        final int MAX_SPEED = 4;
         if((player.speed.x > -MAX_SPEED) && (player.speed.x < MAX_SPEED))
             player.speed.x += increase;
         else

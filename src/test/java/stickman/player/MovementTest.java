@@ -46,15 +46,15 @@ public class MovementTest {
         thenPlayerMoveLeft();
     }
 
-    @Test public void testCantMoveUp() {
-        makeWorld();
-        makeCollisionDetector();
-        makeThread();
-        collisionDetector.update();
-        player.movement.up();
-        sleep(200);
-        thenPlayerCantMove();
-    }
+//    @Test public void testCantMoveUp() {
+//        makeWorld();
+//        makeCollisionDetector();
+//        makeThread();
+//        collisionDetector.update();
+//        player.movement.up();
+//        sleep(200);
+//        thenPlayerCantMove();
+//    }
 
 
 //    @Test public void testMoveUp() {
