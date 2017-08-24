@@ -5,8 +5,6 @@ import stickman.entity.Point;
 
 public class Entity
 {
-	private int y=0;
-	private int x=0;
 	public Point position = new Point(0,0);
 	private volatile boolean alive = true;
 	public Image img;

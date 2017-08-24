@@ -42,7 +42,7 @@ public class Player extends Entity implements CollisionDetector.Hittable, Collis
 	}
 
     @Override
-    public void around(List<Point> around) {
-        movement.setOutside(around);
+    public void setContext(Image context) {
+        movement.setContex(context);
     }
 }

@@ -3,6 +3,7 @@ import stickman.enemy.*;
 import stickman.entity.*;
 import stickman.player.Player;
 import stickman.input.Input;
+import stickman.util.ImageUtil;
 
 import java.util.List;
 
@@ -10,59 +11,74 @@ import static stickman.entity.Entity.Direction;
 
 public class Movement implements Runnable
 {
-    public Player player;
-    private int jumps;
-    private long jumpBegin;
-    private long slowDownBegin;
-    public String debugText = "";
-    private List<Point> outside;
+    final long WAIT_NEXT = 50;
+    private Player player;
+    private Image context;
+    private Thread threadSlowdown;
+    private Thread threadJump;
+    private Thread threadFall;
+    public boolean isJumping = false;
+    private boolean isDoubleJump = false;
+    private int jump = 0;
+    private enum JumpStatus {jump, doubleJump, waiting, complete}
+    private JumpStatus jumpStatus = JumpStatus.complete;
 
     public Movement(Player newPlayer) {
         player = newPlayer;
-        jumps = 0;
-        slowDownBegin = System.currentTimeMillis();
+        threadSlowdown = new Thread(() -> {
+            while(true) slowdown();
+        });
+        threadJump = new Thread(() -> {
+            while(true) jump();
+        });
+        threadFall = new Thread(() -> {
+            while (true) fall();
+        });
     }
 
     public void run() {
+        threadSlowdown.start();
+        threadJump.start();
+        threadFall.start();
         while(true) {
             char key = Input.getKey();
-             onKeyPress(key);
-            jump();
-            slowdown();
+            onKeyPress(key);
             sleep(20);
         }
     }
 
     public void onKeyPress(char key) {
         if (key == 'w') {
-            moveUp();
+            up();
         } else if (key == 's') {
-            moveDown();
+            down();
         } else if (key == 'a') {
-            left();
+            left(1);
             increaseSpeed(-1);
         } else if (key == 'd') { 
             right(1);
             increaseSpeed(1);
-        } resetDirection();
+        }
+        player.dir = Direction.NONE;
     }
 
-    public void moveUp() {
-        player.dir = Direction.UP;
-        if(jumps == 0)
-            jumps++;
-        jump();
-        sleep(5);
+    public void up() {
+        if (jumpStatus == JumpStatus.complete) {
+            jumpStatus = JumpStatus.jump;
+        } else if (jumpStatus == JumpStatus.jump) {
+            jumpStatus = JumpStatus.doubleJump;
+        }
     }
 
-    private void moveDown() {
+    public void down() {
         player.dir = Direction.DOWN;
-        player.setY(player.getY() - 1);
+        if(isClear(Direction.DOWN))
+            player.setY(player.getY() - 1);
     }
 
-    private void left(int i) {
+    public void left(int i) {
         for(int j = 0; j < i; j++) {
-            if (isRightClear()) {
+            if (isClear(Direction.LEFT)) {
                 player.dir = Direction.LEFT;
                 player.setX(player.getX() - 1);
             } else {
@@ -75,7 +91,7 @@ public class Movement implements Runnable
 
     public void right(int i) {
         for(int j = 0; j < i; j++) {
-            if (isRightClear()) {
+            if (isClear(Direction.RIGHT)) {
                 player.dir = Direction.RIGHT;
                 player.setX(player.getX() + 1);
             } else {
@@ -86,64 +102,67 @@ public class Movement implements Runnable
         }
     }
 
-    private void slowdown() {
-        final long WAIT_MILLIS = 100;
-        long elapsedTime = System.currentTimeMillis() - slowDownBegin;
-
-        if(elapsedTime > WAIT_MILLIS) {
-            if (player.speed.x > 0)
-                //if(isClear(player.position.x + 1, player.position.y))
-                if(isRightClear())
-                    player.setX(player.getX() + (player.speed.x--));
-            else if (player.speed.x < 0)
-                if(isClear(player.position.x + 1, player.position.y))
-                    player.setX(player.getX() + (player.speed.x++));
-            slowDownBegin = System.currentTimeMillis();
+    private void slowdown () {
+        if (player.speed.x > 0) {
+            right(player.speed.x--);
+        } else if (player.speed.x < 0) {
+            left(-player.speed.x++);
         }
+        sleep(WAIT_NEXT);
     }
 
-    private void jump() {
-        final long WAIT_RESET = 500;
-        final long WAIT_NEXT = 50;
-        long elapsedTime = System.currentTimeMillis() - jumpBegin;
+    public void jump() {
+        final int MOVES_PER_JUMP = 2;
+        long wait = WAIT_NEXT;
+        int moves = MOVES_PER_JUMP;
+        switch (jumpStatus) {
+            case jump:
+            case doubleJump:
+                if (jump < moves) {
+                    if (isClear(Direction.UP)) {
+                        player.dir = Direction.UP;
+                        player.setY(player.getY() + 1);
+                        jump++;
+                        wait = wait * jump;
+                    }
+                } else {
+                    jump = 0;
+                    jumpStatus = JumpStatus.waiting;
+                }
+                break;
+            case waiting:
+                while (isClear(Direction.DOWN)) {
+                    sleep(WAIT_NEXT);
+                }
+                jumpStatus = JumpStatus.complete;
+                break;
+        }
+        sleep(wait);
+    }
 
-        if((jumps > 0 && jumps <= 3) && elapsedTime > WAIT_NEXT) {
-            player.setY(player.getY() + 1);
-            jumps++;
-            jumpBegin = System.currentTimeMillis();
+    public void fall() {
+        if(jumpStatus != JumpStatus.jump && jumpStatus != JumpStatus.doubleJump)
+        {
+            if(isClear(Direction.DOWN))
+                player.setY(player.getY() -1 );
         }
-        else if((jumps > 3 && jumps <= 5) && elapsedTime > WAIT_NEXT) {
-            jumps++;
-            jumpBegin = System.currentTimeMillis();
-        }
-        else if((jumps > 5 && jumps <= 8) && elapsedTime > WAIT_NEXT) {
-            player.setY(player.getY() - 1);
-            jumps++;
-            jumpBegin = System.currentTimeMillis();
-        }
-        else if((jumps >= 9) && elapsedTime > WAIT_RESET) {
-            jumps = 0;
-        }
-
+        if(jumpStatus == JumpStatus.waiting && !isClear(Direction.DOWN))
+            jumpStatus = JumpStatus.complete;
+        sleep(WAIT_NEXT * 2);
     }
 
     private void increaseSpeed(int increase) {
-        final int MAX_SPEED = 2;
-        if((increase > 0 && player.speed.x < 0) || (increase < 0 && player.speed.x > 0))
-            resetSpeedX();
-        else if((player.speed.x > -MAX_SPEED) && (player.speed.x < MAX_SPEED))
+        final int MAX_SPEED = 8;
+        if((player.speed.x > -MAX_SPEED) && (player.speed.x < MAX_SPEED))
             player.speed.x += increase;
-
+        else
+            resetSpeedX();
     }
 
     private void  resetSpeedX() {
         player.speed.x = 0;
-    }
-
-    private void  resetDirection() {
         player.dir = Direction.NONE;
     }
-
 
     public void sleep(long millis) {
         try {
@@ -154,48 +173,57 @@ public class Movement implements Runnable
     }
 
     public void handleHit(Object who, Point where) {
-        final int LEFT = 0;
-        final int RIGHT = 2;
-        final int TOP = 2;
-        final int BOTTOM = 0;
         if(who instanceof Enemy) {
             System.out.println("Asterisck ");
         } else if(who instanceof Character) {
-            char c = (Character) who;
-            if(where.x >= RIGHT) {
-                moveLeft();
-                debugText = "LOCKED";
-            }
         }
     }
 
-    public void setOutside(List<Point> outside) {
-        this.outside = outside;
+    public void setContex(Image context) {
+        this.context = context;
+    }
+
+    private boolean isClear(Direction direction) {
+        final int OFFSET = 1;
+        Point origin = player.position;
+        Size size = player.img.size;
+        int x = origin.x + 1;
+        int y = origin.y;
+
+        if(direction == Direction.RIGHT)
+            x = origin.x + size.x + OFFSET;
+        else if (direction == Direction.LEFT)
+            x = origin.x;
+        else if (direction == Direction.DOWN)
+            y = origin.y - OFFSET;
+        else if(direction == Direction.UP)
+            y = origin.y + size.y;
+
+        if (direction == Direction.UP || direction == Direction.DOWN) {
+            for (; x < origin.x + size.x; x++) {
+                if (!isClear(x, y)) {
+                    return false;
+                }
+            }
+        }
+        else if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+            for (; y < origin.y + size.y; y++) {
+                if (!isClear(x, y)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private boolean isClear(int x, int y) {
-        int width = x + player.img.size.x;
-        int height = y + player.img.size.y;
-        for(Point p : outside) {
-            boolean isXInside = p.x >= x && p.x <= width;
-            boolean isYInside = p.y >= y && p.y <= height;
-            if(isXInside && isYInside)
-                return false;
-        }
-        return true;
-    }
-
-    private boolean isRightClear() {
-        int width = player.position.x + player.img.size.x;
-        for(Point p : outside) {
-//            boolean isXClear = p.x != (width + 1);
-//            boolean isYClear = (player.position.y - 1 != p.y;
-//            if(isXInside && isYInside)
-//                return false;
-            if(p.x == width + 2)
-                return false;
-        }
-        return true;
+        char value = ' ';
+        ImageUtil.Element element = ImageUtil.from(context)
+                .raw()
+                .getElementAt(new Point(x,y));
+        if(element != null)
+            value = element.value();
+        return value == ' ';
     }
 }
 

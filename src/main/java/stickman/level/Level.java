@@ -21,6 +21,8 @@ public class Level
 
 	public void play() {
 		Player player = (Player) Resources.lookup("player");
+		player.setX(1);
+		player.setY(1);
         entities.add(player);
         Thread movementThread = new Thread(player.movement);
         movementThread.start();
@@ -29,7 +31,6 @@ public class Level
         while(true) {
 		    cd.update();
 			display.render(stage, entities);
-			display.render(player.movement.debugText);
 			display.print();
 			display.sleep();
 		}

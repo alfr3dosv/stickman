@@ -17,16 +17,19 @@ public class CollisionDetector {
     private static final char[] WORLD_CHARS = {FLOOR, WALL};
 
 	public CollisionDetector(Image world, List<Entity> entities) {
-        this.world = world;
 	    this.entities = entities;
         hittable = new ArrayList<>();
         for(Entity e : entities)
             if(e instanceof Hittable)
                 hittable.add((Hittable) e);
+        setContext(world);
     }
 
     public void setContext(Image world) {
         this.world = world;
+        for(Entity e : entities)
+            if(e instanceof Aware)
+                ((Aware) e).setContext(world);
     }
 
 
@@ -55,12 +58,12 @@ public class CollisionDetector {
                 }
             }
         }
-        if(h instanceof Aware) {
-            List<Point> where = findAroundContext(h);
-            if (!where.isEmpty()) {
-                ((Aware) h).around(where);
-            }
-        }
+//        if(h instanceof Aware) {
+//            List<Point> where = findAroundContext(h);
+//            if (!where.isEmpty()) {
+//                ((Aware) h).around(where);
+//            }
+//        }
         // world
 //        List<Point> where = new ArrayList<>();
 //        Entity e = (Entity) h;
@@ -131,6 +134,6 @@ public class CollisionDetector {
     }
 
     public interface Aware {
-	    public void around(List<Point> around);
+	    public void setContext(Image context);
     }
 }
