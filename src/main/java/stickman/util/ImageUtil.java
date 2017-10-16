@@ -1,7 +1,8 @@
 package stickman.util;
 
-import java.util.*;
-import stickman.entity.*;
+import stickman.core.entity.Image;
+import stickman.core.entity.Point;
+import stickman.core.entity.Size;
 import stickman.util.imagetools.ImageCut;
 import stickman.util.imagetools.ImageDraw;
 import stickman.util.imagetools.ImageOverlap;

@@ -12,7 +12,7 @@ sourceSets {
             srcDirs 'src/main/java'
         }
         resources {
-            srcDir 'src/main/resources'
+            srcDir 'src/main/loader'
         }
 //        output.resourcesDir 'build/classes/java/main/stickman/assets'
     }

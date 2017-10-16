@@ -1,6 +1,7 @@
 package stickman;
 
-import stickman.resources.*;
+import stickman.game.Game;
+import stickman.game.storyline.Storyline;
 
 public class Launcher {
     public static void main(String[] args) {

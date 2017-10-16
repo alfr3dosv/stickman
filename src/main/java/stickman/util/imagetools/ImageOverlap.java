@@ -1,7 +1,9 @@
 package stickman.util.imagetools;
 
 import java.util.*;
-import stickman.entity.*;
+
+import stickman.core.entity.Image;
+import stickman.core.entity.Point;
 import stickman.util.ImageUtil;
 
 public class ImageOverlap {

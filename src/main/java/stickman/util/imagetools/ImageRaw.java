@@ -1,8 +1,8 @@
 package stickman.util.imagetools;
 
 import java.util.*;
-import stickman.entity.Image;
-import stickman.entity.Point;
+import stickman.core.entity.Image;
+import stickman.core.entity.Point;
 import stickman.util.ImageUtil;
 
 import java.util.List;
