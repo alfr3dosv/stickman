@@ -40,13 +40,9 @@ public class Display
 	}
 
     public void render(Image destination, String dialog) {
+		text = dialog;
 	    base = destination.clone();
-        text = dialog;
-        List<String> dialogs = new ArrayList<>();
-        dialogs.add(text);
-		frame = ImageUtil.from(base)
-				.draw(new Image(dialogs))
-				.getImage();
+	    frame = base;
 	}
 
 	public void render(Image destination, List<Entity> entities) {
