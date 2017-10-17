@@ -21,8 +21,9 @@ public class Entity
 	}
 
 	public void setPosition(Point position) {
-		if(position != null)
-			this.position = position;
+		if(position != null) {
+			this.position = new Point(position);
+		}
 	}
 
 	public Image getImage() {

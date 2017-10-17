@@ -35,18 +35,22 @@ public class Level
         movementThread.start();
         CollisionDetector cd = new CollisionDetector(stage, entities);
         Display display = new Display();
+
         while(!player.hasKey()) {
         	updateEnemies();
 		    cd.update();
 			display.render(stage, entities);
 			display.print();
 			display.sleep();
-			if( player.isAlive() ) {
-				Loader.lookup("banner/dead");
-				sleep();
+			if( !player.isAlive() ) {
+				display.render((Image) Loader.lookup("banner/dead"));
+				display.print();
+				display.sleep(1000);
+				player.reset();
+				player.setPosition(startPoint);
+				display.sleep(1000);
 			}
 		}
-		System.out.println("Tiempo");
 	}
 
 	private void updateEnemies() {
@@ -54,14 +58,6 @@ public class Level
 			if(e instanceof Asterisck) {
 				((Asterisck) e).update();
 			}
-		}
-	}
-
-	public static void sleep(long millis) {
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 	}
 }

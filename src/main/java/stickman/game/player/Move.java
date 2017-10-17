@@ -79,9 +79,9 @@ public class Move
 
     private void slowdown () {
         if (player.speed.x > 0) {
-            right(player.speed.x--);
+            //right(player.speed.x--);
         } else if (player.speed.x < 0) {
-            left(-player.speed.x++);
+            //left(-player.speed.x++);
         }
         sleep(100);
     }

@@ -87,8 +87,12 @@ public class Display
 	}
 
 	public static void sleep() {
+	    sleep(WAIT_PER_FRAME);
+	}
+
+    public static void sleep(long millis) {
 		try {
-			Thread.sleep(WAIT_PER_FRAME);
+			Thread.sleep(millis);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

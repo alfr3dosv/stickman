@@ -10,7 +10,8 @@ import stickman.game.key.Key;
 
 import static stickman.game.player.Move.JumpStatus;
 
-public class Player extends Entity implements CollisionDetector.Hittable, CollisionDetector.Aware, Runnable
+public class Player extends Entity implements CollisionDetector.Hittable,
+        CollisionDetector.Aware, Runnable
 {
     private boolean key = false;
     public Move move;
@@ -33,9 +34,8 @@ public class Player extends Entity implements CollisionDetector.Hittable, Collis
     }
 
     public void reset() {
-        setX(1);
-        setY(1);
         key = false;
+        setAlive();
     }
 
     public void onKeyPress(char key) {
