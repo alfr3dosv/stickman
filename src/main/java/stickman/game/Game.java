@@ -33,7 +33,9 @@ public class Game{
 
     public void printMenu() {
         Display.clean();
-        System.out.print("1) Start demo, 2)Exit \nOption:");
+        System.out.println(Loader.lookup("banner/stickman").toString());
+        System.out.println(Loader.lookup("banner/menu").toString());
+        System.out.print("1) Start, 2)Exit \n :");
     }
 
     public void start() {
