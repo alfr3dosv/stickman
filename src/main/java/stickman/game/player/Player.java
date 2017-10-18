@@ -98,6 +98,10 @@ public class Player extends Entity implements CollisionDetector.Hittable,
             key = true;
         } else if (who instanceof Asterisck) {
             kill();
+        } else  if(who instanceof Character) {
+            char c = (Character) who;
+            if (c == '*')
+                kill();
         }
     }
 

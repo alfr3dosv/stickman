@@ -142,9 +142,18 @@ public class CollisionDetector {
             ImageUtil.Element element = ImageUtil.from(world)
                     .raw()
                     .getElementAt(new Point(x, y));
-            if (element != null)
+            if (element != null) {
                 value = element.value();
+                if (entity instanceof Hittable && isNotAWall(element.value())) {
+                    Hittable h = (Hittable) entity;
+                    h.onHit((Object) element.value(), element.getPosition());
+                }
+            }
             return value == ' ';
+        }
+
+        private boolean isNotAWall(char c) {
+            return !(c == '|' || c == '=' || c == '-' || c == '~');
         }
     }
 
