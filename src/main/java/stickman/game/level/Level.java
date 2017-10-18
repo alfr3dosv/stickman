@@ -43,9 +43,9 @@ public class Level
 			display.print();
 			display.sleep();
 			if( !player.isAlive() ) {
-				display.render((Image) Loader.lookup("banner/dead"));
-				display.print();
-				display.sleep(1000);
+			    Display.clean();
+				System.out.println(Loader.lookup("banner/dead"));
+				Display.sleep(1000);
 				player.reset();
 				player.setPosition(startPoint);
 				display.sleep(1000);
