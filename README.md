@@ -54,7 +54,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Alfredo Soto** - *Initial work* - [alfr3dosv](https://github.com/alfr3dosv)
+* **Alfredo Soto** - [alfr3dosv](https://github.com/alfr3dosv)
 
 ## License
 
