@@ -1,6 +1,6 @@
 # Stickman
 
-Stickman is a text based game writed in java.
+Stickman is a text based platform game in java.
 
 ### Prerequisites
 
