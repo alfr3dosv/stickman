@@ -24,6 +24,15 @@ jar {
     }
 }
 
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Main-Class': 'stickman.Launcher'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 dependencies {
     //compile 'com.google.guava:guava:20.0'
     compile 'net.java.dev.jna:jna:3.5.0'
