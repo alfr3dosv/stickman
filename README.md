@@ -1,5 +1,6 @@
-# Stickman
+<img width="400" height="auto" align="right" src="http://getgitman.com/img/f_3.jpg">
 
+# Stickman
 Stickman is a text based platform game in java.
 
 ### Prerequisites
@@ -8,8 +9,8 @@ Java >= 1.8
 
 ### Installing
 
-1. Go to releases and download the latest binary build
-2. Unzip it and run bin/stickman for linux/mac or bin/stickman.bat for windows
+1. [Download](https://github.com/alfr3dosv/stickman/releases) the latest fat jar release
+2. Run
 
 ### Build
 
